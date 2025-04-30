@@ -1,4 +1,4 @@
-package qq;
+package qq_test;
 
 public class HelloWord {
 public static void main(String[] args) {

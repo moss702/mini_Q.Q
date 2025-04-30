@@ -1,4 +1,4 @@
-package qq;
+package qq_test;
 
 public class Hellossj {
 public static void main(String[] args) {
