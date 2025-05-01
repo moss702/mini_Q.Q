@@ -67,7 +67,5 @@ public class userAcount {
 	public String toString() {
 		return "[회원번호 : " + no + ", 회원이름 : " + name + ", 회원 I D : " + id + ", 회원 P W : " + pw + ", 사업자 여부 : " + isSeller + "]";
 	}
-
-
 	
 }
