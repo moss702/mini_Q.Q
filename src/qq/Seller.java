@@ -1,6 +1,6 @@
 package qq;
 
-public class seller extends userAcount {
+public class Seller extends UserAcount {
 	public boolean isSeller = true;
 	
 }

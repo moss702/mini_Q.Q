@@ -5,13 +5,13 @@ package qq;
 import java.util.ArrayList;
 import java.util.List;
 
-public class userServiece {
+public class UserServiece {
 //=============================필드======================
-	private List<userAcount> acounts = new ArrayList<userAcount>();
+	private List<UserAcount> acounts = new ArrayList<UserAcount>();
 	
 	{ //임시 데이터
-		acounts.add(new userAcount(1, "더미사장", "Admin", "1234", true));
-		acounts.add(new userAcount(2, "더미손님", "dummy", "1234", false));
+		acounts.add(new UserAcount(1, "더미사장", "Admin", "1234", true));
+		acounts.add(new UserAcount(2, "더미손님", "dummy", "1234", false));
 	}
 	
 //=============================메소드======================

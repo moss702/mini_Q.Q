@@ -1,7 +1,7 @@
 package qq;
 import java.util.Scanner;
 
-public class Login  {
+public class Main  {
 	public static void main(String[] args) {
 		System.out.println("================== 학생 점수 관리 프로그램 ==================");
 		for(;;) {
