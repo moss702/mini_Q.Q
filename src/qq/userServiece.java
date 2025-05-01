@@ -15,11 +15,10 @@ public class userServiece {
 	}
 	
 //=============================메소드======================
-/*	
- * 아직 util 없어서 작동 안됩니다.
+
 	//-----------------입력제한_이름
 	public String inputName() {
-		String name =  BankUtils.nextLine("이름 입력 > ");		
+		String name =  Util.nextLine("이름 입력 > ");		
 		if(!name.matches("[가-힣]{2,4}")) {			
 			throw new IllegalArgumentException("이름은 한글 2~4글자로 입력하세요");
 		}
@@ -27,24 +26,23 @@ public class userServiece {
 	}
 	//-----------------입력제한_ID
 	public String inputId() {
-		String id =  BankUtils.nextLine("ID 입력 > ");		
+		String id =  Util.nextLine("ID 입력 > ");		
 		if(!id.matches("[A-Za-z0-9_+&*-]{+}")) {			
 			throw new IllegalArgumentException("id는 알파벳,숫자 구성으로 입력하세요");
 		}
 		return id;
 	}
-	//-----------------서치_ID(등업용)
-		public userAcount findBy(String id) {
-		userAcount acounts = null;
-		for (int i = 0; i < acounts.size(); i++) {
-			if (acounts.get(i).getId() == id) {
-				acounts = acounts.get(i);
-				break;
-			}
-		}	
-		return acounts;
-	}
+//	//-----------------서치_ID(등업용)
+//		public userAcount findBy(String id) {
+//		userAcount acounts = null;
+//		for (int i = 0; i < acounts.size(); i++) {
+//			if (acounts.get(i).getId() == id) {
+//				acounts = acounts.get(i);
+//				break;
+//			}
+//		}	
+//		return acounts;
+//	}
 	
-*/
 	
 }
