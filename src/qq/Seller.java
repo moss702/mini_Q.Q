@@ -1,6 +1,7 @@
 package qq;
 
 public class Seller extends UserAcount {
+	
 	public Seller() {
 		// TODO Auto-generated constructor stub
 		super();

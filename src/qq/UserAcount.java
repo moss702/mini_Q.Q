@@ -1,20 +1,13 @@
 package qq;
 
-import java.io.Serializable;
-
-//userAcount : customer, seller가 동시에 가져야 하는 필드들
-
-public class UserAcount{
-	// 클래스 내에 선언할 위치 { 
-	
+//UserAcount : Customer, Seller가 동시에 가져야 하는 필드들
+public class UserAcount{	
 //=============================필드======================
 	private int no;		 //회원번호
 	private String name; //회원이름
 	private String id;	 //회원ID
 	private String pw;	 //회원PW
-	public int spend;	 //이번소비금액
-	public int allSpend; //누적소비금액
-	
+
 	public boolean isSeller = false; //사업자 여부
 	
 //=============================생성자======================
@@ -27,6 +20,11 @@ public class UserAcount{
 		this.pw = pw;
 		this.isSeller = isSeller;
 	}
+//=============================toString======================
+	@Override
+	public String toString() {
+		return "[회원번호 : " + no + ", 회원이름 : " + name + ", 회원 I D : " + id + ", 회원 P W : " + pw + ", 사업자 여부 : " + isSeller + "]";
+	}	
 //=============================getter / setter======================
 	public UserAcount get(int i) {
 		// TODO Auto-generated method stub
@@ -63,13 +61,6 @@ public class UserAcount{
 
 	public void setPw(String pw) {
 		this.pw = pw;
-	}
-
-//=============================toString======================
-	@Override
-	public String toString() {
-		return "[회원번호 : " + no + ", 회원이름 : " + name + ", 회원 I D : " + id + ", 회원 P W : " + pw + ", 사업자 여부 : " + isSeller + "]";
-	}
-	
+	}	
 }
 
