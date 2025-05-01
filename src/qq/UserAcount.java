@@ -1,6 +1,6 @@
 package qq;
 
-//UserAcount : Customer, Seller가 동시에 가져야 하는 필드들
+//UserAcount : Customer, Seller가 동시에 가져야 하는 필드
 public class UserAcount{	
 //=============================필드======================
 	private int no;		 //회원번호
