@@ -7,11 +7,11 @@ import java.util.List;
 
 public class UserServiece {
 //=============================필드======================
-	private List<UserAcount> acounts = new ArrayList<UserAcount>();
+	private List<userAcount> acounts = new ArrayList<userAcount>();
 	
 	{ //임시 데이터
-		acounts.add(new UserAcount(1, "더미사장", "Admin", "1234", true));
-		acounts.add(new UserAcount(2, "더미손님", "dummy", "1234", false));
+		acounts.add(new userAcount(1, "더미사장", "Admin", "1234", true));
+		acounts.add(new userAcount(2, "더미손님", "dummy", "1234", false));
 	}
 	
 //	public static void main(String[] args) {
