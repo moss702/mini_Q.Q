@@ -9,8 +9,6 @@ public class UserAcount {
 	private String name; //회원이름
 	private String id;	 //회원ID
 	private String pw;	 //회원PW
-	public int spend;	 //이번소비금액
-	public int allSpend; //누적소비금액
 	
 	public boolean isSeller = false; //사업자 여부
 	
@@ -33,7 +31,6 @@ public class UserAcount {
 	public int getNo() {
 		return no;
 	}
-
 	public void setNo(int no) {
 		this.no = no;
 	}
@@ -41,7 +38,6 @@ public class UserAcount {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -49,7 +45,6 @@ public class UserAcount {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -57,7 +52,6 @@ public class UserAcount {
 	public String getPw() {
 		return pw;
 	}
-
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
