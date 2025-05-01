@@ -7,5 +7,6 @@ public class HelloKCH {
 		System.out.println("gg");
 		System.out.println("gang");
 		
+		
 	}
 }
