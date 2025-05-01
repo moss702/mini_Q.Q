@@ -1,8 +1,11 @@
 package qq;
 
+import java.io.Serializable;
+
 //userAcount : customer, seller가 동시에 가져야 하는 필드들
 
-public class userAcount { 
+public class userAcount{
+	// 클래스 내에 선언할 위치 { 
 	
 //=============================필드======================
 	private int no;		 //회원번호
@@ -69,3 +72,4 @@ public class userAcount {
 	}
 	
 }
+
