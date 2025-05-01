@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class userServiece {
-	
 //=============================필드======================
 	private List<userAcount> acounts = new ArrayList<userAcount>();
 	
