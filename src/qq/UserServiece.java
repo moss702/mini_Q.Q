@@ -94,22 +94,27 @@ public class UserServiece {
 	
 	//-----------------회원목록 조회(only Seller)
 	public void read() { //회원번호순 조회
-		System.out.println("-----[회원조회]-----");
+		System.out.println("[회원번호순]");
 		print(acounts);
 	}
 		
 //	!!!!!!!! 누적소비금액 계산하는 메서드 선작성 필요!!!!!!!!!
 //	public void allSpend() { //누적소비금액 높은 순 조회
-//		System.out.println("-----[회원조회]-----"); 
-		///안내 문구가 달라야할것같은데 어떤 말이 좋을까. 나중에 고민.
+//		System.out.println("[누적소비순]"); 
 //		Collections.sort(sortedAcounts, (o1, o2) -> o2.allSpend() - o1.allSpend());
 //	}  
 		///학생예제에서는 조회,석차순조회 별도 메뉴탭이었지만...
 		/// [1. 뒤로가기] [2. 번호순(소비순)] 번갈아가며 보여주면 UX면에서 보기 좋겠다.
 	
 	//-----------------회원 사업자 여부 변경(only Seller)
-//	public void is {  
-	///메서드명 뭘로하지...... 생각안남.. 일단 자야겠음.......
+//	public void beSeller() { 
+//			String id = Util.nextLine("[ID를 입력해주세요] > ");	
+//			UserAcount s = findBy(id);
+//			if(s != null) {
+//				throw new IllegalArgumentException("[\"id: %s\"가 사업자로 설정되었습니다.]");
+//				acounts(s) = (isSeller = true); //id로 서치해서
+//			} else 			
+//	}
 	
 	
 }
