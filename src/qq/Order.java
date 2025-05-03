@@ -11,8 +11,10 @@ public class Order {
 //	List<Customer> customers = new ArrayList<>(); 손님 리스트는 필요 없고 로그인한 손님에 한해서 정보를 추가하면 될 듯 관리자페이지에서 손님리스트 필요?
 //	CusotmerService cs = CusotmerService.getInstance();
 //	cs = cusotmerService.getLoginCustomer(); //로그인한 손님의 주문정보를 변경 추가 등을 하기 위한 객체 호출
-	private List<Snack> snacksBasket = new ArrayList<>(); //주문한 음식을 담을 리스트 (장바구니)
-	private List<Snack> snacksPayment = new ArrayList<>(); // 결제를 완료한 음식을 담은 리스트
+	private List<SMenu> snacksBasket = new ArrayList<>(); //주문한 음식을 담을 리스트 (장바구니)
+	private List<SMenu> snacksPayment = new ArrayList<>(); // 결제를 완료한 음식을 담은 리스트 
+	private List<SMenu> snackMenu = new ArrayList<>(); 
+	//snackMenu.getInfo(); // SMenu를 통해 상속받은 자손 클래스들 no, name. price, amount 가져오는 메서드 SMenu에서 만들어줘야 할 듯!	
 	//음식객체
 	public Order() {}
 	
@@ -27,31 +29,36 @@ public class Order {
 			case 1: 
 		//		Snack snack = Snack.getInstance();
 				System.out.println("메인메뉴를 선택하셨습니다.");
-				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-				
-//				snacksBasket.add(snack.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
+				selectMenu(snackMenu);				
 				break;
+//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
+//				snacksBasket.add(snack.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
 				
 			case 2: 
 //				Side side = Side.getInstance();
 				System.out.println("사이드를 선택하셨습니다.");
-				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-//				snacksBasket.add(side.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
+				selectMenu(snackMenu);
 				break;
+//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
+//				snacksBasket.add(side.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
 				
 			case 3: 
 //				Soju soju = Soju.getInstance();
 				System.out.println("주류를 선택하셨습니다.");
-				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-//				snacksBasket.add(soju.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
+				selectMenu(snackMenu);
 				break;
-			case 4: 
+//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
+//				snacksBasket.add(soju.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
+			case 4: //장바구니 빼는 기능도 메서드로 따로 뺄까 고민중
 				System.out.println("==========장바구니==========");
-				print(snacksBasket);
-				if(Util.nextConfirm("주문화면으로 돌아가시려면 아무 버튼이나 눌러주세요 >")) {
-					System.out.println("메뉴 화면으로 돌아갑니다."); 
-					return;
+				if(snacksBasket != null) {					
+					print(snacksBasket);
 				}
+				else {
+					System.out.println("장바구니에 상품이 없습니다.");
+					break;
+				}
+				System.out.println("메뉴 화면으로 돌아갑니다."); 
 				break;
 			case 5: 
 				if(!Util.nextConfirm("주문을 확정하시겠습니까? > y/n")) {
@@ -62,7 +69,7 @@ public class Order {
 				break; // 로그인 후 화면으로 
 			case 6: cancle(); break;
 			case 7: System.out.println("메인화면으로 돌아갑니다."); return;
-			default : System.out.println("올바른 번호를 눌러주세요.");
+			default : System.out.println("올바른 번호를 눌러주세요."); break;
 			}
 		}
 	}
@@ -73,7 +80,7 @@ public class Order {
 		//음식종류.count ++;(팔린갯수?)
 		//결제화면
 		int amount = 0;
-		for(Snack s : snacksBasket) {
+		for(SMenu s : snacksBasket) {
 			amount += s.price;
 		}
 		System.out.println("결제하실 금액은 " + amount + "원 입니다.");	
@@ -92,8 +99,8 @@ public class Order {
 	
 	public void cancle() {
 		print(snacksPayment);
-		int no = Util.nextInt("결제를 취소하실 메뉴 번호를 작성하세요. >"); // 결제를 담은 리스트에서 주문번호 1번 : "소주" 이런식으로 나오게 설정..?
-		int amount = snacksPayment.get(no-1).price;
+		int idx = Util.nextInt("결제를 취소하실 메뉴 번호를 작성하세요. >"); // 결제를 담은 리스트에서 주문번호 1번 : "소주" 이런식으로 나오게 설정..?
+		int amount = snacksPayment.get(idx-1).price;
 		System.out.println("취소하실 금액은" + amount + "원 입니다.");
 		int spend = Util.nextInt("취소하실 금액인 " + amount + "원을 숫자로 입력하여주세요. >");
 		if(spend != amount) {
@@ -102,23 +109,31 @@ public class Order {
 			return;
 		}
 //		c.allSpend -= amount; 총 소비 금액에서 취소한 금액 차감
-		snacksPayment.remove(no-1); // payment list에서 음식 삭제
+		snacksPayment.remove(idx-1); // payment list에서 음식 삭제
 		System.out.println("주문이 취소되었습니다.");
 	}
 	
-	public void print(List<Snack> sn) {
-		sn.forEach(s -> System.out.println(s));
+	public void print(List<SMenu> sm) {
+		sm.forEach(s -> System.out.println(s));
 	}
-
-//	public Snack findBy(int no) {// 입력 받은 음식번호를 토대로 음식 객체 소환! 얘는 음식 클래스에서 필요한건가?
+	public void selectMenu(List<SMenu> l) {
+		for(SMenu s : l) {
+			System.out.println(s.no + "번" + " " + s.name + " " + s.price + "원"); 
+		}
+		int no = Util.nextInt("주문하실 번호를 입력하여주세요. >");
+//		if(no != findby(no)) { 메뉴에 없는 번호가 나오면 메서드 종료
+//			return;
+//		}
+		snacksBasket.add(l.get(no - 1));  
+	}
+//	public Snack findBy(int number) {// 입력 받은 음식번호를 토대로 음식 객체 소환! 얘는 음식 클래스에서 필요한건가?
 //		Snack snack = Snack.getInstance();
-	
+			
 //		for(Snack s : snacks){
 //			if() {			
 //				return s;
 //		}
 //		}
-//		return null;
+//		return snack = null;
 //	}
-
 }
