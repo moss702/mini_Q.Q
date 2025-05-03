@@ -1,12 +1,45 @@
 package qq;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
 	// 주문과 관련된 필드 작성, 메뉴 담기가 필요하다고 봄.
 	
-	private Order order = new Order(); 
+	
+	
+	//여기 부분 메뉴판에서 호출할때 필요함
+//	  private Map<SMenu, Integer> items = new HashMap<>();
+//
+//	    public void addItem1(SMenu menu, int qty) {
+//	        if (menu.getAmount() < qty) {
+//	            System.out.println("재고 부족: " + menu.getName());
+//	            return;
+//	        }
+//
+//	        // 재고 차감
+//	        menu.reduceAmount(qty);
+//
+//	        // 주문 목록에 추가
+//	        items.put(menu, items.getOrDefault(menu, 0) + qty);
+//	    }
+//
+//	    public void printOrder1() {
+//	        System.out.println("\n===== 주문 내역 =====");
+//	        int total = 0;
+//	        for (Map.Entry<SMenu, Integer> entry : items.entrySet()) {
+//	            SMenu m = entry.getKey();
+//	            int qty = entry.getValue();
+//	            int price = m.getPrice() * qty;
+//	            System.out.printf("%s x %d = %,d원\n", m.getName(), qty, price);
+//	            total += price;
+//	        }
+//	        System.out.println("총 합계: " + total + "원");
+//	    }  여기까지 필요함   
+	
+	
 //	customer에서 음식 타입의 필드가 필요함. 손님별로 주문한 정보를 보는 것이 맞는건가..?
 //	List<Customer> customers = new ArrayList<>(); 손님 리스트는 필요 없고 로그인한 손님에 한해서 정보를 추가하면 될 듯 관리자페이지에서 손님리스트 필요?
 //	CusotmerService cs = CusotmerService.getInstance();
@@ -18,9 +51,9 @@ public class Order {
 	//음식객체
 	public Order() {}
 	
-	public Order getInstance() {
-		return order;
-	} 
+//	public Order getInstance() {
+//		return order;
+//	} 여기 오류떠서 주석처리함
 	
 	public void display() {//주문 화면//
 		while(true) {
@@ -128,6 +161,16 @@ public class Order {
 	}
 //	public Snack findBy(int number) {// 입력 받은 음식번호를 토대로 음식 객체 소환! 얘는 음식 클래스에서 필요한건가?
 //		Snack snack = Snack.getInstance();
+
+	public void addItem(SMenu selected, int qty) {
+	//이게 있어야 메뉴판기능할수있음 메뉴판에서 내꺼주문호출용
+	}
+
+	public void printOrder() {
+	//이친구도 메뉴판호출에필요
+		
+	}
+
 			
 //		for(Snack s : snacks){
 //			if() {			
