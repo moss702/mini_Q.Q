@@ -13,42 +13,44 @@ public class Order {
 	
 	
 	
-	  private Map<SMenu, Integer> items = new HashMap<>();
+	 
 
-	    public void addItem1(SMenu menu, int qty) {
-	        if (menu.getAmount() < qty) {
-	            System.out.println("재고 부족: " + menu.getName());
-	            return;
-	        }
-
-	        // 재고 차감
-	        menu.reduceAmount(qty);
-
-	        // 주문 목록에 추가
-	        items.put(menu, items.getOrDefault(menu, 0) + qty);
-	    }
-
-	    public void printOrder1() {
-	        System.out.println("\n===== 주문 내역 =====");
-	        int total = 0;
-	        for (Map.Entry<SMenu, Integer> entry : items.entrySet()) {
-	            SMenu m = entry.getKey();
-	            int qty = entry.getValue();
-	            int price = m.getPrice() * qty;
-	            System.out.printf("%s x %d = %,d원\n", m.getName(), qty, price);
-	            total += price;
-	        }
-	        System.out.println("총 합계: " + total + "원");
-} 
+//	    public void addItem1(SMenu menu, int qty) {
+//	        if (menu.getAmount() < qty) {
+//	            System.out.println("재고 부족: " + menu.getName());
+//	            return;
+//	        }
+//
+//	        // 재고 차감
+//	        menu.reduceAmount(qty);
+//
+//	        // 주문 목록에 추가
+//	        items.put(menu, items.getOrDefault(menu, 0) + qty);
+//	    }
+//
+//	    public void printOrder1() {
+//	        System.out.println("\n===== 주문 내역 =====");
+//	        int total = 0;
+//	        for (Map.Entry<SMenu, Integer> entry : items.entrySet()) {
+//	            SMenu m = entry.getKey();
+//	            int qty = entry.getValue();
+//	            int price = m.getPrice() * qty;
+//	            System.out.printf("%s x %d = %,d원\n", m.getName(), qty, price);
+//	            total += price;
+//	        }
+//	        System.out.println("총 합계: " + total + "원");
+//} 
 	
 	
 //	customer에서 음식 타입의 필드가 필요함. 손님별로 주문한 정보를 보는 것이 맞는건가..?
 //	List<Customer> customers = new ArrayList<>(); 손님 리스트는 필요 없고 로그인한 손님에 한해서 정보를 추가하면 될 듯 관리자페이지에서 손님리스트 필요?
-//	CusotmerService cs = CusotmerService.getInstance();
-//	cs = cusotmerService.getLoginCustomer(); //로그인한 손님의 주문정보를 변경 추가 등을 하기 위한 객체 호출
+//	UserService us = UserService.getInstance();
+//	us = cusotmerService.getLoginCustomer(); //로그인한 손님의 주문정보를 변경 추가 등을 하기 위한 객체 호출
 	private List<SMenu> snacksBasket = new ArrayList<>(); //주문한 음식을 담을 리스트 (장바구니)
 	private List<SMenu> snacksPayment = new ArrayList<>(); // 결제를 완료한 음식을 담은 리스트 
-	private List<SMenu> snackMenu = new ArrayList<>(); 
+//	private List<SMenu> snackMenu = new ArrayList<>(); //메뉴판
+	 
+	
 	//snackMenu.getInfo(); // SMenu를 통해 상속받은 자손 클래스들 no, name. price, amount 가져오는 메서드 SMenu에서 만들어줘야 할 듯!	
 	//음식객체
 	public Order() {
@@ -63,7 +65,7 @@ public class Order {
 //    
 //    public void addStock(int qty) {
 //        if (qty > 0) {
-//            amount += qty;
+//            stock += qty;
 //        }
 //    }
 //    public boolean isSoldOut() {
@@ -71,58 +73,38 @@ public class Order {
 //    }
 //	public Order getInstance() {
 //		return order;
-//	} 
-	
-	public void display() {//주문 화면//
-		while(true) {
-			int no = Util.nextInt("1. 메인메뉴, 2. 사이드, 3. 주류 4. 장바구니 보기 5. 결제하기 6. 결제취소하기 7. 뒤로가기");
-			switch (no) {
-			case 1: 
-		//		Snack snack = Snack.getInstance();
-				System.out.println("메인메뉴를 선택하셨습니다.");
-				selectMenu(snackMenu);				
-				break;
-//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-//				snacksBasket.add(snack.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
-				
-			case 2: 
-//				Side side = Side.getInstance();
-				System.out.println("사이드를 선택하셨습니다.");
-				selectMenu(snackMenu);
-				break;
-//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-//				snacksBasket.add(side.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
-				
-			case 3: 
-//				Soju soju = Soju.getInstance();
-				System.out.println("주류를 선택하셨습니다.");
-				selectMenu(snackMenu);
-				break;
-//				no = Util.nextInt("1. 메뉴 1, 2. 메뉴 2, 3. 메뉴 3, 4. 메뉴 4, 5. 메뉴 5, 6. 메뉴 6"); // snack 클래스에서 메뉴번호를 부여하면 주문에서 씀
-//				snacksBasket.add(soju.findBy(no)) // 장바구니 담을 용도 Snack class 에서 번호에 따른 findBy구현 필요
-			case 4: //장바구니 빼는 기능도 메서드로 따로 뺄까 고민중
-				System.out.println("==========장바구니==========");
-				if(snacksBasket != null) {					
-					print(snacksBasket);
-				}
-				else {
-					System.out.println("장바구니에 상품이 없습니다.");
-					break;
-				}
-				System.out.println("메뉴 화면으로 돌아갑니다."); 
-				break;
-			case 5: 
-				if(!Util.nextConfirm("주문을 확정하시겠습니까? > y/n")) {
-					System.out.println("주문화면으로 돌아갑니다."); 
-					break;
-				}
-				payment();
-				break; // 로그인 후 화면으로 
-			case 6: cancle(); break;
-			case 7: System.out.println("메인화면으로 돌아갑니다."); return;
-			default : System.out.println("올바른 번호를 눌러주세요."); break;
-			}
+//
+	private Map<SMenu, Integer> items = new HashMap<>(); // 장바구니 등장
+	public void addItem(SMenu selected, int qty) { //장바구니 담기
+		items.put(selected, qty);
+		if(selected.getAmount() == 0) {
+			System.out.println( selected.getName() + "은/는 현재 재고가 없습니다.");
+			return;
 		}
+//		snacksBasket.add(selected);
+		selected.decreaseAmount(qty);
+	}
+	
+	public void deleteItem(SMenu selected, int qty) { // 장바구니에 빼기
+		System.out.println(items);
+		if(qty > items.get(selected)) {
+			System.out.println("올바른 수량을 입력하세요.");
+			return;
+		}
+		int tmp = items.get(selected);
+		selected.addStock(qty);
+		items.put(selected, tmp - qty);
+		if(items.get(selected) == qty ) {
+			snacksBasket.remove(selected);
+		}
+	}
+
+	public void printBasket() {// 장바구니 보기
+		System.out.println(items);
+	}
+	
+	public void printBill() {// 영수증(결제내역)보기
+		System.out.println(snacksPayment);
 	}
 	
 	public void payment(){
@@ -146,10 +128,11 @@ public class Order {
 		snacksPayment.addAll(snacksBasket);
 		snacksBasket.clear();
 		System.out.println("주문이 완료되었습니다.");
+		
 	}
 	
 	public void cancle() {
-		print(snacksPayment);
+		printBill();
 		int idx = Util.nextInt("결제를 취소하실 메뉴 번호를 작성하세요. >"); // 결제를 담은 리스트에서 주문번호 1번 : "소주" 이런식으로 나오게 설정..?
 		int amount = snacksPayment.get(idx-1).price;
 		System.out.println("취소하실 금액은" + amount + "원 입니다.");
@@ -164,25 +147,21 @@ public class Order {
 		System.out.println("주문이 취소되었습니다.");
 	}
 	
-	public void print(List<SMenu> sm) {
-		sm.forEach(s -> System.out.println(s));
-	}
-	public void selectMenu(List<SMenu> l) {
-		for(SMenu s : l) {
-			System.out.println(s.no + "번" + " " + s.name + " " + s.price + "원"); 
-		}
-		int no = Util.nextInt("주문하실 번호를 입력하여주세요. >");
-//		if(no != findby(no)) { 메뉴에 없는 번호가 나오면 메서드 종료
-//			return;
+	
+//	public void selectMenu(List<SMenu> l) {
+//		for(SMenu s : l) {
+//			System.out.println(s.no + "번" + " " + s.name + " " + s.price + "원"); 
 //		}
-		snacksBasket.add(l.get(no - 1));  
-	}
+//		int no = Util.nextInt("주문하실 번호를 입력하여주세요. >");
+////		if(no != findby(no)) { 메뉴에 없는 번호가 나오면 메서드 종료
+////			return;
+////		}
+//		snacksBasket.add(l.get(no - 1));  
+//	}
 //	public Snack findBy(int number) {// 입력 받은 음식번호를 토대로 음식 객체 소환! 얘는 음식 클래스에서 필요한건가?
 //		Snack snack = Snack.getInstance();
 
-	public void addItem(SMenu selected, int qty) {
-	//이게 있어야 메뉴판기능할수있음 메뉴판에서 내꺼주문호출용
-	}
+	
 
 	public void printOrder() {
 	//이친구도 메뉴판호출에필요
