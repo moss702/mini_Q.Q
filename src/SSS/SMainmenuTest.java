@@ -68,6 +68,11 @@ public class SMainmenuTest {
 	    	            	return;
 	    	            }
 	    	            order.addItem(selected, qty);
+	    	            System.out.print("취소할 수량을 입력하세요.: ");
+	    	            int del = sc.nextInt();
+	    	            order.deleteItem(selected, del);
+	    	            order.payment();	    	            
+	    	            order.printBasket();
 	    	            
 	    	        } catch (InputMismatchException e) {
 	                    System.out.println("숫자만 입력하세요.");
@@ -78,9 +83,6 @@ public class SMainmenuTest {
 	                    sc.nextLine(); // 버퍼비우는것
 	    	           
 	    	           
-	    	        order.payment();
-
-	    	        order.printOrder();
 	    	        sc.close();
 	    	    }
 	    	}
