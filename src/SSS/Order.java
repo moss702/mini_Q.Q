@@ -42,7 +42,6 @@ public class Order {
 //	List<Customer> customers = new ArrayList<>(); 손님 리스트는 필요 없고 로그인한 손님에 한해서 정보를 추가하면 될 듯 관리자페이지에서 손님리스트 필요?
 //	UserService us = UserService.getInstance();
 //	us = cusotmerService.getLoginCustomer(); //로그인한 손님의 주문정보를 변경 추가 등을 하기 위한 객체 호출
-	private List<SMenu> snacksBasket = new ArrayList<>(); //주문한 음식을 담을 리스트 (장바구니)
 	private List<SMenu> snacksPayment = new ArrayList<>(); // 결제를 완료한 음식을 담은 리스트 
 //	private List<SMenu> snackMenu = new ArrayList<>(); //메뉴판
 	 
@@ -91,16 +90,12 @@ public class Order {
 		selected.addStock(qty);
 		items.put(selected, tmp - qty);
 		if(items.get(selected) == qty ) {
-			snacksBasket.remove(selected);
+//			snacksBasket.remove(selected);
 		}
 	}
 
 	public void printBasket() {// 장바구니 보기
 		System.out.println(items);
-	}
-	
-	public void printBill() {// 영수증(결제내역)보기
-		System.out.println(snacksPayment);
 	}
 	
 	public void payment(){
@@ -109,8 +104,8 @@ public class Order {
 		//음식종류.count ++;(팔린갯수?)
 		//결제화면
 		int amount = 0;
-		for(SMenu s : snacksBasket) {
-			amount += s.price;
+		for(SMenu s : items.keySet()) {
+			amount += s.price * items.get(s);
 		}
 		System.out.println("결제하실 금액은 " + amount + "원 입니다.");	
 		int spend = Util.nextInt("결제하실 금액인 " + amount + "원을 숫자로 입력하여주세요. >");
@@ -121,10 +116,14 @@ public class Order {
 		}
 		System.out.println("카드결제중 입니다.");
 //		c.allSpend += spend;
-		snacksPayment.addAll(snacksBasket);
-		snacksBasket.clear();
+//		snacksPayment.addAll(snacksBasket);
+//		snacksBasket.clear();
 		System.out.println("주문이 완료되었습니다.");
 		
+	}
+	
+	public void printBill() {// 영수증(결제내역)보기
+		System.out.println(snacksPayment);
 	}
 	
 	public void cancle() {
