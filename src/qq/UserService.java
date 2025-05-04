@@ -1,22 +1,26 @@
 package qq;
 
-//userServiece : 회원가입, 로그인, 
+//userServiece : 회원가입, 로그인
+//c
 //seller 회원정보조회, 사업자 여부 변경
 
 import java.util.ArrayList;
 import java.util.List;
 import static qq.Util.*;
 
-public class UserServiece {
+public class UserService {
 //=============================필드======================
 	private List<UserAccount> accounts = new ArrayList<>();
 	private List<UserAccount> sortedAccounts; // 소비금액순, 회원번호순 정렬 변경을 위한 리스트입니다.
 	
 	private UserAccount loginUser; //로그인 상태 저장          ***** 소비금액 가져오려면 UserAcount가 아니라 Customer 타입으로 가져와야 하나?
-	
+	private static UserService UserService = new UserService();
+	private UserService() {}
 	public UserAccount getLoginUser() {
 		return loginUser;
 	}
+	
+
 	String serchId;
 	
 	
@@ -48,14 +52,14 @@ public class UserServiece {
 	//-----------------중복체크_ID                                   //Q. 근데 이거 메서드 안에 메서드 써도 되나요? 실행 테스트를 못해봄
 	public String duplId() {
 		String id = this.inputId();
-		UserAccount s = findBy(id);
+		UserAccount s = findByID(id);
 		if(s != null) {
 			throw new IllegalArgumentException("[(!)이미 존재하는 ID 입니다]");
 		}
 		return id;
 	}
 	//-----------------서치_ID
-	public UserAccount findBy(String id) {
+	public UserAccount findByID(String id) {
 	UserAccount acount = null;
 	for (int i = 0; i < accounts.size(); i++) {
 		if (accounts.get(i).getId() == id) {
@@ -70,7 +74,7 @@ public class UserServiece {
 		UA.forEach(System.out::println);
 		UA.forEach(s -> System.out.println(s));
 	}
-//===============================Customer, Seller 공통 메소드=====================
+//===============================Customer, Seller 공통=====================
 	//-----------------회원가입(Customer, Seller)
 	public void register() {
 		System.out.println("=======[회원가입 정보 입력]=======");
@@ -115,7 +119,39 @@ public class UserServiece {
 		}
 	}
 	
-//===============================Seller 전용 메소드=====================
+	
+	//-----------------내 정보 수정하기(Customer, Seller)
+	public void modify() { //수정가능필드 : ID, PW, name
+		System.out.println("(임시)[내 회원정보 수정](임시)");
+		String id = nextLine("[수정]ID > ");
+		UserAccount c = findByID(id);
+		if(c == null) {
+			System.out.printf("[현재 아이디 :\"%s\"를 \"%s\"로 수정하시겠습니까?]", getLoginUser().getId(), id);
+//			getLoginUser().getId() = id; // 이거 왜 안됨니까? T.T))
+			
+			return;
+		}
+		
+		String name = nextLine("[수정]이름 입력 > ");
+//		String tel = nextLine("[수정]HP 입력(010-1111-2222) > ");
+//		String email = nextLine("[수정]e-mail 입력 > ");
+		String pw = nextLine("[수정]PW 입력 > ");
+		
+		c.setName(name);
+//		c.setTel(tel);
+//		c.setEmail(email);
+		c.setPw(pw);
+	}
+	
+//===============================Customer 전용=====================
+	//-----------------내 정보 보기(only Customer)
+	//주문내역확인 (커스토머/오더 클래스의 누적금액(소비금액), 주문내역 가져와야할듯)
+	public void myPage() {
+		System.out.println("(임시) 내 정보 보기 (임시)");
+	}
+	
+	
+//===============================Seller 전용=====================
 	
 	//-----------------회원목록 조회(only Seller)
 	public void read() { //회원번호순 조회
@@ -132,8 +168,8 @@ public class UserServiece {
 		System.out.println("[누적소비순 정렬]"); 
 //		Collections.sort(sortedAcounts, (o1, o2) -> o2.allSpend() - o1.allSpend());
 		switch (nextInt("[1.뒤로가기][2.회원번호순 정렬]")) {
-		case 1 : return;      //어? 이거.. read > allSpend로 접근한건데 여기서 리턴하면 read()로 돌아가나..? main으로 보내고 싶은데?    *******테스트 필요
-		case 2 : read();
+		case 1 : return;    //어? 이거.. read > allSpend로 접근한건데 여기서 리턴하면 read()로 돌아가나..? main으로 보내고 싶은데?    *******테스트 필요
+		case 2 : read();	//이렇게 가도 되나? ^^)) 궁금하네요 메인 호출해보고 테스트 해보죠? ^^)))
 		}
 	}  
 		///학생예제에서는 조회,석차순조회 별도 메뉴탭이었지만...
@@ -143,7 +179,7 @@ public class UserServiece {
 	public void beSeller() { 
 		System.out.println("=======[회원 사업자 여부 변경]=======");
 		String id = nextLine("[ID를 입력해주세요] > ");	
-		UserAccount s = findBy(id);
+		UserAccount s = findByID(id);
 		if(s != null) {
 			if(!s.isSeller) {
 				System.out.printf("[\"id: %s\"가 사업자로 설정되었습니다.]", s.getId());
