@@ -38,7 +38,7 @@ public class SMenu {
 	    }
 
 
-// HashMap<SMenu, Integer> 같은 구조에서 SMenu 객체를 Key로 사용하려면 꼭 필요한 메서드들
+// HashMap<SMenu, Integer> 같은 구조에서 SMenu 를 Key로 사용하려면 꼭 필요한 메서드들임
 //메뉴 번호(no)가 같으면 동일한 메뉴로 간주하게함
 	    @Override
 	    public boolean equals(Object obj) {
