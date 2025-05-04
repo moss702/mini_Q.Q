@@ -12,4 +12,5 @@ public class Seller extends UserAccount {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 }
