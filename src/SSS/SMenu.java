@@ -73,11 +73,10 @@ public class SMenu {
 	    }
 
 	    // 보기 좋게 출력하는 메서드 (카테고리 포함)
-	    @Override
-	    public String toString() {
-	        return String.format("[번호 %d] (%s) %s - %,d원 [재고: %d개]", 
-	                no, category, name, price, amount);
-	    }
+//	    public String toString() {
+//	        return String.format("[번호 %d] (%s) %s - %,d원 [재고: %d개]", 
+//	                no, category, name, price, amount);
+//	    }
 
 	
 	}
