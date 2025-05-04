@@ -1,4 +1,4 @@
-package qq;
+package SSS;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ public class SMainmenuTest {
 	        menuList.add(new SMenu(4, "소주", 4000, 8, "주류"));
 
 	        Scanner sc = new Scanner(System.in);
-	        Order order = new Order();
+	        Order order2 = new Order();
 
 	        while (true) {
 	            System.out.println("\n===== 메뉴판 =====");
@@ -40,10 +40,10 @@ public class SMainmenuTest {
 
 	            System.out.print("수량 입력: ");
 	            int qty = sc.nextInt();
-	            order.addItem(selected, qty);
+	            order2.addItem(selected, qty);
 	        }
 
-	        order.printOrder();
+	        order2.printOrder();
 	        sc.close();
 	    
 	    }

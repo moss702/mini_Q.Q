@@ -1,4 +1,4 @@
-package qq;
+package SSS;
 
 public class SideMenu extends SMenu {
     public SideMenu(int no, String name, int price, int amount) {

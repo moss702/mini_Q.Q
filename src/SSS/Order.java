@@ -1,43 +1,45 @@
-package qq;
+package SSS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import qq.Util;
+
 public class Order {
 	// 주문과 관련된 필드 작성, 메뉴 담기가 필요하다고 봄.
+//	private Order order = new Order();
 	
 	
 	
-	//여기 부분 메뉴판에서 호출할때 필요함
-//	  private Map<SMenu, Integer> items = new HashMap<>();
-//
-//	    public void addItem1(SMenu menu, int qty) {
-//	        if (menu.getAmount() < qty) {
-//	            System.out.println("재고 부족: " + menu.getName());
-//	            return;
-//	        }
-//
-//	        // 재고 차감
-//	        menu.reduceAmount(qty);
-//
-//	        // 주문 목록에 추가
-//	        items.put(menu, items.getOrDefault(menu, 0) + qty);
-//	    }
-//
-//	    public void printOrder1() {
-//	        System.out.println("\n===== 주문 내역 =====");
-//	        int total = 0;
-//	        for (Map.Entry<SMenu, Integer> entry : items.entrySet()) {
-//	            SMenu m = entry.getKey();
-//	            int qty = entry.getValue();
-//	            int price = m.getPrice() * qty;
-//	            System.out.printf("%s x %d = %,d원\n", m.getName(), qty, price);
-//	            total += price;
-//	        }
-//	        System.out.println("총 합계: " + total + "원");
-//	    }  여기까지 필요함   
+	  private Map<SMenu, Integer> items = new HashMap<>();
+
+	    public void addItem1(SMenu menu, int qty) {
+	        if (menu.getAmount() < qty) {
+	            System.out.println("재고 부족: " + menu.getName());
+	            return;
+	        }
+
+	        // 재고 차감
+	        menu.reduceAmount(qty);
+
+	        // 주문 목록에 추가
+	        items.put(menu, items.getOrDefault(menu, 0) + qty);
+	    }
+
+	    public void printOrder1() {
+	        System.out.println("\n===== 주문 내역 =====");
+	        int total = 0;
+	        for (Map.Entry<SMenu, Integer> entry : items.entrySet()) {
+	            SMenu m = entry.getKey();
+	            int qty = entry.getValue();
+	            int price = m.getPrice() * qty;
+	            System.out.printf("%s x %d = %,d원\n", m.getName(), qty, price);
+	            total += price;
+	        }
+	        System.out.println("총 합계: " + total + "원");
+} 
 	
 	
 //	customer에서 음식 타입의 필드가 필요함. 손님별로 주문한 정보를 보는 것이 맞는건가..?
@@ -49,11 +51,27 @@ public class Order {
 	private List<SMenu> snackMenu = new ArrayList<>(); 
 	//snackMenu.getInfo(); // SMenu를 통해 상속받은 자손 클래스들 no, name. price, amount 가져오는 메서드 SMenu에서 만들어줘야 할 듯!	
 	//음식객체
-	public Order() {}
-	
+	public Order() {
+	}
+//    public boolean decreaseAmount(int cnt) {
+//        if (amount >= cnt) {
+//            amount -= cnt;
+//            return true;
+//        }
+//        return false;
+//    }
+//    
+//    public void addStock(int qty) {
+//        if (qty > 0) {
+//            amount += qty;
+//        }
+//    }
+//    public boolean isSoldOut() {
+//        return amount <= 0;
+//    }
 //	public Order getInstance() {
 //		return order;
-//	} 여기 오류떠서 주석처리함
+//	} 
 	
 	public void display() {//주문 화면//
 		while(true) {

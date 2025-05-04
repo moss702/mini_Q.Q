@@ -1,7 +1,7 @@
 package qq;
 
 //UserAcount : Customer, Seller가 동시에 가져야 하는 필드
-public class UserAcount{	
+public class UserAccount{	
 //=============================필드======================
 	private int no;		 //회원번호
 	private String name; //회원이름
@@ -11,9 +11,9 @@ public class UserAcount{
 	public boolean isSeller = false; //사업자 여부
 	
 //=============================생성자======================
-	public UserAcount() { }
+	public UserAccount() { }
 
-	public UserAcount(int no, String name, String id, String pw, boolean isSeller) {
+	public UserAccount(int no, String name, String id, String pw, boolean isSeller) {
 		this.no = no;
 		this.name = name;
 		this.id = id;
@@ -26,7 +26,7 @@ public class UserAcount{
 		return "[회원번호 : " + no + ", 회원이름 : " + name + ", 회원 I D : " + id + ", 회원 P W : " + pw + ", 사업자 여부 : " + isSeller + "]";
 	}	
 //=============================getter / setter======================
-	public UserAcount get(int i) {
+	public UserAccount get(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}

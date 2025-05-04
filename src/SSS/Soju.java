@@ -1,4 +1,4 @@
-package qq;
+package SSS;
 
 public class Soju extends SMenu {
     public Soju(int no, String name, int price, int amount) {

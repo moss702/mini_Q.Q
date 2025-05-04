@@ -8,12 +8,12 @@ import java.util.List;
 
 public class UserServiece {
 //=============================필드======================
-	private List<UserAcount> acounts = new ArrayList<>();
-	private List<UserAcount> sortedAcounts; // 소비금액순, 회원번호순 정렬 변경을 위한 리스트입니다.
+	private List<UserAccount> acounts = new ArrayList<>();
+	private List<UserAccount> sortedAcounts; // 소비금액순, 회원번호순 정렬 변경을 위한 리스트입니다.
 	
 	{ //임시 데이터
-		acounts.add(new UserAcount(1, "더미사장", "Admin", "1234", true));
-		acounts.add(new UserAcount(2, "더미손님", "dummy", "1234", false));
+		acounts.add(new UserAccount(1, "더미사장", "Admin", "1234", true));
+		acounts.add(new UserAccount(2, "더미손님", "dummy", "1234", false));
 		
 		sortedAcounts = new ArrayList<>(acounts);
 		
@@ -40,15 +40,15 @@ public class UserServiece {
 	//-----------------중복체크_ID                                   //Q. 근데 이거 메서드 안에 메서드 써도 되나요? 실행 테스트를 못해봄
 	public String duplId() {
 		String id = this.inputId();
-		UserAcount s = findBy(id);
+		UserAccount s = findBy(id);
 		if(s != null) {
 			throw new IllegalArgumentException("[(!)이미 존재하는 ID 입니다]");
 		}
 		return id;
 	}
 	//-----------------서치_ID
-	public UserAcount findBy(String id) {
-	UserAcount acount = null;
+	public UserAccount findBy(String id) {
+	UserAccount acount = null;
 	for (int i = 0; i < acounts.size(); i++) {
 		if (acounts.get(i).getId() == id) {
 			acount = acounts.get(i);
@@ -58,7 +58,7 @@ public class UserServiece {
 	return acount;
 	}
 	//-----------------출력_회원목록
-	public void print(List<UserAcount> UA) {
+	public void print(List<UserAccount> UA) {
 		UA.forEach(System.out::println);
 		UA.forEach(s -> System.out.println(s));
 	}
@@ -83,7 +83,7 @@ public class UserServiece {
 		
 		//----회원리스트에 저장
 		///(최초가입 사업자여부 default==손님. 이후 관리자 메뉴에서 변경가능)
-		UserAcount UA = new UserAcount(no, name , id, pw, false);
+		UserAccount UA = new UserAccount(no, name , id, pw, false);
 		acounts.add(UA);
 	}
 	//-----------------로그인(Customer, Seller)

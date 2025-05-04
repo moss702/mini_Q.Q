@@ -1,4 +1,4 @@
-package qq;
+package SSS;
 
 public class SMenu {
 	    int no;          // 메뉴 번호

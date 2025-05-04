@@ -1,5 +1,4 @@
-package qq;
-
+package SSS;
 
 public class SMainDish extends SMenu {
     public SMainDish(int no, String name, int price, int amount) {
