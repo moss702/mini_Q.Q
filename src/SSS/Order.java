@@ -11,10 +11,6 @@ public class Order {
 	// 주문과 관련된 필드 작성, 메뉴 담기가 필요하다고 봄.
 //	private Order order = new Order();
 	
-	
-	
-	 
-
 //	    public void addItem1(SMenu menu, int qty) {
 //	        if (menu.getAmount() < qty) {
 //	            System.out.println("재고 부족: " + menu.getName());
