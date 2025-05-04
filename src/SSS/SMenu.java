@@ -1,8 +1,5 @@
 package SSS;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SMenu {
 	  private int no;          // 메뉴 번호
 	  private String name;     // 메뉴 이름
@@ -22,7 +19,7 @@ public class SMenu {
 	        this.category = category;
 	      
 	    }
-	    //Getter 메서드 객체의 필드 값을 읽어오는 메서드들입니다
+	    //Getter 메서드 객체의 필드 값을 읽어오는 메서드
 	    public int getNo() { return no; }
 	    public String getName() { return name; }
 	    public int getPrice() { return price; }
@@ -49,8 +46,8 @@ public class SMenu {
 	    
 	    
 
-// HashMap<SMenu, Integer> 같은 구조에서 SMenu 객체를 Key로 사용하려면 꼭 필요한 메서드들입니다.
-//메뉴 번호(no)가 같으면 동일한 메뉴로 간주하게 합니다
+// HashMap<SMenu, Integer> 같은 구조에서 SMenu 객체를 Key로 사용하려면 꼭 필요한 메서드들
+//메뉴 번호(no)가 같으면 동일한 메뉴로 간주하게함
 	    @Override
 	    public boolean equals(Object obj) {
 	        if (this == obj) return true;
@@ -78,17 +75,19 @@ public class SMenu {
 	    }
 
 	    //재고를 추가하는 메서드 관리자 모드에서 재입고 아직 관리자 클래스 만들지않아서 구현가능할지>?..
-//	    public void addStock(int qty) {
-//	        if (qty > 0) {
-//	            amount += qty;
-//	        }
-//	    }
+	    public void addStock(int qty) {
+	        if (qty > 0) {
+	            amount += qty;
+	        }
+	    }
 
 	    // 메뉴 정보를 예쁘게 출력하는 메서드임
 	    public String toString() {
 	        return String.format("[번호 %d] (%s) %s - %,d원 [재고: %d개]", 
 	                no, category, name, price, amount);
 	    }
+
+	
 	}
 
 
