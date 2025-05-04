@@ -1,46 +1,43 @@
 package qq;
-import java.util.Scanner;
 
-public class Main  {
+import qq.Util.*;
+import qq.UserAccount.*;
+
+public class Main {
+//	private static Main main = new Main();
+//	private Main() {}
+//	public static Main getInstance() {
+//		return main;
+//	}
 	public static void main(String[] args) {
-		System.out.println("================== 손님 관리 프로그램 ==================");
-		for(;;) {
-			try {
-				switch (Util.nextInt("1.예약 2.등록 3.조회 4.삭제 5.마이페이지 6.쿠폰발급 7. 종료" )) {
-				case 1:
-					
-					break;
-				case 2:
-		
-					break;
-				case 3:
-					
-					break;
-				case 4:
-					
-					break;
-				case 5:
-					
-					break;
-				case 6:
-					
-					break;
-				case 7:
-					System.out.println("bye~!");
-					break;
-				
-				default:
-					System.out.println("지정된 범위의 숫자만 입력하시오.");
-					break;
-				}
-			}
-			catch (NumberFormatException e) {
-				System.out.println("정확한 숫자를 입력하시오.");
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
+		UserService userServiece = UserService.getInstance();
+		UserAccount ua = userServiece.getLoginUser();
+		if(ua == null) { // 
+			int no = Util.nextInt("1. 회원가입 2. 로그인");
+			switch(no) {
+			case 1:
+				userServiece.register(); break;
+			case 2:
+				userServiece.login(); break;
 			}
 		}
-	}
+		else {			
+			if ( ua.isSeller == false ){
+				System.out.println("로그인 상태");
+				int no = Util.nextInt("1.내정보수정 2. 주문 3. 내정보확인  ");
+				switch(no) {
+				// 로그인 한 후 나와야하는거
+				// 첫번째 페이지에서 다른 두개의 페이지로 갈수 있게
+//			
+				case 1: userServiece.modify(); break;
+				case 2: userServiece.myPage(); break;
+				case 3: userServiece.read(); break;
+				}
+			} else {
+				System.out.println("로그인 상태");
+				int yes = Util.nextInt("1.사업자 2.손님");
+			}
+			
+		}
+	}	
 }
-
