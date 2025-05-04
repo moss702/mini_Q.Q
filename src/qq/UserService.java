@@ -14,10 +14,14 @@ public class UserService {
 	private List<UserAccount> sortedAccounts; // 소비금액순, 회원번호순 정렬 변경을 위한 리스트입니다.
 	
 	private UserAccount loginUser; //로그인 상태 저장          ***** 소비금액 가져오려면 UserAcount가 아니라 Customer 타입으로 가져와야 하나?
-	private static UserService UserService = new UserService();
-	private UserService() {}
 	public UserAccount getLoginUser() {
 		return loginUser;
+	}
+	
+	private static UserService userService = new UserService();
+	private UserService() {}
+	public static UserService getInstance() {
+		return userService;
 	}
 	
 
