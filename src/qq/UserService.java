@@ -13,27 +13,25 @@ public class UserService {
 	private List<UserAccount> accounts = new ArrayList<>();
 	private List<UserAccount> sortedAccounts; // 소비금액순, 회원번호순 정렬 변경을 위한 리스트입니다.
 	
-	private UserAccount loginUser; //로그인 상태 저장          ***** 소비금액 가져오려면 UserAcount가 아니라 Customer 타입으로 가져와야 하나?
 	private static UserService userService = new UserService();
 	private UserService() {}
 	public static UserService getInstance() {
 		return userService;
 	}
-	
 
-	String serchId;
-	
-	
-	{ //임시 데이터 ***** 필요기능!! 회원가입한 Acounts의 데이터파일 생성 및 저장
-		accounts.add(new UserAccount(1, "더미사장", "Admin", "1234", true));
-		accounts.add(new UserAccount(2, "더미손님", "dummy", "1234", false));
-		
-		sortedAccounts = new ArrayList<>(accounts);
-	}
+	private UserAccount loginUser; //로그인 상태 저장          ***** 소비금액 가져오려면 UserAccount가 아니라 Customer 타입으로 가져와야 하나?
 	public UserAccount getLoginUser() {
 		return loginUser;
 	}
 	
+	
+	
+	{ //임시 데이터 ***** 필요기능!! 회원가입한 Accounts의 데이터파일 생성 및 저장
+		accounts.add(new UserAccount(1, "더미사장", "admin", "1234", true));
+		accounts.add(new UserAccount(2, "더미손님", "dummy", "1234", false));
+		
+		sortedAccounts = new ArrayList<>(accounts);
+	}
 	
 //=============================메소드======================
 
@@ -64,14 +62,14 @@ public class UserService {
 	}
 	//-----------------서치_ID
 	public UserAccount findByID(String id) {
-	UserAccount acount = null;
+	UserAccount account = null;
 	for (int i = 0; i < accounts.size(); i++) {
 		if (accounts.get(i).getId() == id) {
-			acount = accounts.get(i);
+			account = accounts.get(i);
 			break;
 		}
 	}	
-	return acount;
+	return account;
 	}
 	//-----------------출력_회원목록
 	public void print(List<UserAccount> UA) {
@@ -113,9 +111,8 @@ public class UserService {
 			if(c.getId().equals(id) && c.getPw().equals(pw)) {
 				flag = true;
 				loginUser = c;
-				serchId = id;
 				System.out.println("[" + loginUser.getName() + "님 환영합니다!]");
-				break;
+				return;
 			}
 		}
 		if(!flag) {
@@ -123,16 +120,17 @@ public class UserService {
 		}
 	}
 	
-	
 	//-----------------내 정보 수정하기(Customer, Seller)
-	public void modify() { //수정가능필드 : ID, PW, name
-		System.out.println("(임시)[내 회원정보 수정](임시)");
+	public void modify() { //수정가능요소 : ID, PW, name
+		System.out.println("=======[내 회원정보 수정]=======");
 		String id = nextLine("[수정]ID > ");
 		UserAccount c = findByID(id);
 		if(c == null) {
-			System.out.printf("[현재 아이디 :\"%s\"를 \"%s\"로 수정하시겠습니까?]", getLoginUser().getId(), id);
-//			getLoginUser().getId() = id; // 이거 왜 안됨니까? T.T))
-			
+			System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
+//			getLoginUser().getId() = id;
+			loginUser.setId(id);
+		} else {
+			System.out.println("[(!)이미 존재하는 ID 입니다.]");
 			return;
 		}
 		
@@ -141,10 +139,10 @@ public class UserService {
 //		String email = nextLine("[수정]e-mail 입력 > ");
 		String pw = nextLine("[수정]PW 입력 > ");
 		
-		c.setName(name);
+		loginUser.setName(name);
 //		c.setTel(tel);
 //		c.setEmail(email);
-		c.setPw(pw);
+		loginUser.setPw(pw);
 	}
 	
 //===============================Customer 전용=====================
@@ -158,6 +156,9 @@ public class UserService {
 //===============================Seller 전용=====================
 	
 	//-----------------회원목록 조회(only Seller)
+	///학생예제에서는 조회,석차순조회 별도 메뉴탭이었지만...
+	/// [1. 뒤로가기] [2. 번호순(소비순)] 번갈아가며 보여주면 UX면에서 좋을것같아요! * 플머님 구현가능한가요?
+
 	public void read() { //회원번호순 조회
 		System.out.println("=======[회원 목록 조회]=======");
 		System.out.println("[회원번호순 정렬]");
@@ -170,14 +171,13 @@ public class UserService {
 	}
 	public void allSpend() { //누적소비금액 높은 순 조회
 		System.out.println("[누적소비순 정렬]"); 
-//		Collections.sort(sortedAcounts, (o1, o2) -> o2.allSpend() - o1.allSpend());
+//		Collections.sort(sortedAccounts, (o1, o2) -> o2.allSpend() - o1.allSpend());
 		switch (nextInt("[1.뒤로가기][2.회원번호순 정렬]")) {
 		case 1 : return;    //어? 이거.. read > allSpend로 접근한건데 여기서 리턴하면 read()로 돌아가나..? main으로 보내고 싶은데?    *******테스트 필요
 		case 2 : read();	//이렇게 가도 되나? ^^)) 궁금하네요 메인 호출해보고 테스트 해보죠? ^^)))
 		}
 	}  
-		///학생예제에서는 조회,석차순조회 별도 메뉴탭이었지만...
-		/// [1. 뒤로가기] [2. 번호순(소비순)] 번갈아가며 보여주면 UX면에서 좋을것같아요!
+
 	
 	//-----------------회원 사업자 여부 변경(only Seller)
 	public void beSeller() { 
