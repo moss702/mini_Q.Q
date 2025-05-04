@@ -13,7 +13,7 @@ public class SMainmenuTest {
 	    	        menuList.add(new SMenu(4, "소주", 4000, 8, "주류"));
 
 	    	        Scanner sc = new Scanner(System.in);
-//	    	        Order order = new Order(); // 주문 관리할 오더 객체
+	    	        Order order = new Order(); // 주문 관리할 오더 객체
 
 	    	        while (true) {
 	    	            System.out.println("\n===== 메뉴판 =====");
@@ -42,10 +42,11 @@ public class SMainmenuTest {
 	    	            System.out.print("수량 입력: ");
 	    	            int qty = sc.nextInt();
 
-//	    	            order.addItem(selected, qty);
+	    	            order.addItem(selected, qty);
 	    	        }
+	    	        order.payment();
 
-//	    	        order.printOrder();
+	    	        order.printOrder();
 	    	        sc.close();
 	    	    }
 	    	}
