@@ -1,5 +1,7 @@
 package qq;
 
+import Membership.MembershipGr;
+
 //UserAcount : Customer, Seller가 동시에 가져야 하는 필드
 public class UserAccount{	
 //=============================필드======================
@@ -61,6 +63,10 @@ public class UserAccount{
 
 	public void setPw(String pw) {
 		this.pw = pw;
-	}	
+	}
+
+	//public MembershipGr getGrade() {
+	//	return null;
+	//}	( 이메서드 필요함 쿠폰만들때
 }
 
