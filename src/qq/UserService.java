@@ -78,6 +78,7 @@ public class UserService {
 	return account;
 	}
 	
+	
 	//-----------------서치_ID (Customer) : (타 클래스에서 Customer 클래스의 누적소비금액 필드 접근을 위한 메서드)
 //	public Customer findByCustomer(String id) {
 //	    for (UserAccount ua : accounts) {
