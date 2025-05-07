@@ -65,8 +65,8 @@ public class UserAccount{
 		this.pw = pw;
 	}
 
-	//public MembershipGr getGrade() {
-	//	return null;
-	//}	( 이메서드 필요함 쿠폰만들때
+	public MembershipGr getGrade() {
+		return null;
+	}	//( 이메서드 필요함 쿠폰만들때
 }
 
