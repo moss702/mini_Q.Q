@@ -57,7 +57,7 @@ public class UserService {
 		}
 		return id;
 	}
-	//-----------------중복체크_ID                                   //Q. 근데 이거 메서드 안에 메서드 써도 되나요? 실행 테스트를 못해봄
+	//-----------------중복체크_ID
 	public String duplId() {
 		String id = this.inputId();
 		UserAccount s = findByID(id);
@@ -98,6 +98,11 @@ public class UserService {
 		UA.forEach(System.out::println);
 		UA.forEach(s -> System.out.println(s));
 	}
+	
+	//-----------------사업자 변경 코드 자동생성   (* 해당 코드 또는 단어는 파일에 저장되어야 함.
+	
+	
+	
 //===============================Customer, Seller 공통=====================
 	//-----------------회원가입(Customer, Seller)
 	public void register() {
@@ -148,6 +153,16 @@ public class UserService {
 	    System.out.println("[로그아웃 되었습니다]");
 	}
 	
+	//-----------------탈퇴/계정삭제(Customer, Seller)
+	public void remove() {
+		System.out.println("=======[탈퇴 서비스]=======");
+		if(!nextConfirm("[정말 탈퇴하시겠습니까?]")) {
+			return;
+		}
+		accounts.remove(loginUser);
+		logout();
+	}
+	
 	//-----------------내 정보 수정하기(Customer, Seller)
 	public void modify() { //수정가능요소 : ID, PW, name
 		System.out.println("=======[내 회원정보 수정]=======");
@@ -180,6 +195,8 @@ public class UserService {
 		System.out.println("(임시) 내 정보 보기 (임시)");
 	}
 	
+	//-----------------사업자 변경 코드 입력하기(only Customer)
+	
 //===============================Seller 전용=====================
 	
 	//-----------------회원목록 조회(only Seller)
@@ -205,7 +222,6 @@ public class UserService {
 		}
 	}  
 
-	
 	//-----------------회원 사업자 여부 변경(only Seller)
 	public void beSeller() { 
 		System.out.println("=======[회원 사업자 여부 변경]=======");
@@ -228,6 +244,10 @@ public class UserService {
 		}
 		// ********** if문 뎁스가 조금 깊죠..? ^^;;;;;; 관련한 코드 수정 피드백 언제나 환영합니다.
 	}
+	
+	//-----------------사업자 변경 코드 확인(only Seller)   * 파일 열람만 하면 됨
+	//아니 근데 이런기능이 있으면 좋겠다~를 할 때가 아님 지금!!! 기본기능들이 안되는데!
+	
 	
 //====================================================UserService class end line
 }
