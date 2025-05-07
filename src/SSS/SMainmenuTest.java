@@ -67,23 +67,23 @@ public class SMainmenuTest {
 	    	            	System.out.println("수량은 1 이상 입력해야 합니다.");
 	    	            	return;
 	    	            }
-	    	            order.addItem(selected, qty);
-	    	            System.out.print("취소할 수량을 입력하세요.: ");
-	    	            int del = sc.nextInt();
-	    	            order.deleteItem(selected, del);
-	    	            order.payment();	    	            
-	    	            order.printBasket();
+//	    	            order.addItem(selected, qty);
+//	    	            System.out.print("취소할 수량을 입력하세요.: ");
+//	    	            int del = sc.nextInt();
+//	    	            order.deleteItem(selected, del);
+//	    	            order.payment();	    	            
+//	    	            order.printBasket();
+//	    	            order.printBill();
 	    	            
 	    	        } catch (InputMismatchException e) {
 	                    System.out.println("숫자만 입력하세요.");
 	                    sc.nextLine(); // 버퍼비우는것
+	                    sc.close();
 	                    
 	                } catch (Exception e) {
 	                    System.out.println("오류가 발생했습니다: " + e.getMessage());
 	                    sc.nextLine(); // 버퍼비우는것
-	    	           
-	    	           
-	    	        sc.close();
+	                    sc.close();
 	    	    }
 	    	}
 	    }
