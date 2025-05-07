@@ -15,12 +15,44 @@ public class OrderService {
 //	UserAccount loginAccount = us.getLoginUser();
 ////	us = cusotmerService.getLoginCustomer(); //로그인한 손님의 주문정보를 변경 추가 등을 하기 위한 객체 호출
 //	
-//	private static OrderService osv = new OrderService();
-//	public static OrderService getInstance() {
-//		return osv;
+	private static final OrderService ORDER_SERVICE = new OrderService();
+	private OrderService() {	}
+	public static OrderService getInstance() {
+		return ORDER_SERVICE;
+	}
+	List<Order> items = new ArrayList<>();// 주문 내역을 담는 용도- 영수증 정도로 생각하면 편하다
+	{
+		
+	}
+//	CRUD (Create Read Update Delete?)
+	
+//	public void findBy(int no) {
+//		
 //	}
-//	List<Order> items = new ArrayList<>();// 장바구니
-//	
+	
+	//장바구니 담기 (Create)
+	
+	public void addItem() {
+		List<Cart> carts = new ArrayList<Cart>();
+		while(true) {
+//			MenuService.getInstance().read(); //메뉴판 불러오기		
+			int no = Util.nextInt("주문하실 메뉴 번호를 입력하세요 > ");
+//			Menu m = MenuService.getInstance().findBy(no); // 번호를 입력받고 입력한 번호에 해당하는 메뉴 가져오기 -- return 값이 존재할 것임
+			int amount = Util.nextInt("담을 수량을 입력하세요 > ");
+//			Cart cart = new Cart(m, amount);
+//			carts.add(cart); // 카트 담기 완료
+			
+			if(Util.nextConfirm("메뉴판으로 돌아가시겠습니까?(y/n) >")) {
+				break;
+			}
+			return;
+		}
+	}
+	
+	public void readItem() {
+//		System.out.println(carts); -- 금액도 같이 나와야함
+	}
+	
 //	public void addItem(SMenu selected, int qty) { //장바구니 담기
 //		Order or = Order.getInstance();
 //		if(selected.getAmount() == 0) {
