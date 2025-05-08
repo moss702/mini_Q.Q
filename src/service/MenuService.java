@@ -6,7 +6,6 @@ import Domain.Menu;
 
 public class MenuService {
 	private static final MenuService MENU_SERVICE = new MenuService();
-	private static final String Integer = null;
 	private Scanner sc = new Scanner(System.in);
 	
 	private MenuService() {	}
@@ -37,56 +36,55 @@ public class MenuService {
 	
 	// 메뉴 등록
 	
-//		public void register() {
-//			System.out.println(" 메뉴 등록");
-//
-//			System.out.print("메뉴 번호 > ");
-//		
-//			int no = Integer.parseInt(sc.nextLine());
-//           
-//			Menu m = findBy(no);
-//			if (m != null) {
-//				System.out.println("중복된 메뉴 번호가 존재합니다.");
-//				return;
-//			}
-//			System.out.print("메뉴 이름 > ");
-//			String name = sc.nextLine();
-//
-//			System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
-//			int category = Integer.parseInt(sc.nextLine());
-//
-//			System.out.print("가격 >");
-//			int price = Integer.parseInt(sc.nextLine());
-//			Menu newMenu = new Menu(no, name, category, price);
-//			menus.add(newMenu);
-//			System.out.println("메뉴가 등록되었습니다.");
-//		}
-//	// 메뉴수정
-//		public void modify() {
-//			System.out.println("메뉴 수정");
-//
-//			System.out.print("수정할 메뉴 번호 > ");
-//			int no = Integer.parseInt(sc.nextLine());
-//
-//			Menu m = findBy(no);
-//			if (m == null) {
-//				System.out.println("해당 번호의 메뉴가 존재하지 않습니다.");
-//				return;
-//			}
-//
-//			System.out.print("새 이름 > ");
-//			m.name = sc.nextLine();
-//			
-//			System.out.print("새 카테고리 (0:메인, 1:사이드, 2:주류) > ");
-//			m.category = Integer.parseInt(sc.nextLine());
-//			
-//			System.out.print("새 가격 > ");
-//			m.price = Integer.parseInt(sc.nextLine());
-//
-//			System.out.println("메뉴가 수정되었습니다.");
-//			
-//		}
+		public void register() {
+			System.out.println(" 메뉴 등록");
+
+			System.out.print("메뉴 번호 > ");
 		
+			int no = Integer.parseInt(sc.nextLine());
+           
+			Menu m = findBy(no);
+			if (m != null) {
+				System.out.println("중복된 메뉴 번호가 존재합니다.");
+				return;
+			}
+			System.out.print("메뉴 이름 > ");
+			String name = sc.nextLine();
+
+			System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
+			int category = Integer.parseInt(sc.nextLine());
+
+			System.out.print("가격 >");
+			int price = Integer.parseInt(sc.nextLine());
+			Menu newMenu = new Menu(no, name, category, price);
+			menus.add(newMenu);
+			System.out.println("메뉴가 등록되었습니다.");
+		}
+	// 메뉴수정
+		public void modify() {
+			System.out.println("메뉴 수정");
+
+			System.out.print("수정할 메뉴 번호 > ");
+			int no = Integer.parseInt(sc.nextLine());
+
+			Menu m = findBy(no);
+			if (m == null) {
+				System.out.println("해당 번호의 메뉴가 존재하지 않습니다.");
+				return;
+			}
+
+			System.out.print("새 이름 > ");
+			m.setName(sc.nextLine());
+
+			System.out.print("새 카테고리 (0:메인, 1:사이드, 2:주류) > ");
+			m.setCategory(Integer.parseInt(sc.nextLine()));
+
+			System.out.print("새 가격 > ");
+			m.setPrice(Integer.parseInt(sc.nextLine()));
+			
+			System.out.println("메뉴가 수정되었습니다.");
+		}
+
 
 //	// 메뉴삭제
 //		public void remove() {
