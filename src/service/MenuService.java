@@ -131,20 +131,17 @@ public class MenuService {
 //		}
 //	
 //	// 메뉴조회
-//	public void read() {
-//		menus.forEach(System.out::println);
-//	}
-//	
-//	public Menu findBy(int no) {
-//		for(Menu m : menus) {
-//			if(no == m.no) {
-//				return m;
-//			}
-//		}
-//		return null;
-//	}
-	private Menu findBy(int no) {
-		// TODO Auto-generated method stub
+	public void read() {
+		menus.forEach(System.out::println);
+	}
+	
+	public Menu findBy(int no) {
+		for(Menu m : menus) {
+			if(no == m.no) {
+				return m;
+			}
+		}
 		return null;
 	}
+
 }
