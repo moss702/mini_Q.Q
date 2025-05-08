@@ -143,5 +143,11 @@ public class MenuService {
 		}
 		return null;
 	}
-
+	public void rad() {
+		System.out.println("조회가능");
+		print(menus);
+	}
+	private void print(List<Menu> menus2) {
+		
+	}
 }
