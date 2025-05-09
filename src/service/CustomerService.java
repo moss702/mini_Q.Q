@@ -15,7 +15,7 @@ public class CustomerService {
 	
 	List<Customer> customers;
 	{
-		customers = UserService.getInstance().getCustomers();
+	//	customers = UserService.getInstance().getCustomers();
 	}
 	
 	// 메뉴추가
