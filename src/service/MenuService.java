@@ -1,22 +1,23 @@
 package service;
-import java.util.ArrayList;
-import java.util.List;
-
 import domain.Menu;
-
+import java.util.Collections;
 import java.util.*;
 
 public class MenuService {
+	// 싱글톤
 	private static final MenuService MENU_SERVICE = new MenuService();
 	private Scanner sc = new Scanner(System.in);
 	
+	//메뉴리스트생성
+//	private List<Menu> sortedMenus;
+	// MenuService생성자
 	private MenuService() {	}
 	public static MenuService getInstance() {
 		return MENU_SERVICE;
 		 
 	}
 	
-	List<Menu> menus = new ArrayList<Menu>();
+	private List<Menu> menus = new ArrayList<Menu>();
 	{
 		menus.add(new Menu(1, "차돌볶음", 0, 20_000));
 		menus.add(new Menu(2, "두부조림", 0, 12_000));
@@ -36,6 +37,9 @@ public class MenuService {
 	}
 	// CRUD
 	
+//	void rank1() {	
+//		sortedMenus = new ArrayList<Menu>(menus);
+//	}
 	// 메뉴 등록
 	
 		public void register() {
@@ -58,8 +62,9 @@ public class MenuService {
 			
 			System.out.print("가격 >");
 			int price = Integer.parseInt(sc.nextLine());
-			Menu newMenu = new Menu(no, name, category, price);
-			menus.add(newMenu);
+			
+			Menu m1 = new Menu(no, name, category, price);
+			menus.add(m1);
 			System.out.println("메뉴가 등록되었습니다.");
 		}
 	// 메뉴수정
@@ -134,21 +139,33 @@ public class MenuService {
 //	
 //	// 메뉴조회
 	public void read() {
+		System.out.println("메뉴조회");
 		menus.forEach(System.out::println);
+		
 	}
-	
 	public Menu findBy(int no) {
 		for(Menu m : menus) {
-			if(no == m.no) {
+			if(no == m.getNo()) {
 				return m;
+				
 			}
 		}
 		return null;
 	}
-	public void rad() {
-		System.out.println("조회가능");
-		print(menus);
+	
+	
+	public void readOrder() {
+	System.out.println("메뉴순서조회기능");
+	System.out.println(menus);
 	}
-	private void print(List<Menu> menus2) {
+	
+	
+	public void print(List<Menu> mes) {
+		mes.forEach(s -> System.out.println(s));
 	}
+	
+	public void rank() {
+		Collections.sort(menus,(o1, o2) -> o2.getCategory() - o1.getCategory());
+	}
+	
 }
