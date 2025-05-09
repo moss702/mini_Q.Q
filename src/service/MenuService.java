@@ -140,6 +140,7 @@ public class MenuService {
 //	// 메뉴조회
 	public void read() {
 		System.out.println("메뉴조회");
+		       	print(menus);
 		menus.forEach(System.out::println);
 		
 	}
@@ -156,12 +157,12 @@ public class MenuService {
 	
 	public void readOrder() {
 	System.out.println("메뉴순서조회기능");
-	System.out.println(menus);
+	        print(menus);
 	}
 	
 	
-	public void print(List<Menu> mes) {
-		mes.forEach(s -> System.out.println(s));
+	public void print(List<Menu> menus) {
+		menus.forEach(s -> System.out.println(s));
 	}
 	
 	public void rank() {

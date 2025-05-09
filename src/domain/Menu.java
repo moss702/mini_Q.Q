@@ -34,6 +34,6 @@ public class Menu {
 
 	@Override
 	public String toString() {
-		return "Menu [no=" + no + ", name=" + name + ", category=" + category + ", price=" + price + "]";
+		return "Menu [no=" + no + ", name=" + name + ", category=" + (category == 0 ? "메인메뉴" : (category == 1 ? "사이드메뉴" : "주류")) + ", price=" + price + "]";
 	}
 }
