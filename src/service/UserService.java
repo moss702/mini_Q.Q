@@ -59,11 +59,27 @@ public class UserService {
 	
 	// 회원가입
 //	public void register(User user) {
+//		System.out.println("=======[회원가입 정보 입력]=======");
+//		//----ID
+//		String id = null;
+//		inputId();
+//		duplId();
+//
+//		//----PW
+//		String pw = nextLine("[비밀번호를 입력해주세요] > ");
+//		
+//		//----이름
+//		String name = inputName();
+//		
+//		//----회원번호(자동증가)
+//		int no = accounts.get(accounts.size() + 1).getNo();
+//		
+//		//----회원리스트에 저장 
+//		//최초 회원가입시 사업자여부 F (Seller 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부 변경)
+//		UserAccount UA = new UserAccount(no, name , id, pw, false);
+//		accounts.add(UA);
 //		users.add(user);
 //	}
-	public void register() {
-		System.out.println("=======[회원가입 정보 입력]=======");
-	}
 	
 	// 수정
 	public void modify(User user) {
@@ -107,7 +123,7 @@ public class UserService {
 				int input = nextInt("1.회원가입 2.로그인");
 				switch (input) {
 					case 1 : {
-						UserService.getInstance().register();
+//						UserService.getInstance().register();
 						break;
 					}
 					case 2 : {
