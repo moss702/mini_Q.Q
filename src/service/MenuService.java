@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.*;
 
 public class MenuService {
+		
+	
+		
+	
 	// 싱글톤
 	private static final MenuService MENU_SERVICE = new MenuService();
 	private Scanner sc = new Scanner(System.in);
@@ -141,7 +145,7 @@ public class MenuService {
 	public void read() {
 		System.out.println("메뉴조회");
 		       	print(menus);
-		menus.forEach(System.out::println);
+		
 		
 	}
 	public Menu findBy(int no) {
@@ -170,3 +174,4 @@ public class MenuService {
 	}
 	
 }
+
