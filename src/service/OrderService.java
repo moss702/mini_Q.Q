@@ -16,7 +16,7 @@ public class OrderService {
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
 	}
-	List<Order> orders = new ArrayList<Order>(); // 영수증 정보
+	private List<Order> orders = new ArrayList<Order>(); // 영수증 정보
 	{
 		
 	}
@@ -47,13 +47,18 @@ public class OrderService {
 			System.out.println("결제가 완료되었습니다.");
 			Order order = new Order(null, carts, sales); // null에는 login된 customer를 가져와야 함
 			orders.add(order);
-			order.pay = true;
+//			order.pay = true;
 			return;
 		}
 	}
-	
-	
-	// 결제취소
+	// 결제 취소
+	public void cancle() {
+		System.out.println("취소하실 금액? 메뉴? 를 선택하여주세요." );
+	}
 	
 	// 결제 조회
+	
+	public void getPayment() {
+		
+	}
 }

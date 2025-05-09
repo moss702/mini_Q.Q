@@ -3,11 +3,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-	Customer customer;
-	List<Cart> cart;
-	Date date = new Date();
-	public boolean pay; // false 주문만 true 결제완료 상태
-	int sales;
+	private Customer customer;
+	private List<Cart> cart;
+	private Date date = new Date();
+	private boolean pay; // false 주문만 true 결제완료 상태
+	private int sales;
 	
 	public Order() {
 	}

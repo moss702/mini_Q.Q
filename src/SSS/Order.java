@@ -15,15 +15,15 @@ public class Order {
 //	Customer customer = new Customer();
 	List<Cart> cart;
 	Date date = new Date();
-	public boolean pay; // 지불되기전 false, 지불 완료 true
-	int sales;
+	private boolean pay; // 지불되기전 false, 지불 완료 true
+	private int sales; // 결제 비용
 	 
-//	private static Order order = new Order();
-//	public static Order getInstance() {
-//		return order;
-//	}
-	public Order() {
+	private static Order order = new Order();
+	public static Order getInstance() {
+		return order;
 	}
+//	public Order() {
+//	}
 	
 //	public Order(Customer customer, List<Cart> cart, int sales) {
 //		this.customer = customer;
