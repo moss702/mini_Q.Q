@@ -2,10 +2,10 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domain.Admin;
-import Domain.Customer;
-import Domain.Menu;
-import Domain.User;
+import domain.Admin;
+import domain.Customer;
+import domain.Menu;
+import domain.User;
 
 public class UserService {
 

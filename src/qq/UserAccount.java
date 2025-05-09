@@ -1,7 +1,7 @@
 package qq;
 
-import Membership.Coupon;
-import Membership.MembershipGr;
+import membership.Coupon;
+import membership.MembershipGr;
 
 //UserAcount : Customer, Seller가 동시에 가져야 하는 필드
 public class UserAccount{	

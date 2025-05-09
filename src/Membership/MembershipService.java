@@ -1,4 +1,4 @@
-package Membership;
+package membership;
 
 import qq.UserAccount;
 

@@ -1,4 +1,4 @@
-package Domain;
+package domain;
 
 public class Cart extends Menu{
 	private int amount;
