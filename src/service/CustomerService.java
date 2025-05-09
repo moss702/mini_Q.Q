@@ -2,8 +2,8 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domain.Customer;
-import Domain.Menu;
+import domain.Customer;
+import domain.Menu;
 
 public class CustomerService {
 

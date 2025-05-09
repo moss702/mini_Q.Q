@@ -1,8 +1,10 @@
 package service;
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.Menu;
+
 import java.util.*;
-import Domain.Menu;
 
 public class MenuService {
 	private static final MenuService MENU_SERVICE = new MenuService();
@@ -53,7 +55,7 @@ public class MenuService {
 
 			System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
 			int category = Integer.parseInt(sc.nextLine());
-
+			
 			System.out.print("가격 >");
 			int price = Integer.parseInt(sc.nextLine());
 			Menu newMenu = new Menu(no, name, category, price);
@@ -148,6 +150,5 @@ public class MenuService {
 		print(menus);
 	}
 	private void print(List<Menu> menus2) {
-		
 	}
 }

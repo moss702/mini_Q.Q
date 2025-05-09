@@ -2,10 +2,10 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domain.Cart;
-import Domain.Customer;
-import Domain.Menu;
-import Domain.Order;
+import domain.Cart;
+import domain.Customer;
+import domain.Menu;
+import domain.Order;
 public class OrderService {
 	private static final OrderService ORDER_SERVICE = new OrderService();
 	private OrderService() {	}
