@@ -1,11 +1,11 @@
 package domain;
 
 public class Menu {
-	public int no;
-	public String name;
-	public int category; // 0 메인메뉴, 1 사이드,  2 주류
-	public int price;
-	boolean sale = true;
+	private int no;
+	private String name;
+	private int category; // 0 메인메뉴, 1 사이드,  2 주류
+	private int price;  //가격
+	private boolean sale = true;
 	
 	public Menu() {	}
 	public Menu(int no, String name, int category, int price) {
@@ -34,6 +34,6 @@ public class Menu {
 
 	@Override
 	public String toString() {
-		return "Menu [no=" + no + ", name=" + name + ", category=" + category + ", price=" + price + "]";
+		return "Menu [no=" + no + ", name=" + name + ", category=" + (category == 0 ? "메인메뉴" : (category == 1 ? "사이드메뉴" : "주류")) + ", price=" + price + "]";
 	}
 }
