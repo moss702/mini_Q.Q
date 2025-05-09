@@ -3,11 +3,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-	Customer customer;
-	List<Cart> cart;
-	Date date = new Date();
-	public boolean pay; // false 주문만 true 결제완료 상태
-	int sales;
+	private Customer customer;
+	private List<Cart> cart;
+	private Date date = new Date();
+	private boolean pay; // false 주문만 true 결제완료 상태
+	private int sales;
 	
 	public Order() {
 	}
@@ -18,11 +18,49 @@ public class Order {
 		this.sales = sales;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public List<Cart> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Cart> cart) {
+		this.cart = cart;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public boolean isPay() {
+		return pay;
+	}
+
+	public void setPay(boolean pay) {
+		this.pay = pay;
+	}
+
+	public int getSales() {
+		return sales;
+	}
+
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
+		
 	@Override
 	public String toString() {
-		return "Order [customer=" + customer + ", cart=" + cart + ", date=" + date + ", pay=" + pay + ", sales=" + sales
+		return "주문내역 [customer=" + customer + ", cart=" + cart + ", date=" + date + ", pay=" + pay + ", sales=" + sales
 				+ "]";
 	}
-	
-
 }
