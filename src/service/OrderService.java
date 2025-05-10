@@ -1,5 +1,6 @@
 package service;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import domain.Cart;
@@ -12,7 +13,7 @@ import utils.QqUtils;
 public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
-	private CustomerService cu = CustomerService.getInstance();
+	private CustomerService cu = CustomerService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
 	private OrderService() {	}
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
@@ -46,10 +47,12 @@ public class OrderService {
 			System.out.println("결제하실 금액은 " + sales + "원 입니다."); 
 			QqUtils.nextInt(sales + "원을 입력하여주세요. > ");
 			System.out.println("결제가 완료되었습니다.");
-//			private Customer lc = cu.loginCustomer;
-			Order order = new Order(null, carts, sales); // null에는 login된 customer 즉 lc를 가져와야 함
+			Customer kim = new Customer(); // 여기는 임시용
+			Order order = new Order(kim, carts, sales); // null 대신 lc를 대입해야 함
+			order.setDate(new Date());
 			orders.add(order);
 			order.setPay(true);
+			System.out.println(orders);  
 			return;
 		}
 	}
@@ -62,16 +65,22 @@ public class OrderService {
 	}
 	
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
-	public Order findByPayment(User u) { 
+	public Order findByPayment(Customer c) { //loginCustomer를 집어 넣는다 개인의 주문금액 조회, 쿠폰도 여기서 호출?/ 관리자페이지에서 손님 리스트에 손님객체 대입
 		for (Order o : orders) {
-			if(u == o.getCustomer()) {
+			if(c == o.getCustomer()) {
 				return o;
 			}
 		}
 		return null; 
 	}
 	
+	public Order findBySales () { // 매출 조회 날짜/메뉴/수량/금액 
+		return null;
+	}
+	
+	
 	public static void main(String[] args) {// 구동 연습 메서드
+		System.out.println(new Date());
 		OrderService order = ORDER_SERVICE.getInstance();
 		while(true) {
 			int no = QqUtils.nextInt(" 1. 주문하기, 2. 결제 취소하기 3. findBy점검 4. 종료");
