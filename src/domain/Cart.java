@@ -22,7 +22,7 @@ public class Cart extends Menu{
 
 	@Override
 	public String toString() {
-		return " [메뉴=" + getName() + "]" + " [가격 = " + getPrice() + "]" + " [수량=" + amount + "]" + " [소계=" + getPrice() * amount + "]" ;
+		return " 메뉴번호 : " + getNo()  + ", 메뉴명 : " + getName() +  ", 가격 = " + getPrice() + "원, " + amount + "개, " + "소계 = " + getPrice() * amount + "원" ;
 	}
 
 	

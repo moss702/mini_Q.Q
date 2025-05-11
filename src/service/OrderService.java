@@ -20,8 +20,9 @@ public class OrderService {
 	}
 	private List<Order> orders = new ArrayList<Order>(); // 주문 내역 집합
 	private List<Cart> carts = new ArrayList<>(); // 장바구니
-	static Customer kim = new Customer(); // 로그인 커스토머 담기 전 임시
+	static Customer kim = new Customer(1, "김찬", "kim@123", "kim", "1234" ); // 로그인 커스토머 담기 전 임시
 	{
+		
 		
 	}
 	// CRUD
@@ -57,8 +58,8 @@ public class OrderService {
 			}
 			List<Cart> tmp = new ArrayList<>();
 			tmp.addAll(carts);
-			Order order = new Order(kim, tmp, sales); // kim 대신 로그인한 손님을 대입해야 함
-			order.setDate(new Date());
+			int num = 1;
+			Order order = new Order(num++, kim, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
 			orders.add(order);
 			order.setPay(true);
 			System.out.println("결제가 완료되었습니다.");
@@ -68,12 +69,38 @@ public class OrderService {
 		}
 	}
 	// 결제 취소
-	public void cancle() {
-		findByPayment(kim);
-		int no = QqUtils.nextInt("결제를 취소하실 메뉴 번호를 선택하여 주십시오. > ");
-		
-		int amount = QqUtils.nextInt("결제를 취소하실 수량을 선택하여 주십시오. > ");
-		
+	public void cancle() { // 취소 했을 때의 시간도 반영되어야 한다.
+		List<Order> tmp = findByPayment(kim);// loginCustomer를 집어넣어야 한다.
+		int no = QqUtils.nextInt("결제를 취소하실 주문번호를 선택하여 주십시오. > ");
+		Order order = new Order();
+		for(Order o : tmp) {
+			if(o.getNum() == no) {
+				order = o;
+				break;
+			}
+		}
+		int menu = QqUtils.nextInt("결제를 취소하실 메뉴 번호를 선택하여 주십시오. > ");
+		for(Cart c : order.getCart()) {
+			if(c.getNo() != menu) {
+				System.out.println("올바른 메뉴 번호를 입력하여주세요.");
+				return;
+			}
+			int amount = QqUtils.nextInt("결제를 취소하실 수량을 선택하여 주십시오. > ");
+			if(c.getAmount() >= amount) {						
+				c.setAmount(c.getAmount() - amount);
+				order.setSales(order.getSales() - c.getPrice() * c.getAmount());
+				order.setDate(new Date());
+				if(c.getAmount() == 0) {
+					order.getCart().remove(c);
+				}
+				System.out.println(findByPayment(kim));
+				return;
+			}
+			else {
+				System.out.println("주문하신 수량값 이하를 입력하여 주세요.");
+				return;
+			}
+		}			
 	}
 	
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련

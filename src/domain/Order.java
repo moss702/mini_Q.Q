@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
+	private int num; // 주문번호가 있어야함
 	private Customer customer;
 	private List<Cart> cart;
 	private Date date = new Date();
@@ -11,11 +12,19 @@ public class Order {
 	
 	public Order() {
 	}
-
+	
 	public Order(Customer customer, List<Cart> cart, int sales) {
 		this.customer = customer;
 		this.cart = cart;
 		this.sales = sales;
+	}
+	
+	public Order(int num, Customer customer, List<Cart> cart, int sales, Date date) {
+		this.num = num;
+		this.customer = customer;
+		this.cart = cart;
+		this.sales = sales;
+		this.date = date;
 	}
 
 	public Customer getCustomer() {
@@ -58,9 +67,15 @@ public class Order {
 		this.sales = sales;
 	}
 		
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 	@Override
 	public String toString() {
-		return "주문내역 [손님 정보 : " + customer.getId() + ", 주문내역 : " + cart + ", 결제 금액 : " + sales +  "원, 결제 시간 : " + date
-				+ "]";
+		return "주문내역 " + "주문 번호 : " + num +  ", 손님 정보 : " + customer.getId() + ", 주문내역 : " + cart + ", 결제 금액 : " + sales +  "원, 결제 시간 : " + date;
 	}
 }
