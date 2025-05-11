@@ -19,4 +19,11 @@ public class Cart extends Menu{
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
+	@Override
+	public String toString() {
+		return " [메뉴=" + getName() + "]" + " [가격 = " + getPrice() + "]" + " [수량=" + amount + "]" + " [소계=" + getPrice() * amount + "]" ;
+	}
+
+	
 }
