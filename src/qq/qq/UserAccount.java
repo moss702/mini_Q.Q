@@ -8,13 +8,13 @@ public class UserAccount{
 //=============================필드======================
 	private int no;		 //회원번호
 	private String name; //회원이름
-	private String id;	 //회원ID
-	private String pw;	 //회원PW
+	String id;	 //회원ID
+	String pw;	 //회원PW
 
 	public boolean isSeller = false; //사업자 여부
 	
 //=============================생성자======================
-	public UserAccount() { }
+	public UserAccount(String id2, String password, boolean isSeller2) { }
 
 	public UserAccount(int no, String name, String id, String pw, boolean isSeller) {
 		this.no = no;

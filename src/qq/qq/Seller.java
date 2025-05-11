@@ -2,9 +2,13 @@ package qq;
 
 public class Seller extends UserAccount {
 	
-	public Seller() {
+	private static String id;
+	private static int no;
+	private static String name;
+
+	public Seller(boolean isSeller) {
 		// TODO Auto-generated constructor stub
-		super();
+		super(no, id, name, id, isSeller);
 	}
 
 	public Seller(int no, String name, String id, String pw, boolean isSeller) {
