@@ -21,14 +21,15 @@ public class OrderService {
 	private List<Order> orders = new ArrayList<Order>(); // 주문 내역 집합
 	private List<Cart> carts = new ArrayList<>(); // 장바구니
 	static Customer kim = new Customer(1, "김찬", "kim@123", "kim", "1234" ); // 로그인 커스토머 담기 전 임시
+	int num ;
 	{
 		
 		
 	}
 	// CRUD
 	
-	// 주문하기 (장바구니 담기+주문하기)
-	public void makeOrder() {
+	// 주문하기 (장바구니 담기)
+	public void getItem() {
 		while(true) {
 			MenuService.getInstance().read();
 			// 상품 번호를 입력받고
@@ -38,69 +39,92 @@ public class OrderService {
 			int amount = QqUtils.nextInt("담을 수량을 입력하세요 > ");
 			Cart cart = new Cart(m, amount);
 			carts.add(cart);
-			int sales = 0;
-			for(Cart c : carts) {
-				sales += c.getAmount() * c.getPrice();
-			}
 			if(QqUtils.nextConfirm("메뉴판으로 돌아가시겠습니까?(y/n) > ")) {
 				continue;
-			}
-//			결제 프로세스 진행
-
-			System.out.println("주문하신 메뉴는 " + carts + " 입니다.");			
-			System.out.println("결제하실 금액은 " + sales + "원 입니다."); 
-			if(sales != QqUtils.nextInt(sales + "원을 입력하여주세요. > ")) {
-				System.out.println("올바른 값을 입력하여 주십시오.");
-				System.out.println("주문화면으로 돌아갑니다.");
-				carts.clear();
-				cart = null;
-				return;
-			}
-			List<Cart> tmp = new ArrayList<>();
-			tmp.addAll(carts);
-			int num = 1;
-			Order order = new Order(num++, kim, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
-			orders.add(order);
-			order.setPay(true);
-			System.out.println("결제가 완료되었습니다.");
-			System.out.println(orders);  
+			} 
+			System.out.println("주문화면으로 돌아갑니다.");
+			break;	
+		}
+	}
+	
+	public void deleteItem() {
+		
+	}
+	
+	//결제하기 
+	public void pay() {
+		System.out.println("주문하신 메뉴는 " + carts + " 입니다.");
+		int sales = 0;
+		for(Cart c : carts) {
+			sales += c.getPrice() * c.getAmount();
+		}
+		System.out.println("결제하실 금액은 " + sales + "원 입니다."); 
+		if(sales != QqUtils.nextInt(sales + "원을 입력하여주세요. > ")) {
+			System.out.println("올바른 값을 입력하여 주십시오.");
+			System.out.println("주문화면으로 돌아갑니다.");
 			carts.clear();
 			return;
 		}
+		List<Cart> tmp = new ArrayList<>();
+		tmp.addAll(carts);
+		
+		Order order = new Order(++num, kim, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
+		orders.add(order);
+		order.setPay(true);
+		System.out.println("결제가 완료되었습니다.");
+		System.out.println(orders);  
+		carts.clear();
+		return;
 	}
 	// 결제 취소
 	public void cancle() { // 취소 했을 때의 시간도 반영되어야 한다.
 		List<Order> tmp = findByPayment(kim);// loginCustomer를 집어넣어야 한다.
 		int no = QqUtils.nextInt("결제를 취소하실 주문번호를 선택하여 주십시오. > ");
 		Order order = new Order();
+		boolean res = false;
 		for(Order o : tmp) {
 			if(o.getNum() == no) {
 				order = o;
+				res = true;
 				break;
 			}
 		}
+		if(!res) {
+			System.out.println("올바른 주문번호를 입력하세요.");
+			return;			
+		}
 		int menu = QqUtils.nextInt("결제를 취소하실 메뉴 번호를 선택하여 주십시오. > ");
+		Cart car = new Cart();
+		res = false;
 		for(Cart c : order.getCart()) {
-			if(c.getNo() != menu) {
-				System.out.println("올바른 메뉴 번호를 입력하여주세요.");
-				return;
+			if(c.getNo() == menu) {
+				car = c;
+				res = true;
+				break;
 			}
-			int amount = QqUtils.nextInt("결제를 취소하실 수량을 선택하여 주십시오. > ");
-			if(c.getAmount() >= amount) {						
-				c.setAmount(c.getAmount() - amount);
-				order.setSales(order.getSales() - c.getPrice() * c.getAmount());
-				order.setDate(new Date());
-				if(c.getAmount() == 0) {
-					order.getCart().remove(c);
-				}
-				System.out.println(findByPayment(kim));
-				return;
+		}	
+		if(!res) {
+			System.out.println("올바른 메뉴번호를 입력하세요.");
+			return;			
+		}
+		
+		int amount = QqUtils.nextInt("결제를 취소하실 수량을 선택하여 주십시오. > ");
+		res = false;
+		if(car.getAmount() >= amount) {	
+			res = true;
+			order.setSales(order.getSales() - car.getPrice() * amount);
+			car.setAmount(car.getAmount() - amount);
+			order.setDate(new Date());
+			if(car.getAmount() == 0) {
+				order.getCart().remove(car);
 			}
-			else {
-				System.out.println("주문하신 수량값 이하를 입력하여 주세요.");
-				return;
-			}
-		}			
+			System.out.println(findByPayment(kim));
+			return;
+		}
+		if(!res) {
+			System.out.println("올바른 수량을 입력하여주세요.");
+			return;
+		}
 	}
 	
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
@@ -124,18 +148,24 @@ public class OrderService {
 		System.out.println(new Date());
 		OrderService order = ORDER_SERVICE.getInstance();
 		while(true) {
-			int no = QqUtils.nextInt(" 1. 주문하기, 2. 결제 취소하기 3. 매출점검  4. 주문내역 점검(손님기준) 5. 종료");
+			int no = QqUtils.nextInt(" 1. 장바구니담기,  2. 장바구니 빼기 3. 결제하기 4. 결제 취소하기 5. 매출점검  6. 주문내역 점검(손님기준) 7. 종료");
 			switch (no) {
-			case 1 :  order.makeOrder();
+			case 1 :  order.getItem();
 			break;
 			
-			case 2 : order.cancle();
+			case 2 : order.deleteItem();
 			break;
 			
-			case 3 : order.findBySales();
+			case 3 : order.pay();;
 			break;
 			
-			case 4 : System.out.println(order.findByPayment(kim));
+			case 4 : order.cancle(); 
+			break;
+			
+			case 5 : order.findBySales();
+			break;
+			
+			case 6 : System.out.println(order.findByPayment(kim));
 			break;
 			}
 		}
