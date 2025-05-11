@@ -1,4 +1,4 @@
-package qq;
+package qq.qq;
 
 //userServiece : 회원가입, 로그인, 로그아웃, 내정보수정
 //Customer 내정보조회

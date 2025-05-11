@@ -1,4 +1,4 @@
-package qq;
+package qq.qq;
 
 import membership.Coupon;
 import membership.MembershipGr;

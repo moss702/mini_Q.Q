@@ -138,8 +138,7 @@ public class MenuService {
 		
 		
 	}
-//메뉴 번호를 입력받아, menus 리스트 안에서 번호가 일치하는 메뉴를 찾아 반환
-//없으면 null 반환
+//메뉴 번호를 입력받아, menus 리스트 안에서 번호가 일치하는 메뉴를 찾아 반환 없으면 null 반환
 	public Menu findBy(int no) {
 		for(Menu m : menus) {
 			if(no == m.getNo()) {
@@ -169,6 +168,25 @@ public class MenuService {
 	
 	
 	
+	// 가격 범위로 메뉴 검색할수있는기능
+	public void PriceRange() {
+	    System.out.print("최소 가격 > ");
+	    int min = Integer.parseInt(sc.nextLine());
+	    //sc.nextLine()사용자가 입력한 값을 문자열로 받아와서Integer.parseInt 그 문자열을 숫자로 바꿈
+
+	    System.out.print("최대 가격 > ");
+	    int max = Integer.parseInt(sc.nextLine());
+
+	    for (Menu m : menus) {
+	        if (m.getPrice() >= min && m.getPrice() <= max) {
+	            System.out.println(m);
+	        }
+	    }
+	}
+
+	
+	
+	
 	
 	//선택한메뉴 가격 합계할수있는것
 	public void totalMenuPrice() {
@@ -176,17 +194,17 @@ public class MenuService {
 	    System.out.println("메뉴 번호를 쉼표로 구분해서 입력하세요");
 	    String input = sc.nextLine();//사용자로부터 입력을받고 input 변수에는 문자열이 저장
 	    
-	    String[] parts = input.split(",");//입력된 문자열을 쉼표(,)기준으로 잘라서 배열로 만듬 1,3,5 → [1, 3, 5]
-	    int totalPrice = 0;//선택된 메뉴들의 가격을 더해서 저장할 변수입니다. 처음엔 0으로 시작
+	    String[] parts = input.split(",");//입력된 문자열을 쉼표 , 기준으로 잘라서 배열로 만듬 1,3,5 > [1,3,5]
+	    int totalPrice = 0;//선택된 메뉴들의 가격을 더해서 저장할 변수 처음엔 0으로 시작
 
-	    for (String part : parts) {  //위에서 나눈 메뉴 번호들 1, 3, 5을 하나씩 꺼내서 반복 part는 각 반복에서 1 → 3 → 5식으로 순서대로 바뀜
+	    for (String part : parts) {  //위에서 나눈 메뉴 번호들 1,3,5을 하나씩 꺼내서 반복 part는 각 반복에서 1 > 3 > 5식으로 순서대로 바뀜
 	        try {
-	            int no = Integer.parseInt(part.trim());//trim()은 1처럼 공백이 있을 경우 없애줌 → 1
-	                                                   //Integer.parseInt(...)로 1을 숫자 1로 바꿈
-                                              //만약 숫자로 바꿀 수 없는 글자면 예외가 발생함아 래에서 catch 처리
+	            int no = Integer.parseInt(part.trim());//trim()은 1처럼 공백이 있을 경우 없애줌 > 1
+	                                                   //Integer.parseInt()로 1을 숫자 1로 바꿈
+                                              //만약 숫자로 바꿀 수 없는 글자면 예외가 발생 아래에서 catch 처리
 	            
 	            Menu m = findBy(no);  //findBy(int no) 메서드를 사용해서 입력한 메뉴 번호와 같은 번호를 가진 Menu 객체를 찾아옴
-                                  //예:no가 3이면 메뉴 리스트 중 번호가 3인 Menu 객체를 찾아오는데 없다면 null이됨
+                                  //no가 3이면 메뉴 리스트 중 번호가 3인 Menu 객체를 찾아오는데 없다면 null이됨
 	            if (m != null) {
 	                totalPrice += m.getPrice();  //메뉴가 존재하면 getPrice로 해당 메뉴의 가격을 가져와서 totalPrice에 누적합산
 	            } else {
@@ -213,7 +231,8 @@ public class MenuService {
             System.out.println("3. 메뉴 수정");
             System.out.println("4. 메뉴 삭제");
             System.out.println("5. 메뉴 가격합산");
-            System.out.println("6. 종료");
+            System.out.println("6. 메뉴 가격범위로 검색");
+            System.out.println("7. 종료");
             System.out.print("선택 > ");
             
             int choice = Integer.parseInt(scanner.nextLine());
@@ -232,6 +251,8 @@ public class MenuService {
                 case 5:
                 	menuService.totalMenuPrice();
                 case 6:
+                	menuService.PriceRange();
+                case 7:
                     System.out.println("프로그램 종료.");
                     return; 
                 default:

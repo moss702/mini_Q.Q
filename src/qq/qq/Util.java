@@ -1,4 +1,4 @@
-package qq;
+package qq.qq;
 import java.util.Scanner;
 
 public class Util {

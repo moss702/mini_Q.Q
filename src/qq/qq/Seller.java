@@ -1,4 +1,4 @@
-package qq;
+package qq.qq;
 
 public class Seller extends UserAccount {
 	
