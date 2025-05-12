@@ -7,9 +7,7 @@ import java.util.stream.Collectors;
 import domain.Admin;
 import domain.Customer;
 import domain.User;
-import qq.UserAccount;
 
-import static qq.Util.nextLine;
 import static utils.QqUtils.*;
 
 public class UserService {
