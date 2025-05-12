@@ -1,5 +1,8 @@
 package service;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -142,17 +145,22 @@ public class OrderService {
 		for (Order o : orders) {
 			if(c == o.getCustomer()) {
 				tmp.add(o);
+				System.out.println(tmp);
+				return tmp;
 			}
 		}
 		System.out.println("주문 내역이 없습니다.");
-		return tmp;
+		return null;
 	}
 	
-	public List<Order> findBySalesDate (Date d) { // 일별 매출 조회 날짜/메뉴/수량/금액
+	public List<Order> findBySalesDate () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth() && o.getDate().getDate() == d.getDate()) {					
 					sales.add(o);
+					System.out.println(sales);
 					return sales;
 				}
 			}
@@ -161,26 +169,30 @@ public class OrderService {
 		return null;
 	}
 	
-	public List<Order> findBySalesMonth (Date d) { // 일별 매출 조회 날짜/메뉴/수량/금액
+	public List<Order> findBySalesMonth () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth()) {					
 					sales.add(o);
+					System.out.println(sales);
 					return sales;
 				}
 			}
-		System.out.println("선택한 월의 매출 내역이 없습니다.");
+		System.out.println("선택한 일자의 매출 내역이 없습니다.");
 		System.out.println(sales);
 		return null;
 	}
+
 	
 	
-	public static void main(String[] args) {// 구동 연습 메서드
+	public static void main(String[] args) throws ParseException {// 구동 연습 메서드
 		System.out.println(new Date());
 		OrderService order = ORDER_SERVICE.getInstance();
 		Date d = new Date();
 		while(true) {
-			int no = QqUtils.nextInt(" 1. 장바구니담기,  2. 장바구니 빼기 3. 결제하기  4. 매출점검  5. 주문내역 점검(손님기준) 6. 종료");
+			int no = QqUtils.nextInt(" 1. 장바구니담기,  2. 장바구니 빼기 3. 결제하기  4. 일별매출점검  5. 월별매출점검 6. 주문내역 점검(손님기준) 7. 종료");
 			switch (no) {
 			case 1 :  order.getItem();
 			break;
@@ -191,13 +203,16 @@ public class OrderService {
 			case 3 : order.pay();;
 			break;
 				
-			case 4 : order.findBySalesDate(d);
+			case 4 : order.findBySalesDate(); 
 			break;
 			
-			case 5 : order.findByPayment(kim);
+			case 5 : order.findBySalesMonth();
+			
+			case 6 : order.findByPayment(kim);
 			break;
-			case 6 : 
-			break;
+			
+			default : System.out.println("프로그램을 종료합니다");
+			return;
 			}
 		}
 	}
