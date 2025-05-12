@@ -53,7 +53,7 @@ public class AdminService {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
 	public void isSeller() {
@@ -64,7 +64,7 @@ public class AdminService {
 //		else if(findByID(id) == UserService.getInstance().getUsers()) {
 //			
 //		}
-=======
+
 
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
@@ -82,7 +82,7 @@ public class AdminService {
 			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
 		}
 		
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
+
 	}
 	
 	
