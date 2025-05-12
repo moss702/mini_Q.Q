@@ -2,7 +2,10 @@ package main;
 
 import static utils.QqUtils.nextInt;
 
+import java.beans.Customizer;
+
 import domain.Admin;
+import service.CustomerService;
 import service.UserService;
 
 public class Main {
@@ -43,6 +46,7 @@ public class Main {
 					}
 				} else { //커스토머 서비스에서 만든 메뉴 호출
 					System.out.println("===============손님 로그인 상태"); 
+					CustomerService.getInstance().init();
 				}
 			}	catch (NumberFormatException e) {
 				System.out.println("정확한 숫자를 입력하세요");
