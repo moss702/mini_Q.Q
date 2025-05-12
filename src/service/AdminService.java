@@ -21,6 +21,7 @@ public class AdminService {
 		System.out.println("===============관리자 로그인 상태");
 		int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
 		switch (input) {
+		
 			case 1 : 
 				UserService.getInstance().printUser();
 				break;
