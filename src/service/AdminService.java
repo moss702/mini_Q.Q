@@ -34,7 +34,6 @@ public class AdminService {
 		System.out.println("===============관리자 로그인 상태");
 		int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 		switch (input) {
-		
 			case 1 : 
 				read();
 				break;
@@ -70,7 +69,7 @@ public class AdminService {
 			break;
 		case 3 : 
 			UserService.getInstance().printCustomer();
-			break;
+			return;
 		} 
 	}
 	
@@ -84,8 +83,9 @@ public class AdminService {
 		if (UserService.getInstance().getUsers(Admin.class).contains(t)){
 			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
 		} else if (UserService.getInstance().getUsers(Customer.class).contains(t)) {
-			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getId(),t.getPw(),t.getName()));
-		//	UserService.getInstance().users.remove(Customer t(t.getUserNo(),t.getId(),t.getPw(),t.getName()));
+			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
+//			UserService.getInstance().users.remove(Customer(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
+			 UserService.getInstance().users.remove(t);
 			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]", id);
 		} else {
 			System.out.println("[(!)존재하지 않는 계정입니다.]");
@@ -105,8 +105,9 @@ public class AdminService {
 				System.out.println("[(!)해당 회원은 관리자 권한을 갖고 있습니다.]\n[관리자 권한 해지 후 회원 삭제가 가능합니다.]");
 				return;
 			} else {
-				if(nextConfirm("[id : \"%s\" 계정을 정말 삭제하시겠습니까?]")) {
-//				UserService.getInstance().users.remove(Customer t(t.getUserNo(),t.getId(),t.getPw(),t.getName()));
+				if(nextConfirm("[이 계정을 정말 삭제하시겠습니까? (Y,YES)] > ")) {
+				UserService.getInstance().users.remove(t);
+				System.out.printf("[id : \"%s\"가 삭제되었습니다.]");
 				} else {
 					System.out.println("[취소되었습니다.]");
 					return;
