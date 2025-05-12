@@ -25,10 +25,10 @@ public class UserService {
 
 	// 유저 리스트 초기화 블럭
 	{
-		users.add(new Admin(1, "admin", "1234", "고양이관리자"));
-		users.add(new Customer(2, "guest1", "1234", "새똥이"));
-		users.add(new Customer(3, "guest2", "1234", "개똥이"));
-		users.add(new Admin(4, "admin2", "1234", "멍멍이관리자"));
+		users.add(new Admin(1, "고양이관리자", "admin", "1234"));
+		users.add(new Customer(2, "새똥이", "guest1", "1234"));
+		users.add(new Customer(3, "개똥이", "guest2", "1234"));
+		users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
 	}
 	
 	
@@ -39,9 +39,12 @@ public class UserService {
 		return loginUser;
 	}
 	
-	// getUsers -- 유저 리스트 서치
+	// getUsers -- 유저 리스트 서치 
 	public <T extends User> List<T> getUsers(Class<T> clazz) {
-		return users.stream().filter(clazz::isInstance).map(clazz::cast).collect(Collectors.toList());
+		return users.stream().
+		filter(clazz::isInstance).
+		map(clazz::cast).
+		collect(Collectors.toList());
 	}
 	
 	// findBy -- (입력 : id, 클래스 | 출력 : 해당하는 클래스 users 스트림)
@@ -129,9 +132,6 @@ public class UserService {
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
 		//----회원리스트에 저장 
 		//최초 회원가입시 Customer
-		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
-		//2안. 회원가입시 코드입력시 admin에 저장
-		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
 		User users = new Customer(no, name , id, pw);
 		this.users.add(users);
 		
