@@ -71,8 +71,9 @@ public class AdminService {
 		case 3 : 
 			UserService.getInstance().printCustomer();
 			break;
-		}	
+		} 
 	}
+	
 	
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
