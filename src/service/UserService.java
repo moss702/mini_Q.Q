@@ -13,7 +13,7 @@ import static utils.QqUtils.*;
 public class UserService {
 	// 싱글톤
 	private static final UserService USER_SERVICE = new UserService();
-	public UserService() {	}
+	public UserService() {}
 	public static UserService getInstance() {
 		return USER_SERVICE;
 	}
