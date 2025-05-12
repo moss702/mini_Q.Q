@@ -134,7 +134,7 @@ public class OrderService {
 		List<Cart> tmp = new ArrayList<>();
 		tmp.addAll(carts);
 		
-		Order order = new Order(++num, loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
+		Order order = new Order(++num, (Customer)loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
