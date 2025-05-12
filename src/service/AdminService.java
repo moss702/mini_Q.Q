@@ -74,35 +74,37 @@ public class AdminService {
 	}
 	
 	
-	//-----------------관리자 권한 관리
+	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
 	public void isSeller() {
-		System.out.println("=======[관리자 권한 관리]=======");
-		
-		String input = nextLine("[관리자 권한을 부여할 ID 또는 회원번호를 입력하세요] > ");
-//		if (input == ) { //ID의 시작이 숫자일 수 없으니까 숫자로 시작하면 무조건 회원번호로 취급
-//			User t = UserService.getInstance().findBy(id, User.class);
-//		}
-		User t = UserService.getInstance().findBy(input, User.class);
-		
-	    if (t instanceof Admin) {
-	        System.out.print("[(!)이미 관리자 등급인 계정입니다.]\n");
-	        if(nextConfirm("[이 계정의 관리자 권한을 취소하시겠습니까?] > ")) {
-		        UserService.getInstance().users.add(new Customer(t.getUserNo(), t.getName(), t.getId(), t.getPw() ));
-		        UserService.getInstance().users.remove(t);
-		        System.out.printf("[id : \"%s\"의 관리자 권한이 취소되었습니다.]", input);
-	        }
-	        return;
-	    }
-	    if (t instanceof Customer) {
-	        UserService.getInstance().users.add(new Admin(t.getUserNo(), t.getName(), t.getId(), t.getPw() ));
-	        UserService.getInstance().users.remove(t);
-	        System.out.printf("[id : \"%s\"에게 관리자 권한이 부여되었습니다.]", input);
-	    }
+		String id = nextLine("[관리자 권한을 부여할 ID를 입력하세요] > ");
+		User t = UserService.getInstance().findBy(id, User.class);
+
+		if (UserService.getInstance().getUsers(Admin.class).contains(t)){
+			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
+		} else if (UserService.getInstance().getUsers(Customer.class).contains(t)) {
+			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
+//			UserService.getInstance().users.remove(Customer(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
+			 UserService.getInstance().users.remove(t);
+			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]", id);
+		} else {
+			System.out.println("[(!)존재하지 않는 계정입니다.]");
+			return;
+		}
+	}
+	
+	 //관리자 권한 해제메서드
+	public void removeAdminRole() {
+	    String id = nextLine("관리자 권한을 해제할 ID를 입력하세요> ");
+	    User t = UserService.getInstance().findBy(id, Admin.class);
+
 	    if (t == null) {
-	        System.out.println("[(!)존재하지 않는 계정입니다.]");
+	        System.out.println("해당 ID는 관리자 계정이 아닙니다");
 	        return;
 	    }
+	    UserService.getInstance().users.remove(t);
+	    UserService.getInstance().users.add(new Customer(t.getUserNo(), t.getName(), t.getId(), t.getPw()));
+	    System.out.printf("[id : 의 관리자 권한이 해제되었습니다.]", id);
 	}
 	
 	//-----------------회원 삭제 //관리자 권한이 있을경우 삭제 불가능
@@ -118,7 +120,7 @@ public class AdminService {
 				System.out.println("[(!)해당 회원은 관리자 권한을 갖고 있습니다.]\n[관리자 권한 해지 후 회원 삭제가 가능합니다.]");
 				return;
 			} else {
-				if(nextConfirm("[이 계정을 정말 삭제하시겠습니까?] > ")) {
+				if(nextConfirm("[이 계정을 정말 삭제하시겠습니까? (Y,YES)] > ")) {
 				UserService.getInstance().users.remove(t);
 				System.out.printf("[id : \"%s\"가 삭제되었습니다.]");
 				} else {
