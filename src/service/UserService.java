@@ -7,14 +7,13 @@ import java.util.stream.Collectors;
 import domain.Admin;
 import domain.Customer;
 import domain.User;
-import utils.QqUtils;
 
 import static utils.QqUtils.*;
 
 public class UserService {
 	// 싱글톤
 	private static final UserService USER_SERVICE = new UserService();
-	public UserService() {}
+	private UserService() {	}
 	public static UserService getInstance() {
 		return USER_SERVICE;
 	}
@@ -26,8 +25,8 @@ public class UserService {
 	// 유저 리스트 초기화 블럭
 	{
 		users.add(new Admin(1, "admin", "1234", "고양이관리자"));
-		users.add(new Customer(2, "guest1", "1234", "새똥이"));
-		users.add(new Customer(3, "guest2", "1234", "개똥이"));
+//		users.add(new Customer(2, "guest1", "1234", "새똥이"));
+//		users.add(new Customer(3, "guest2", "1234", "개똥이"));
 		users.add(new Admin(4, "admin2", "1234", "멍멍이관리자"));
 	}
 	
@@ -48,27 +47,6 @@ public class UserService {
 	public <T extends User> T findBy(String id, Class<T> clazz) {
 		return users.stream().filter(u -> clazz.isInstance(u) && u.getId().equals(id)).map(clazz::cast).findFirst().orElse(null);
 	}
-	
-	// findByID 
-	public User findByID(String id) {
-		for(User u : users) {
-			if(u.getId().equals(id)) {
-				return u;
-			}
-		}
-		return null;
-	}
-	// findByNo 
-	public User findByNo(int no) {
-		for(User u : users) {
-			if(u.getUserNo() == no) {
-				return u;
-			}
-		}
-		return null;
-	}
-	
-	
 	
 	// inputName -- 입력제한_이름
 	public String inputName() {
@@ -99,15 +77,15 @@ public class UserService {
 	}
 	
 	// print -- 출력용 회원 리스트
-	public void printUser() {
-		printAdmin();
-		printCustomer();
+	public void printUser(List<User> u) {
+		u.forEach(System.out::println);
+		u.forEach(s -> System.out.println(s));
 	}
-	public void printAdmin() {
+	public void printAdmin(List<Admin> a) {
 		List<Admin> admins = getInstance().getUsers(Admin.class);
 		admins.forEach(System.out::println);
 	}
-	public void printCustomer() {
+	public void printCustomer(List<Customer> c) {
 		List<Customer> customers = getInstance().getUsers(Customer.class);
 		customers.forEach(System.out::println);
 	}
@@ -118,8 +96,8 @@ public class UserService {
 		System.out.println("=======[회원가입 정보 입력]=======");
 		//----ID
 		String id = null;
-		id = inputId();
-		id = duplId();
+		inputId();
+		duplId();
 
 		//----PW
 		String pw = nextLine("[비밀번호를 입력해주세요] > ");
@@ -134,8 +112,9 @@ public class UserService {
 		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
 		//2안. 회원가입시 코드입력시 admin에 저장
 		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
-		User users = new Admin(no, id, pw, name);
-		this.users.add(users);
+		User users1 = new Admin(no, name , id, pw);
+		users.add(users1);
+		//이거 왜 리스트에 안들어가?!
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
 		
@@ -227,7 +206,8 @@ public class UserService {
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
-							UserService.getInstance().printUser();
+							System.out.println("* 임시 * 회원목록조회");
+				//			UserService.getInstance().printAdmin(users);
 							break;
 						case 2 : 
 							System.out.println("* 임시 * 관리자등급관리");
