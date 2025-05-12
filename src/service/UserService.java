@@ -112,8 +112,8 @@ public class UserService {
 		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
 		//2안. 회원가입시 코드입력시 admin에 저장
 		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
-		User users = new Admin(no, name , id, pw);
-//		users.add(users);
+		User users1 = new Admin(no, name , id, pw);
+		users.add(users1);
 		//이거 왜 리스트에 안들어가?!
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
