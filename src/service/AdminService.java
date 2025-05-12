@@ -29,8 +29,8 @@ public class AdminService {
 		return ADMIN_SERVICE;
 	}
 	
+// =============================== 메인 호출용 -- 관리자 로그인 상태
 	public void adminInit() throws Exception {
-
 		System.out.println("===============관리자 로그인 상태");
 		int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 		switch (input) {
@@ -77,6 +77,7 @@ public class AdminService {
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
 	public void isSeller() {
+		System.out.println("=======[관리자 권한 관리]=======");
 		String id = nextLine("[관리자 권한을 부여할 ID를 입력하세요] > ");
 		User t = UserService.getInstance().findBy(id, User.class);
 
@@ -86,7 +87,7 @@ public class AdminService {
 			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
 //			UserService.getInstance().users.remove(Customer(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
 			 UserService.getInstance().users.remove(t);
-			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]", id);
+			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]\n", id);
 		} else {
 			System.out.println("[(!)존재하지 않는 계정입니다.]");
 			return;
@@ -110,10 +111,9 @@ public class AdminService {
 	//-----------------회원 삭제 //관리자 권한이 있을경우 삭제 불가능
 	public void userRemove() {
 	//계정 존재유무 확인 >> 관리자 권한 소지유무 확인 >> 정말 삭제할건지 확인
-		
-		System.out.println("임시 * 회원삭제");
-		String id = nextLine("[삭제할 회원의 ID를 입력하세요] > ");
-		User t = UserService.getInstance().findBy(id, User.class);
+		System.out.println("=======[회원 정보 삭제]=======");
+		String input = nextLine("[삭제할 회원의 ID를 입력하세요] > ");
+		User t = UserService.getInstance().findBy(input, User.class);
 		
 		if(UserService.getInstance().getUsers(User.class).contains(t)) {
 			if (UserService.getInstance().getUsers(Admin.class).contains(t)){
@@ -122,7 +122,7 @@ public class AdminService {
 			} else {
 				if(nextConfirm("[이 계정을 정말 삭제하시겠습니까? (Y,YES)] > ")) {
 				UserService.getInstance().users.remove(t);
-				System.out.printf("[id : \"%s\"가 삭제되었습니다.]");
+				System.out.printf("[id : \"%s\"가 삭제되었습니다.]",input);
 				} else {
 					System.out.println("[취소되었습니다.]");
 					return;

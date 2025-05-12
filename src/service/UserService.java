@@ -75,8 +75,8 @@ public class UserService {
 	// inputName -- 입력제한_이름
 	public String inputName() {
 		String name =  nextLine("[이름을 입력해주세요] > ");		
-		if(!name.matches("[가-힣]{1,4}")) {
-			throw new IllegalArgumentException("[(!)이름은 한글 1~4글자로 입력하세요]");
+		if(!name.matches("[가-힣a-zA-z]{1,10}")) {
+			throw new IllegalArgumentException("[(!)이름은 한글 또는 영어 1~10글자로 입력하세요]");
 		}
 		return name;
 	}
@@ -84,8 +84,8 @@ public class UserService {
 	// inputId -- 입력제한_ID
 	public String inputId(String id) {
 		id = nextLine("[ID를 입력해주세요] > ");	
-		if(!id.matches("[A-Za-z0-9_+&*-]")) {			
-			throw new IllegalArgumentException("[(!)ID는 알파벳, 숫자 조합으로 입력하세요]");
+		if(!id.matches("^[A-Za-z][A-Za-z0-9_+&*-]*")) {			
+			throw new IllegalArgumentException("[(!)ID의 첫글자는 알파벳으로 시작해야 합니다.]\n[(!)영어와 숫자 조합으로 입력하세요]");
 		}
 		return id;
 	}
@@ -121,9 +121,9 @@ public class UserService {
 		String name = inputName();
 		
 		//----ID
-		String id = "id";
-		inputId(id);
-		duplId(id);
+		String id = "a";
+		id = inputId(id);
+		id = duplId(id);
 
 		//----PW
 		String pw = nextLine("[비밀번호를 입력해주세요] > ");
@@ -132,7 +132,7 @@ public class UserService {
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
 		//----회원리스트에 저장 
 		//최초 회원가입시 Customer
-		User users = new Customer(no, name , id, pw);
+		User users = new Customer(no, name, id, pw);
 		this.users.add(users);
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
@@ -219,7 +219,7 @@ public class UserService {
 					}
 				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
-					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
+					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원정보삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
 							AdminService.getInstance().read();
