@@ -6,11 +6,8 @@ import java.util.*;
 public class MenuService {
 		
 	
-		
-	
 	// 싱글톤 (MENU_SERVICE 라는 이름의 객체를 클래스 안에서 딱 한 번 만들고, 나중에 getInstance()로 꺼내쓰기위해 사용함)
 	private static final MenuService MENU_SERVICE = new MenuService();
-	private Scanner sc = new Scanner(System.in);
 	
 	//메뉴리스트생성
 //	private List<Menu> sortedMenus;
@@ -23,23 +20,26 @@ public class MenuService {
 	}
 	//메뉴를 저장할 ArrayList
 //메뉴는 Menu 객체로 구성돼 있음(메뉴 번호, 이름, 카테고리, 가격)
+	private Scanner sc = new Scanner(System.in);
 	private List<Menu> menus = new ArrayList<Menu>(); 
 	{
-		menus.add(new Menu(1, "차돌볶음", 0, 20_000));
 		menus.add(new Menu(2, "두부조림", 0, 12_000));
 		menus.add(new Menu(3, "술찜", 0, 18_000));
-		menus.add(new Menu(4, "도가니수육", 0, 50_000));
-		menus.add(new Menu(5, "탕수육", 0, 15_000));
-		menus.add(new Menu(6, "감자전", 0, 10_000));
+		menus.add(new Menu(14, "하이볼", 2, 8_000));
 		menus.add(new Menu(7, "김치전", 0, 10_000));
 		menus.add(new Menu(8, "타코와사비", 1, 8_000));
-		menus.add(new Menu(9, "파인샤베트", 1, 8_000));
+		menus.add(new Menu(4, "도가니수육", 0, 50_000));
 		menus.add(new Menu(10, "타코야끼", 1, 8_000));
-		menus.add(new Menu(11, "소주", 2, 5_000));
+		menus.add(new Menu(5, "탕수육", 0, 15_000));
+		menus.add(new Menu(6, "감자전", 0, 10_000));
+		menus.add(new Menu(1, "차돌볶음", 0, 20_000));
 		menus.add(new Menu(12, "맥주", 2, 6_000));
+		menus.add(new Menu(9, "파인샤베트", 1, 8_000));
+		menus.add(new Menu(11, "소주", 2, 5_000));
 		menus.add(new Menu(13, "청하", 2, 7_000));
-		menus.add(new Menu(14, "하이볼", 2, 8_000));
 		menus.add(new Menu(15, "고량주", 2, 10_000));
+		rank();
+		sank();
 	}
 
 	
@@ -103,8 +103,7 @@ public class MenuService {
 			
 			System.out.println("메뉴가 수정되었습니다.");
 		}
-
-
+	
 // 메뉴삭제
 		public void remove() {
 		    System.out.println("메뉴 삭제");
@@ -123,7 +122,7 @@ public class MenuService {
 		    System.out.printf("'%s' 메뉴를 정말 삭제하시겠습니까? (Y/N) > ", m.getName());
 		    String confirm = sc.nextLine().trim();
 
-		    if (confirm.equalsIgnoreCase("Y")) {
+		    if (confirm.equals("Y") || confirm.equals("y")) {
 		        menus.remove(m);
 		        System.out.println("메뉴가 삭제되었습니다.");
 		    } else {
@@ -135,8 +134,7 @@ public class MenuService {
 	public void read() {
 		System.out.println("메뉴조회");
 		       	print(menus);
-		
-		
+		       	
 	}
 //메뉴 번호를 입력받아, menus 리스트 안에서 번호가 일치하는 메뉴를 찾아 반환 없으면 null 반환
 	public Menu findBy(int no) {
@@ -148,21 +146,31 @@ public class MenuService {
 		}
 		return null;
 	}
-	
-	
-	public void readOrder() {
-	System.out.println("메뉴순서조회기능");
-	        print(menus);
-	}
-	
+	  
 //메뉴 리스트를 화면에 하나씩 출력 System.out.println(s)는 Menu 클래스의 toString()을 자동으로 사용
 	public void print(List<Menu> menus) {
+		 System.out.println("메뉴순서조회기능");	 
 		menus.forEach(s -> System.out.println(s));
 	}
 	
 	public void rank() {
-		Collections.sort(menus,(o1, o2) -> o2.getCategory() - o1.getCategory());
+		Collections.sort(menus,(o1, o2) -> o1.getCategory() - o2.getCategory());
+		print(menus);
+		
+		
 	}
+	
+	public void sank() {
+		Collections.sort(menus,(o1, o2) -> o1.getNo() - o2.getNo());
+		print(menus);
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
