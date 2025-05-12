@@ -152,7 +152,8 @@ public class MenuService {
 	
 	public void readOrder() {
 	System.out.println("메뉴순서조회기능");
-	        print(menus);
+	menus.sort(Comparator.comparing(Menu::getNo));
+	print(menus);
 	}
 	
 //메뉴 리스트를 화면에 하나씩 출력 System.out.println(s)는 Menu 클래스의 toString()을 자동으로 사용
@@ -161,9 +162,10 @@ public class MenuService {
 	}
 	
 	public void rank() {
-		Collections.sort(menus,(o1, o2) -> o2.getCategory() - o1.getCategory());
+		Collections.sort(menus, (o1, o2) -> o2.getCategory() - o1.getCategory());
+		print(menus);
 	}
-	
+
 	
 	
 	
