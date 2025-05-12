@@ -132,9 +132,8 @@ public class UserService {
 		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
 		//2안. 회원가입시 코드입력시 admin에 저장
 		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
-		User users = new Admin(no, name , id, pw);
+		User users = new Customer(no, name , id, pw);
 		this.users.add(users);
-		//이거 왜 리스트에 안들어가?!
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
 		
@@ -142,26 +141,28 @@ public class UserService {
 	
 	//----------------- 회원 정보 수정 (수정가능요소 : ID, PW, name)
 	public void modify(User user) {
-			System.out.println("=======[내 회원정보 수정]=======");
-			String id = nextLine("[수정] ID  입력 > ");
+		System.out.println("=======[내 회원정보 수정]=======");
+		String id = nextLine("[수정] ID  입력 > ");
 //			users = findBy(id, Class<T>);
-			if(id == null) {
-				System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
-				loginUser.setId(id);
-			} else {
-				System.out.println("[(!)이미 존재하는 ID 입니다.]");
-				return;
-			}
-			
-			String name = nextLine("[수정]이름 입력 > ");
-			String pw = nextLine("[수정] PW  입력 > ");
-				System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
-			loginUser.setName(name);
-			loginUser.setPw(pw); 
-			//이걸 loginUser에 저장하는게 아니라 users에 저장해야할것같은디
-			//회원목록을 파일로 익스포트, 파일에 loginUser 정보도 저장해야함.
+		
+		if(id == null) {
+			System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
+			loginUser.setId(id);
+		} else {
+			System.out.println("[(!)이미 존재하는 ID 입니다.]");
+			return;
+		}
+		
+		String name = nextLine("[수정]이름 입력 > ");
+		String pw = nextLine("[수정] PW  입력 > ");
+		System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
+	
+		loginUser.setName(name);
+		loginUser.setPw(pw); 
+		//이걸 loginUser에 저장하는게 아니라 users에 저장해야할것같은디
+		//회원목록을 파일로 익스포트, 파일에 loginUser 정보도 저장해야함.
 
-			System.out.println("[회원 정보가 수정되었습니다.]");
+		System.out.println("[회원 정보가 수정되었습니다.]");
 	}
 	
 	//----------------- 로그인
@@ -221,7 +222,7 @@ public class UserService {
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
-							UserService.getInstance().printAdmin();
+							AdminService.getInstance().read();
 							break;
 						case 2 : 
 							AdminService.getInstance().isSeller();

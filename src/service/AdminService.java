@@ -36,7 +36,7 @@ public class AdminService {
 		switch (input) {
 		
 			case 1 : 
-				UserService.getInstance().printAdmin();
+				read();
 				break;
 			case 2 : 
 				isSeller();
@@ -57,6 +57,23 @@ public class AdminService {
 		}
 	}
 
+	//-----------------회원 목록 조회
+	public void read() {
+		System.out.println("=======[회원 목록 조회]=======");
+		int input = nextInt("[1.전체회원 보기] [2.관리자회원 보기] [3.일반회원 보기]");
+		switch (input) {
+		case 1 : 
+			UserService.getInstance().printUser();
+			break;
+		case 2 : 
+			UserService.getInstance().printAdmin();
+			break;
+		case 3 : 
+			UserService.getInstance().printCustomer();
+			break;
+		}	
+	}
+	
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
 	public void isSeller() {
