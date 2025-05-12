@@ -56,19 +56,20 @@ public class AdminService {
 
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
-	@SuppressWarnings("unlikely-arg-type")
 	public void isSeller() {
 		String id = nextLine("[관리자 권한을 부여할 ID를 입력하세요] > ");
 		User t = UserService.getInstance().findBy(id, User.class);
-		if(t == null) {
-			System.out.println("[(!)존재하지 않는 계정입니다.]");
-			return;
+		if (t == UserService.getInstance().getUsers(Admin.class)){
+			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
 		} else if (t == UserService.getInstance().getUsers(Customer.class)) {
 			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getId(),t.getPw(),t.getName()));
 			//UserService.getInstance().users.remove(Customer(t.getUserNo(),t.getId(),t.getPw(),t.getName()));
+			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]", id);
 		} else {
-			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
+			System.out.println("[(!)존재하지 않는 계정입니다.]");
+			return;
 		}
+		
 	}
 	
 	

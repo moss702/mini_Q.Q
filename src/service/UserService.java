@@ -100,8 +100,8 @@ public class UserService {
 	
 	// print -- 출력용 회원 리스트
 	public void printUser() {
-		printAdmin();
-		printCustomer();
+		List<User> users = getInstance().getUsers(User.class);
+		users.forEach(System.out::println);
 	}
 	public void printAdmin() {
 		List<Admin> admins = getInstance().getUsers(Admin.class);
@@ -201,11 +201,6 @@ public class UserService {
 		users.remove(loginUser);
 		logout();
 	}
-	
-	//-----------------관리자 권한 부여
-	//User customer에 있던 정보를 User Admin으로 이동시키기
-	
-	
 	
 // =============================== 테스트용 메인
 	public static void main(String[] args) {
