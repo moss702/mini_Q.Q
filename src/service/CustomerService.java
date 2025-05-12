@@ -37,7 +37,7 @@ public class CustomerService  extends UserService{
 				OrderService.getInstance().pay();
 				break;
 			case 5 :
-				//UserService.getInstance().();  // 소비금액, 주문내역
+				//UserService.getInstance().();  // 소비금액, 주문내역,  
 				
 				break;
 			case 6 :
