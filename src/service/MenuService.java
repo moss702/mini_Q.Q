@@ -1,5 +1,9 @@
 package service;
+import domain.Admin;
 import domain.Menu;
+import domain.User;
+import utils.QqUtils;
+
 import java.util.Collections;
 import java.util.*;
 
@@ -192,9 +196,30 @@ public class MenuService {
 	    }
 	}
 
-	
-	
-	
+//	//관리자 권한 부여
+//	public void ToAdmin() {
+//		String id = QqUtils.nextLine("관리자로 승격할 회원의 ID 입력 ");
+//		User target = UserService.getInstance().findBy(id, User.class);
+//		
+//		if (target == null) {
+//			System.out.println("해당 ID의 사용자를 찾을 수 없습니다.");
+//			return;
+//		}
+//		
+//		if (target instanceof Admin) {
+//			System.out.println("[이미 관리자입니다.]");
+//			return;
+//		}
+//		}
+//
+//	
+//	public void to Admin(){
+//		String id = QqUtils.nextLine('관리자 권한부여');
+//	  User target= target=UserService.getInstance().findBy(id, User.class);
+//	  if(target==null)
+//		  System.out.println(해당아이디를 찾을수없습);
+//	  return;
+//	}
 	
 	//선택한메뉴 가격 합계할수있는것
 	public void totalMenuPrice() {
@@ -228,46 +253,46 @@ public class MenuService {
 
 	
 	// 메서드기능 테스트
-    public static void main(String[] args) {
-        MenuService menuService = MenuService.getInstance();
-        
-        Scanner scanner = new Scanner(System.in); 
-        while (true) {
-            System.out.println("===== 메뉴 서비스 =====");
-            System.out.println("1. 메뉴 등록");
-            System.out.println("2. 메뉴 조회");
-            System.out.println("3. 메뉴 수정");
-            System.out.println("4. 메뉴 삭제");
-            System.out.println("5. 메뉴 가격합산");
-            System.out.println("6. 메뉴 가격범위로 검색");
-            System.out.println("7. 종료");
-            System.out.print("선택 > ");
-            
-            int choice = Integer.parseInt(scanner.nextLine());
-            
-            switch (choice) {
-                case 1:
-                    menuService.register(); // 메뉴 등록
-                    break;
-                case 2:
-                    menuService.read(); // 메뉴 조회
-                    break;
-                case 3:
-                	menuService.modify();//메뉴수정
-                case 4:
-                	menuService.remove(); //메뉴삭제
-                case 5:
-                	menuService.totalMenuPrice();
-                case 6:
-                	menuService.PriceRange();
-                case 7:
-                    System.out.println("프로그램 종료.");
-                    return; 
-                default:
-                    System.out.println("잘못된 입력입니다.");
-            }
-        }
-    }
+//    public static void main(String[] args) {
+//        MenuService menuService = MenuService.getInstance();
+//        
+//        Scanner scanner = new Scanner(System.in); 
+//        while (true) {
+//            System.out.println("===== 메뉴 서비스 =====");
+//            System.out.println("1. 메뉴 등록");
+//            System.out.println("2. 메뉴 조회");
+//            System.out.println("3. 메뉴 수정");
+//            System.out.println("4. 메뉴 삭제");
+//            System.out.println("5. 메뉴 가격합산");
+//            System.out.println("6. 메뉴 가격범위로 검색");
+//            System.out.println("7. 종료");
+//            System.out.print("선택 > ");
+//            
+//            int choice = Integer.parseInt(scanner.nextLine());
+//            
+//            switch (choice) {
+//                case 1:
+//                    menuService.register(); // 메뉴 등록
+//                    break;
+//                case 2:
+//                    menuService.read(); // 메뉴 조회
+//                    break;
+//                case 3:
+//                	menuService.modify();//메뉴수정
+//                case 4:
+//                	menuService.remove(); //메뉴삭제
+//                case 5:
+//                	menuService.totalMenuPrice();
+//                case 6:
+//                	menuService.PriceRange();
+//                case 7:
+//                    System.out.println("프로그램 종료.");
+//                    return; 
+//                default:
+//                    System.out.println("잘못된 입력입니다.");
+//            }
+//        }
+//    }
 }
 
    
