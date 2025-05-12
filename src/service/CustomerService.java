@@ -9,7 +9,7 @@ import domain.Customer;
 import domain.Menu;
 import domain.User;
 
-public class CustomerService  extends UserService{
+public class CustomerService {
 	private static final CustomerService CUSTOMER_SERVICE = new CustomerService();
 	public CustomerService () {
 		
@@ -59,7 +59,7 @@ public class CustomerService  extends UserService{
 	public void modify() {
 		System.out.println("정보수정");
 		String pw = nextLine("비밀번호 > ");
-		Customer c = findBy(pw, null);
+//		Customer c = findBy(pw, null);
 		}
 	
 	}
