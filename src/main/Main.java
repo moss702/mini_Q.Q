@@ -3,6 +3,7 @@ package main;
 import static utils.QqUtils.nextInt;
 
 import domain.Admin;
+import service.CustomerService;
 import service.UserService;
 
 public class Main {
@@ -43,11 +44,7 @@ public class Main {
 					}
 				} else { //커스토머 서비스에서 만든 메뉴 호출
 					System.out.println("===============손님 로그인 상태"); 
-					int input = nextInt("[0.로그아웃]");	
-					switch (input) {
-						case 0 : 
-							UserService.getInstance().logout();
-							break;
+					CustomerService.getInstance().init();
 					}
 				}
 			}	catch (NumberFormatException e) {
