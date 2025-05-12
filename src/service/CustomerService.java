@@ -37,7 +37,8 @@ public class CustomerService  extends UserService{
 				OrderService.getInstance().pay();
 				break;
 			case 5 :
-			//	UserService.getInstance().logout();
+				UserService.getInstance().logout(); // 소비금액, 회원정보,주문내역
+				
 				break;
 			case 6 :
 				UserService.getInstance().logout();
