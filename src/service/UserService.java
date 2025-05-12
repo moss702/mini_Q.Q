@@ -1,5 +1,6 @@
 package service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -203,7 +204,7 @@ public class UserService {
 	}
 	
 // =============================== 테스트용 메인
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		while(true) {
 			try {	
 				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
@@ -219,7 +220,7 @@ public class UserService {
 					}
 				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
-					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
+					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
 							UserService.getInstance().printUser();
@@ -232,6 +233,10 @@ public class UserService {
 							break;
 						case 4 : 
 							System.out.println("* 임시 * 메뉴관리"); 
+							break;
+						case 5 : 
+							System.out.println("* 임시 * 매출관리"); 
+							OrderService.getInstance().findBySalesDate();
 							break;
 						case 0 :
 							UserService.getInstance().logout();
