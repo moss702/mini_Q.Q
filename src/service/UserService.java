@@ -25,7 +25,7 @@ public class UserService {
 	// 유저 리스트 초기화 블럭
 	{
 		users.add(new Admin(1, "admin", "1234", "고양이관리자"));
-		users.add(new Customer(2, "guest1", "1234", "새똥이"));
+//		users.add(new Customer(2, "guest1", "1234", "새똥이"));
 //		users.add(new Customer(3, "guest2", "1234", "개똥이"));
 		users.add(new Admin(4, "admin2", "1234", "멍멍이관리자"));
 	}
