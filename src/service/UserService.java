@@ -68,30 +68,28 @@ public class UserService {
 		return null;
 	}
 	
-	
-	
+
 	// inputName -- 입력제한_이름
 	public String inputName() {
 		String name =  nextLine("[이름을 입력해주세요] > ");		
-		if(!name.matches("[가-힣]{1,4}")) {			
+		if(!name.matches("[가-힣]{1,4}")) {
 			throw new IllegalArgumentException("[(!)이름은 한글 1~4글자로 입력하세요]");
 		}
 		return name;
 	}
 	
 	// inputId -- 입력제한_ID
-	public String inputId() {
-		String id = nextLine("[ID를 입력해주세요] > ");	
-		if(!id.matches("[A-Za-z0-9_+&*-]{+}")) {			
+	public String inputId(String id) {
+		id = nextLine("[ID를 입력해주세요] > ");	
+		if(!id.matches("[A-Za-z0-9_+&*-]")) {			
 			throw new IllegalArgumentException("[(!)ID는 알파벳, 숫자 조합으로 입력하세요]");
 		}
 		return id;
 	}
 	
 	// duplId -- 중복체크_ID
-	public String duplId() {
-		String id = this.inputId();
-		User u = findBy(id, null);
+	public String duplId(String id) {
+		User u = findBy(id, User.class);
 		if(u != null) {
 			throw new IllegalArgumentException("[(!)이미 존재하는 ID 입니다]");
 		}
@@ -116,16 +114,16 @@ public class UserService {
 	//----------------- 회원가입
 	public void register() {
 		System.out.println("=======[회원가입 정보 입력]=======");
+		//----이름
+		String name = inputName();
+		
 		//----ID
-		String id = null;
-		id = inputId();
-		id = duplId();
+		String id = "id";
+		inputId(id);
+		duplId(id);
 
 		//----PW
 		String pw = nextLine("[비밀번호를 입력해주세요] > ");
-		
-		//----이름
-		String name = inputName();
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
@@ -134,8 +132,8 @@ public class UserService {
 		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
 		//2안. 회원가입시 코드입력시 admin에 저장
 		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
-		User users1 = new Admin(no, name , id, pw);
-		users.add(users1);
+		User users = new Admin(no, name , id, pw);
+		this.users.add(users);
 		//이거 왜 리스트에 안들어가?!
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
@@ -223,16 +221,16 @@ public class UserService {
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
-							UserService.getInstance().printUser();
+							UserService.getInstance().printAdmin();
 							break;
 						case 2 : 
 							AdminService.getInstance().isSeller();
 							break;
 						case 3 : 
-							System.out.println("* 임시 * 회원삭제");
+							AdminService.getInstance().userRemove();
 							break;
 						case 4 : 
-							System.out.println("* 임시 * 메뉴관리"); 
+							MenuService.getInstance().register();
 							break;
 						case 5 : 
 							System.out.println("* 임시 * 매출관리"); 
