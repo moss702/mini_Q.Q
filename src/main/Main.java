@@ -2,7 +2,6 @@ package main;
 
 import static utils.QqUtils.nextInt;
 
-import java.beans.Customizer;
 
 import domain.Admin;
 import service.CustomerService;
