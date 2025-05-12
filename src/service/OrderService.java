@@ -17,7 +17,7 @@ public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
 	private UserService cu = UserService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
-	Customer loginCustomer = (Customer) cu.getLoginUser();
+	User loginCustomer = cu.getLoginUser();
 	private OrderService() {	}
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
