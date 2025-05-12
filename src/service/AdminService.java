@@ -1,6 +1,13 @@
 package service;
 
 import static utils.QqUtils.nextInt;
+
+import java.util.List;
+
+import domain.Customer;
+import domain.User;
+import service.UserService;
+
 import java.lang.annotation.Target;
 import java.util.List;
 
@@ -9,6 +16,7 @@ import domain.Customer;
 import domain.User;
 import service.UserService;
 import utils.QqUtils;
+
 
 import static utils.QqUtils.*;
 
@@ -19,17 +27,15 @@ public class AdminService {
 	public static AdminService getInstance() {
 		return ADMIN_SERVICE;
 	}
+	
+	public void adminInit() {
 
-	
-	
-	public void init() {
 		System.out.println("===============관리자 로그인 상태");
 		int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
 		switch (input) {
 		
 			case 1 : 
-				System.out.println("* 임시 * 회원목록조회");
-//				UserService.getInstance().printAdmin(users);
+				UserService.getInstance().printUser();
 				break;
 			case 2 : 
 				System.out.println("* 임시 * 관리자등급관리");
@@ -45,7 +51,8 @@ public class AdminService {
 				break;
 		}
 	}
-	
+
+
 
 	//-----------------관리자 권한 부여
 	//User customer에 있던 정보를 User Admin으로 이동시키기
@@ -62,7 +69,6 @@ public class AdminService {
 		} else {
 			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
 		}
-		
 	}
 	
 	
