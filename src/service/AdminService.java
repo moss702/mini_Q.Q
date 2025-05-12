@@ -3,7 +3,6 @@ package service;
 import static utils.QqUtils.nextInt;
 
 public class AdminService {
-
 	
 	public void init() {
 		System.out.println("===============관리자 로그인 상태");
@@ -11,7 +10,7 @@ public class AdminService {
 		switch (input) {
 			case 1 : 
 				System.out.println("* 임시 * 회원목록조회");
-	//			UserService.getInstance().printAdmin(users);
+//				UserService.getInstance().printAdmin(users);
 				break;
 			case 2 : 
 				System.out.println("* 임시 * 관리자등급관리");
@@ -26,7 +25,7 @@ public class AdminService {
 				UserService.getInstance().logout();
 				break;
 		}
-		
 	}
 	
-}
+	
+} //============================ AdminService 닫기
