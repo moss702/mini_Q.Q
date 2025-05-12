@@ -1,8 +1,6 @@
 package service;
 
 import static utils.QqUtils.nextInt;
-
-<<<<<<< HEAD
 import java.lang.annotation.Target;
 import java.util.List;
 
@@ -15,6 +13,14 @@ import utils.QqUtils;
 import static utils.QqUtils.*;
 
 public class AdminService {
+	// 싱글톤
+	private static final AdminService ADMIN_SERVICE = new AdminService();
+	public AdminService() {}
+	public static AdminService getInstance() {
+		return ADMIN_SERVICE;
+	}
+
+	
 	
 	public void init() {
 		System.out.println("===============관리자 로그인 상태");
