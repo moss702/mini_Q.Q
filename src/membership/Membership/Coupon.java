@@ -1,4 +1,4 @@
-package membership;
+package Membership;
 
 public class Coupon {
 	//CouponService에서 등급에따라 쿠폰 객체를 생성하고,그 쿠폰을 UserAccount에 추가하면되지않을까?..
