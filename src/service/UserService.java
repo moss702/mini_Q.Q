@@ -107,7 +107,6 @@ public class UserService {
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
-		
 		//----회원리스트에 저장 
 		//최초 회원가입시 Customer
 		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
