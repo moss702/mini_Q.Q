@@ -49,7 +49,7 @@ public abstract class User {
 	//-----------------투스트링 
 	@Override
 	public String toString() {
-		return "User [userNo=" + userNo + ", id=" + id + ", pw=" + pw + ", name=" + name + "]";
+		return "[회원번호 : " + userNo + " ], [ID : " + id + " ], [PW : " + pw + " ], [이름 : " + name + " ]";
 	}
 
 	
