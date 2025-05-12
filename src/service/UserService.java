@@ -190,7 +190,7 @@ public class UserService {
 	public static void main(String[] args) {
 		while(true) {
 			try {	
-				if(USER_SERVICE.getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
+				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
 					int input = nextInt("[1.회원가입] [2.로그인]");
 					switch (input) {
 						case 1 : 
@@ -201,7 +201,7 @@ public class UserService {
 							UserService.getInstance().login();
 							break;
 					}
-				} else if(USER_SERVICE.getLoginUser().getClass() == Admin.class){
+				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
 					switch (input) {
