@@ -210,7 +210,7 @@ public class UserService {
 				//			UserService.getInstance().printAdmin(users);
 							break;
 						case 2 : 
-							System.out.println("* 임시 * 관리자등급관리");
+							AdminService.getInstance().isSeller();
 							break;
 						case 3 : 
 							System.out.println("* 임시 * 회원삭제");
