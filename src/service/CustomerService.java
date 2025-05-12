@@ -49,7 +49,7 @@ public class CustomerService  extends UserService{
 				break;
 		}
 	}
-	// 소비금액, 목록, 개인정보 수정,회원정보 수정
+	// 소비금액조회, 정보 수정,
 	public void  Mypage () {
 		System.out.println("내정보보기");
 		System.out.println(loginCustomer);
