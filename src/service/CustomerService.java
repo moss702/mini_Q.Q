@@ -12,7 +12,7 @@ import domain.User;
 
 public class CustomerService {
 	private static final CustomerService CUSTOMER_SERVICE = new CustomerService();
-	public CustomerService () {
+	private   CustomerService () {
 		
 	}
 	public static CustomerService getInstance() {
@@ -20,7 +20,7 @@ public class CustomerService {
 	}
 	
 	List<Customer> customers;
-	private Customer Customer;
+	private static Customer Customer;
 	private char[] loginCustomer;
 
 	
@@ -42,20 +42,33 @@ public class CustomerService {
 				OrderService.getInstance().pay();
 				break;
 			case 5 :
+<<<<<<< HEAD
+				CustomerService.Mypage();;
+=======
 				CustomerService.modify();
 				
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 				break;
 			case 6 :
 				UserService.getInstance().logout();
 				break;
 		}
 	}
+<<<<<<< HEAD
+	// 소비금액조회, 정보 수정
+		static void  Mypage () {
+		System.out.println("내정보보기");
+		System.out.println("loginCustomer");
+		System.out.println("소비금액 조회");
+		//OrderService.getInstance().print(OrderService.getInstance().findByPayment(Customer ));
+=======
 	// 소비금액조회, 정보 수정, 수정후 저장
 	public void Mypage() {
 	    System.out.println("내 정보 보기");
 	    System.out.println(Customer);  
 	    List<Order> payment = OrderService.getInstance().findByPayment(Customer);
 	  //  OrderService.getInstance().print(payment);
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 	}
 
 		public static void modify() {
@@ -79,5 +92,3 @@ public class CustomerService {
 	
 	}
 	
-	
-

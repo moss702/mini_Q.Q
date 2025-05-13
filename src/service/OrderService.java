@@ -16,9 +16,13 @@ import utils.QqUtils;
 public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
+<<<<<<< HEAD
+	private CustomerService cu = CustomerService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
+=======
 	private UserService cu = UserService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
 	private MenuService mu = MenuService.getInstance();
 	User loginCustomer = cu.getLoginUser();
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 	private OrderService() {	}
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
@@ -26,7 +30,11 @@ public class OrderService {
 	private List<Order> orders = new ArrayList<Order>(); // 주문 내역 집합
 	private List<Cart> carts = new ArrayList<>(); // 장바구니
 	private List<Menu> menus = new ArrayList<>(); //메뉴판 목록
+<<<<<<< HEAD
+	static Customer kim = new Customer(1, "김찬", "kim@123", "kim", "1234" ); // 로그인 커스토머 담기 전 임시
+=======
 	
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 	int num ;
 	{	
 		List<Cart> l = new ArrayList<>();
@@ -48,17 +56,17 @@ public class OrderService {
 	
 	//유효값 범위 체크
 	public int checkRangeMenu(int no) {
-		if(no > 0 || no <= 15 ) {
-			return no;	
+		if(no <= 0 || no > 15 ) {
+			throw new IllegalArgumentException("메뉴판에 존재하는 메뉴번호를 입력하여 주십시오.");
 		}
-		throw new IllegalArgumentException("메뉴판에 존재하는 메뉴번호를 입력하여 주십시오.");
+		return no;	
 	}
 	
 	public int checkRangeAmount(int no) {
-		if(no > 0 || no <= 10 ) {
-			return no;	
+		if(no <= 0 || no > 10 ) {
+			throw new IllegalArgumentException("주문하실 수량은 1 ~ 10까지 입력하여 주십시오.");
 		}
-		throw new IllegalArgumentException("주문하실 수량은 1 ~ 10까지 숫자로 입력하여 주십시오.");
+		return no;	
 	}
 	
 	// 주문하기 (장바구니 담기)
@@ -70,8 +78,13 @@ public class OrderService {
 			checkRangeMenu(no);
 			Menu m = MenuService.getInstance().findBy(no); // 숫자 번호는 1번부터
 			if(m == null) {
+<<<<<<< HEAD
 				System.out.println("올바른 메뉴번호를 입력하여주세요.");
 				break;
+=======
+				System.out.println("올바른 메뉴를 입력하여주세요.");
+				return;
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 			}
 			// 수량 입력
 			int amount = QqUtils.nextInt("담을 수량을 입력하세요 > ");
@@ -87,16 +100,8 @@ public class OrderService {
 		}
 	}
 	
-	public void read() {//장바구니 조회 기능
-		System.out.println(carts);
-	}
-	
 	public void deleteItem() { //장바구니에 담은 상품을 결제 전에 뺄 수 있는 기능
 		while(true) {
-			if(carts.isEmpty()) {
-				System.out.println("장바구니가 비었습니다.");
-				break;
-			}
 			System.out.println(carts);
 			int menu = QqUtils.nextInt("결제를 취소하실 메뉴 번호를 선택하여 주십시오. > ");
 			checkRangeMenu(menu);
@@ -106,10 +111,7 @@ public class OrderService {
 					car = c;
 					break;
 				}
-			 System.out.println("담으신 메뉴중에서 선택하여 주십시오.");
-			 return;
 			}	
-			
 			int amount = QqUtils.nextInt("취소하실 수량을 선택하여 주십시오. > ");
 			boolean res = false;
 			if(car.getAmount() >= amount) {	
@@ -122,11 +124,12 @@ public class OrderService {
 					continue;
 				} 
 				System.out.println("주문화면으로 돌아갑니다.");
-				break;
+				System.out.println(carts);
+				return;
 			}
 			if(!res) {
 				System.out.println("올바른 수량을 입력하여주세요.");
-				break;
+				return;
 			}
 		}
 	}
@@ -142,23 +145,29 @@ public class OrderService {
 		if(sales != QqUtils.nextInt(sales + "원을 입력하여주세요. > ")) {
 			System.out.println("올바른 값을 입력하여 주십시오.");
 			System.out.println("주문화면으로 돌아갑니다.");
+			carts.clear();
 			return;
 		}
 		List<Cart> tmp = new ArrayList<>();
 		tmp.addAll(carts);
 		
+<<<<<<< HEAD
+		Order order = new Order(++num, kim, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
+=======
 		Order order = new Order(++num, (Customer)loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
 		System.out.println(orders);  
 		carts.clear();
+		return;
 	}
 	// 결제 취소
-//	public void cancle() { // 취소 했을 때의 시간도 반영되어야 한다.
-//		List<Order> tmp = findByPayment(loginCustomer);// loginCustomer를 집어넣어야 한다.
-//		
-//	}
+	public void cancle() { // 취소 했을 때의 시간도 반영되어야 한다.
+		List<Order> tmp = findByPayment(kim);// loginCustomer를 집어넣어야 한다.
+		
+	}
 	
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
 	public List<Order> findByPayment(Customer c) { //loginCustomer를 집어 넣는다 개인의 주문금액 조회, 쿠폰도 여기서 호출?/ 관리자페이지에서 손님 리스트에 손님객체 대입
@@ -197,10 +206,16 @@ public class OrderService {
 			System.out.println(f + "일 매출 총액 : " + sum);
 	}
 	
+<<<<<<< HEAD
+	public List<Order> findBySalesMonth () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
+=======
 	public void findBySalesMonth () throws ParseException { // 월별 매출 조회 날짜/메뉴/수량/금액
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM");
 		Date d = date.parse(QqUtils.nextLine("조회하실 월을 yyyy-MM 순으로 입력하여 주십시오. >"));
 		String f = date.format(d);
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth()) {					
@@ -241,10 +256,9 @@ public class OrderService {
 			break;
 			
 			case 5 : order.findBySalesMonth();
-			break;
 			
-//			case 6 : order.findByPayment(kim);
-//			break;
+			case 6 : order.findByPayment(kim);
+			break;
 			
 			default : System.out.println("프로그램을 종료합니다");
 			return;
