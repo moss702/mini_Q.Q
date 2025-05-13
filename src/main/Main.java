@@ -2,6 +2,7 @@ package main;
 
 import static utils.QqUtils.nextInt;
 
+import java.text.ParseException;
 
 import domain.Admin;
 import service.AdminService;
@@ -11,7 +12,7 @@ import service.OrderService;
 import service.UserService;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		while(true) {
 			try {	
 				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
@@ -43,7 +44,7 @@ public class Main {
 							break;
 						case 5 : 
 							System.out.println("* 임시 * 매출관리"); 
-						//	OrderService.getInstance().findBySalesDate();
+							OrderService.getInstance().findBySalesDate();
 							break;
 						case 0 :
 							UserService.getInstance().logout();
