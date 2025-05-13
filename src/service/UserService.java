@@ -1,5 +1,6 @@
 package service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,14 +8,13 @@ import java.util.stream.Collectors;
 import domain.Admin;
 import domain.Customer;
 import domain.User;
-import utils.QqUtils;
 
 import static utils.QqUtils.*;
 
 public class UserService {
 	// 싱글톤
 	private static final UserService USER_SERVICE = new UserService();
-	public UserService() {}
+	private UserService() {	}
 	public static UserService getInstance() {
 		return USER_SERVICE;
 	}
@@ -25,10 +25,10 @@ public class UserService {
 
 	// 유저 리스트 초기화 블럭
 	{
-		users.add(new Admin(1, "admin", "1234", "고양이관리자"));
-//		users.add(new Customer(2, "guest1", "1234", "새똥이"));
-//		users.add(new Customer(3, "guest2", "1234", "개똥이"));
-		users.add(new Admin(4, "admin2", "1234", "멍멍이관리자"));
+		users.add(new Admin(1, "고양이관리자", "admin", "1234"));
+		users.add(new Customer(2, "새똥이", "guest1", "1234"));
+		users.add(new Customer(3, "개똥이", "guest2", "1234"));
+		users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
 	}
 	
 	
@@ -39,9 +39,12 @@ public class UserService {
 		return loginUser;
 	}
 	
-	// getUsers -- 유저 리스트 서치
+	// getUsers -- 유저 리스트 서치 
 	public <T extends User> List<T> getUsers(Class<T> clazz) {
-		return users.stream().filter(clazz::isInstance).map(clazz::cast).collect(Collectors.toList());
+		return users.stream().
+		filter(clazz::isInstance).
+		map(clazz::cast).
+		collect(Collectors.toList());
 	}
 	
 	// findBy -- (입력 : id, 클래스 | 출력 : 해당하는 클래스 users 스트림)
@@ -49,28 +52,47 @@ public class UserService {
 		return users.stream().filter(u -> clazz.isInstance(u) && u.getId().equals(id)).map(clazz::cast).findFirst().orElse(null);
 	}
 	
+	// findByID 
+	public User findByID(String id) {
+		for(User u : users) {
+			if(u.getId().equals(id)) {
+				return u;
+			}
+		}
+		return null;
+	}
+	// findByNo 
+	public User findByNo(int no) {
+		for(User u : users) {
+			if(u.getUserNo() == no) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
+
 	// inputName -- 입력제한_이름
 	public String inputName() {
 		String name =  nextLine("[이름을 입력해주세요] > ");		
-		if(!name.matches("[가-힣]{1,4}")) {			
-			throw new IllegalArgumentException("[(!)이름은 한글 1~4글자로 입력하세요]");
+		if(!name.matches("[가-힣a-zA-z]{1,10}")) {
+			throw new IllegalArgumentException("[(!)이름은 한글 또는 영어 1~10글자로 입력하세요]");
 		}
 		return name;
 	}
 	
 	// inputId -- 입력제한_ID
-	public String inputId() {
-		String id = nextLine("[ID를 입력해주세요] > ");	
-		if(!id.matches("[A-Za-z0-9_+&*-]{+}")) {			
-			throw new IllegalArgumentException("[(!)ID는 알파벳, 숫자 조합으로 입력하세요]");
+	public String inputId(String id) {
+		id = nextLine("[ID를 입력해주세요] > ");	
+		if(!id.matches("^[A-Za-z][A-Za-z0-9_+&*-]*")) {			
+			throw new IllegalArgumentException("[(!)ID의 첫글자는 알파벳으로 시작해야 합니다.]\n[(!)영어와 숫자 조합으로 입력하세요]");
 		}
 		return id;
 	}
 	
 	// duplId -- 중복체크_ID
-	public String duplId() {
-		String id = this.inputId();
-		User u = findBy(id, null);
+	public String duplId(String id) {
+		User u = findBy(id, User.class);
 		if(u != null) {
 			throw new IllegalArgumentException("[(!)이미 존재하는 ID 입니다]");
 		}
@@ -78,15 +100,15 @@ public class UserService {
 	}
 	
 	// print -- 출력용 회원 리스트
-	public void printUser(List<User> u) {
-		u.forEach(System.out::println);
-		u.forEach(s -> System.out.println(s));
+	public void printUser() {
+		List<User> users = getInstance().getUsers(User.class);
+		users.forEach(System.out::println);
 	}
-	public void printAdmin(List<Admin> a) {
+	public void printAdmin() {
 		List<Admin> admins = getInstance().getUsers(Admin.class);
 		admins.forEach(System.out::println);
 	}
-	public void printCustomer(List<Customer> c) {
+	public void printCustomer() {
 		List<Customer> customers = getInstance().getUsers(Customer.class);
 		customers.forEach(System.out::println);
 	}
@@ -95,25 +117,22 @@ public class UserService {
 	//----------------- 회원가입
 	public void register() {
 		System.out.println("=======[회원가입 정보 입력]=======");
+		//----이름
+		String name = inputName();
+		
 		//----ID
-		String id = null;
-		inputId();
-		duplId();
+		String id = "a";
+		id = inputId(id);
+		id = duplId(id);
 
 		//----PW
 		String pw = nextLine("[비밀번호를 입력해주세요] > ");
-		
-		//----이름
-		String name = inputName();
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
 		//----회원리스트에 저장 
 		//최초 회원가입시 Customer
-		//1안. Admin 로그인후 beSeller 메소드 호출하여 특정 아이디의 사업자 여부(클래스) 변경)
-		//2안. 회원가입시 코드입력시 admin에 저장
-		//Customer에 생성자 없어서 일단 Admin으로 회원가입함..
-		User users = new Admin(no, id, pw, name);
+		User users = new Customer(no, name, id, pw);
 		this.users.add(users);
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
@@ -122,26 +141,28 @@ public class UserService {
 	
 	//----------------- 회원 정보 수정 (수정가능요소 : ID, PW, name)
 	public void modify(User user) {
-			System.out.println("=======[내 회원정보 수정]=======");
-			String id = nextLine("[수정] ID  입력 > ");
+		System.out.println("=======[내 회원정보 수정]=======");
+		String id = nextLine("[수정] ID  입력 > ");
 //			users = findBy(id, Class<T>);
-			if(id == null) {
-				System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
-				loginUser.setId(id);
-			} else {
-				System.out.println("[(!)이미 존재하는 ID 입니다.]");
-				return;
-			}
-			
-			String name = nextLine("[수정]이름 입력 > ");
-			String pw = nextLine("[수정] PW  입력 > ");
-				System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
-			loginUser.setName(name);
-			loginUser.setPw(pw); 
-			//이걸 loginUser에 저장하는게 아니라 users에 저장해야할것같은디
-			//회원목록을 파일로 익스포트, 파일에 loginUser 정보도 저장해야함.
+		
+		if(id == null) {
+			System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
+			loginUser.setId(id);
+		} else {
+			System.out.println("[(!)이미 존재하는 ID 입니다.]");
+			return;
+		}
+		
+		String name = nextLine("[수정]이름 입력 > ");
+		String pw = nextLine("[수정] PW  입력 > ");
+		System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
+	
+		loginUser.setName(name);
+		loginUser.setPw(pw); 
+		//이걸 loginUser에 저장하는게 아니라 users에 저장해야할것같은디
+		//회원목록을 파일로 익스포트, 파일에 loginUser 정보도 저장해야함.
 
-			System.out.println("[회원 정보가 수정되었습니다.]");
+		System.out.println("[회원 정보가 수정되었습니다.]");
 	}
 	
 	//----------------- 로그인
@@ -181,13 +202,8 @@ public class UserService {
 		logout();
 	}
 	
-	//-----------------관리자 권한 부여
-	//User customer에 있던 정보를 User Admin으로 이동시키기
-	
-	
-	
 // =============================== 테스트용 메인
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		while(true) {
 			try {	
 				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
@@ -203,20 +219,23 @@ public class UserService {
 					}
 				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
-					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [0.로그아웃]");	
+					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원정보삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 					switch (input) {
 						case 1 : 
-							System.out.println("* 임시 * 회원목록조회");
-				//			UserService.getInstance().printAdmin(users);
+							AdminService.getInstance().read();
 							break;
 						case 2 : 
 							AdminService.getInstance().isSeller();
 							break;
 						case 3 : 
-							System.out.println("* 임시 * 회원삭제");
+							AdminService.getInstance().userRemove();
 							break;
 						case 4 : 
-							System.out.println("* 임시 * 메뉴관리"); 
+							MenuService.getInstance().register();
+							break;
+						case 5 : 
+							System.out.println("* 임시 * 매출관리"); 
+							OrderService.getInstance().findBySalesDate();
 							break;
 						case 0 :
 							UserService.getInstance().logout();

@@ -17,7 +17,8 @@ public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
 	private UserService cu = UserService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
-	Customer loginCustomer = (Customer) cu.getLoginUser();
+	private MenuService mu = MenuService.getInstance();
+	User loginCustomer = cu.getLoginUser();
 	private OrderService() {	}
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
@@ -25,11 +26,23 @@ public class OrderService {
 	private List<Order> orders = new ArrayList<Order>(); // 주문 내역 집합
 	private List<Cart> carts = new ArrayList<>(); // 장바구니
 	private List<Menu> menus = new ArrayList<>(); //메뉴판 목록
-//	static Customer kim = new Customer(1, "김찬", "kim@123", "kim", "1234" ); // 로그인 커스토머 담기 전 임시
+	
 	int num ;
-	{
-		
-		
+	{	
+		List<Cart> l = new ArrayList<>();
+		l.add(new Cart(mu.findBy(1), 2));
+		Calendar cal = Calendar.getInstance();
+		cal.set(2025, 4, 1, 18, 30);
+		Date d = cal.getTime();
+		System.out.println(d);
+		orders.add(new Order(++num, (Customer)cu.findByID("guest1"), l, mu.findBy(1).getPrice() * 2, d));
+		l.clear();
+		l.add(new Cart(mu.findBy(4), 1));
+		l.add(new Cart(mu.findBy(11), 2));
+		cal.set(2025, 4, 2, 20, 20);
+		d = cal.getTime();
+		System.out.println(d);
+		orders.add(new Order(++num, (Customer)cu.findByID("guest2"), l, (mu.findBy(4).getPrice() * 1 + mu.findBy(11).getPrice() *  2) , d));
 	}
 	// CRUD
 	
@@ -134,7 +147,7 @@ public class OrderService {
 		List<Cart> tmp = new ArrayList<>();
 		tmp.addAll(carts);
 		
-		Order order = new Order(++num, loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
+		Order order = new Order(++num, (Customer)loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
@@ -162,36 +175,48 @@ public class OrderService {
 		return null;
 	}
 	
-	public List<Order> findBySalesDate () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
+	public void findBySalesDate () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
+		String f = date.format(d);
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth() && o.getDate().getDate() == d.getDate()) {					
 					sales.add(o);
-					System.out.println(sales);
-					return sales;
+				}
+				else {					
+					System.out.println("선택한 일자의 매출 내역이 없습니다.");
+					return;
 				}
 			}
-		System.out.println("선택한 일자의 매출 내역이 없습니다.");
-		System.out.println(sales);
-		return null;
+			int sum = 0;
+			for(Order o : sales) {
+				sum += o.getSales();
+			}
+			System.out.println(sales);
+			System.out.println(f + "일 매출 총액 : " + sum);
 	}
 	
-	public List<Order> findBySalesMonth () throws ParseException { // 월별 매출 조회 날짜/메뉴/수량/금액
+	public void findBySalesMonth () throws ParseException { // 월별 매출 조회 날짜/메뉴/수량/금액
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM");
 		Date d = date.parse(QqUtils.nextLine("조회하실 월을 yyyy-MM 순으로 입력하여 주십시오. >"));
+		String f = date.format(d);
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth()) {					
 					sales.add(o);
-					System.out.println(sales);
-					return sales;
+				}
+				else {					
+					System.out.println("선택한 월의 매출 내역이 없습니다.");
+					return;
 				}
 			}
-		System.out.println("선택한 일자의 매출 내역이 없습니다.");
-		System.out.println(sales);
-		return null;
+			int sum = 0;
+			for(Order o : sales) {
+				sum += o.getSales();
+			}
+			System.out.println(sales);
+			System.out.println(d + "월 매출 총액 : " + sum);
 	}
 
 	

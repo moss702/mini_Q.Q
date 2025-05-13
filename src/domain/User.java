@@ -12,11 +12,11 @@ public abstract class User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(int userNo, String id, String pw, String name) {
+	public User(int userNo, String name, String id, String pw) {
 		this.userNo = userNo;
+		this.name = name;
 		this.id = id;
 		this.pw = pw;
-		this.name = name;
 	}
 
 	//-----------------getter/setter
@@ -49,7 +49,7 @@ public abstract class User {
 	//-----------------투스트링 
 	@Override
 	public String toString() {
-		return "User [userNo=" + userNo + ", id=" + id + ", pw=" + pw + ", name=" + name + "]";
+		return "[회원번호 : " + userNo + " ], [이름 : " + name + " ], [ID : " + id + " ], [PW : " + pw + " ]";
 	}
 
 	
