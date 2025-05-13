@@ -2,9 +2,11 @@ package service;
 
 import static utils.QqUtils.nextInt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.Customer;
+import domain.Order;
 import domain.User;
 import service.UserService;
 
@@ -22,14 +24,12 @@ import utils.QqUtils;
 import static utils.QqUtils.*;
 
 public class AdminService {
-	// 싱글톤
+	//AdminService 싱글톤
 	private static final AdminService ADMIN_SERVICE = new AdminService();
 	public AdminService() {}
 	public static AdminService getInstance() {
 		return ADMIN_SERVICE;
 	}
-	
-	
 	
 // =============================== 메인 호출용 -- 관리자 로그인 상태
 	public void adminInit() throws Exception {
@@ -78,7 +78,7 @@ public class AdminService {
 	}
 	
 	//-----------------관리자 권한 관리
-	//User customer에 있던 정보를 User Admin으로 이동시키기
+	//계정 존재유무 확인 >> 관리자 권한 소지유무 확인 >> 관리자 권한 부여 및 박탈
 	public void isSeller() {
 		System.out.println("=======[관리자 권한 관리]=======");
 		
@@ -86,7 +86,7 @@ public class AdminService {
 
 		User t = UserService.getInstance().findBy(input, User.class);
 		
-	    if (t instanceof Admin) {
+	    if (t instanceof Admin) { //해당 ID가 이미 Admin일때 권한 취소
 	        System.out.print("[(!)이미 관리자 등급인 계정입니다.]\n");
 	        if(nextConfirm("[이 계정의 관리자 권한을 취소하시겠습니까?] > ")) {
 		        UserService.getInstance().users.add(new Customer(t.getUserNo(), t.getName(), t.getId(), t.getPw()));
@@ -95,12 +95,13 @@ public class AdminService {
 	        }
 	        return;
 	    }
-	    if (t instanceof Customer) {
+	    
+	    if (t instanceof Customer) { //해당 ID가 Customer일 때 Admin 권한 부여
 	        UserService.getInstance().users.add(new Admin(t.getUserNo(), t.getName(), t.getId(), t.getPw() ));
 	        UserService.getInstance().users.remove(t);
 	        System.out.printf("[id : \"%s\"에게 관리자 권한이 부여되었습니다.]", input);
 	    }
-	    if (t == null) {
+	    if (t == null) { //해당 ID가 UserList에 존재하지 않을때
 	        System.out.println("[(!)존재하지 않는 계정입니다.]");
 	        return;
 	    }
@@ -149,46 +150,37 @@ public class AdminService {
 	        case 4: 
 	        	MenuService.getInstance().remove();
 	        break;
-        }		
+        }
 //        if (input == 0) break;
 	}
-	
-	
-	
-	
 	
 	//----------------- 매출조회
 	public void salesRecord() {
 		System.out.println("=======[매출조회]=======");
-		int input = nextInt("[1.당일 매출] [2.특정일 매출] [3.특정월 매출] [4.총 누적 매출]");
+		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출] > ");
 		switch (input) {
 		case 1 : //오늘 매출
 			System.out.println("당일매출");
-//			System.out.printf("오늘 매출은 %s원 입니다.", saleTodayTotal);
-			
+			List<Order> od = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, null);
+			OrderService.getInstance().print(od);
 			break;
-		case 2 : //일매출
+		case 2 : //이번달 매출
+			System.out.println("당월매출");
+			List<Order> om = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, null);
+			OrderService.getInstance().print(om);
+			break;
+		case 3 : //일매출
 			String d = nextLine("[일 매출 확인할 날짜를 입력](yyyy-mm-dd) > ");
-			
+			List<Order> old = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, d);
+			OrderService.getInstance().print(old);
 			break;
-		case 3 : //특정월
+		case 4 : //특정월
 			String m = nextLine("[월 매출 확인할 날짜를 입력](yyyy-mm) > ");
-			
+			List<Order> olm = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, m);
+			OrderService.getInstance().print(olm);
 			break;
-		case 4 : //누적
-			System.out.println("누적매출");
-			OrderService.getInstance().totalSales(null)
-			System.out.printf("현재까지 총 누적 매출은 %d원 입니다.", totalSales);			
-			break;
-			
 		}
 	}
-	
-
-//	public static void main(String[] args) {// 구동 연습 메서드
-//		List<Order> orders = getInstance().findOrderBy(QqUtils.DATE_FORMAT_MONTH, "2025-05");
-//		getInstance().print(orders);
-//		System.out.println(getInstance().getSum(orders)); }
 
 	
 } //============================ AdminService 닫기
