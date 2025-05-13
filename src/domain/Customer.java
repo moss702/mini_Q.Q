@@ -6,9 +6,7 @@ public class Customer extends User {
 		super(userNo, id, pw, name);
 	}
 	public void setPassword(String newPw) {
-		
 	}
-
 	
 }
 	
