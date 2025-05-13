@@ -102,30 +102,48 @@ public class MenuService {
 	// 메뉴수정
 //사용자에게 수정할 메뉴 번호를 입력받고, 해당 메뉴가 있으면
 //이름, 카테고리, 가격을 다시 입력받아 값을 변경
-		public void modify() {
-			System.out.println("메뉴 수정");
-		
-			System.out.print("수정할 메뉴 번호 > ");
-			int no = Integer.parseInt(sc.nextLine());
+	public void modify() {
+	    System.out.println("메뉴 수정");
 
-			Menu m = findBy(no);
-			if (m == null) {
-				System.out.println("해당 번호의 메뉴가 존재하지 않습니다.");
-				return;
-			}
+	    System.out.print("수정할 메뉴 번호 > ");
+	    int no = Integer.parseInt(sc.nextLine());
 
-			System.out.print("새 이름 > ");
-			m.setName(sc.nextLine());
+	    Menu m = findBy(no);
+	    if (m == null) {
+	        System.out.println("해당 번호의 메뉴가 존재하지 않습니다.");
+	        return;
+	    }
 
-			System.out.print("새 카테고리 (0:메인, 1:사이드, 2:주류) > ");
-			m.setCategory(Integer.parseInt(sc.nextLine()));
+	    System.out.print("새 이름 > ");
+	    m.setName(sc.nextLine());
+	    int category = -1;
+	    while (true) {
+	        try {
+	            System.out.print("새 카테고리 (0:메인, 1:사이드, 2:주류) > ");
+	            category = Integer.parseInt(sc.nextLine());
+	            if (category < 0 || category > 2) {
+	                throw new IllegalArgumentException("0~2 사이 숫자를 입력하세요.");
+	            }
+	            
+	            
+	            System.out.print("새 가격 > ");
+	    	    int price = Integer.parseInt(sc.nextLine());
+	            if (price < 0) {
+	                throw new IllegalArgumentException("가격은 음수일 수 없습니다.");
+	            }
 
-			System.out.print("새 가격 > ");
-			m.setPrice(Integer.parseInt(sc.nextLine()));
-			
-			System.out.println("메뉴가 수정되었습니다.");
-	
-		}
+	            break; 
+	            
+	        } catch (NumberFormatException e) {
+	            System.out.println("숫자를 입력하세요.");
+	        } catch (IllegalArgumentException e) {
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    m.setCategory(category);
+	    System.out.println("메뉴가 수정되었습니다.");
+	}
+
 	
 // 메뉴삭제
 		public void remove() {
