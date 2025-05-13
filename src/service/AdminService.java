@@ -32,7 +32,7 @@ public class AdminService {
 // =============================== 메인 호출용 -- 관리자 로그인 상태
 	public void adminInit() throws Exception {
 		System.out.println("===============관리자 로그인 상태");
-		int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
+		int input = nextInt("[1.회원목록 조회] [2.관리자 권한 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
 		switch (input) {
 			case 1 : 
 				read();
@@ -47,8 +47,7 @@ public class AdminService {
 				MenuService.getInstance().register();
 				break;
 			case 5 : 
-				System.out.println("* 임시 * 매출조회"); 
-				OrderService.getInstance().findBySalesDate();
+				salesRecord();
 				break;
 			case 0 :
 				UserService.getInstance().logout();
@@ -69,43 +68,39 @@ public class AdminService {
 			break;
 		case 3 : 
 			UserService.getInstance().printCustomer();
-			return;
+			break;
 		} 
 	}
 	
-	
-	//-----------------관리자 권한 부여
+	//-----------------관리자 권한 관리
 	//User customer에 있던 정보를 User Admin으로 이동시키기
 	public void isSeller() {
 		System.out.println("=======[관리자 권한 관리]=======");
-		String id = nextLine("[관리자 권한을 부여할 ID를 입력하세요] > ");
-		User t = UserService.getInstance().findBy(id, User.class);
-
-		if (UserService.getInstance().getUsers(Admin.class).contains(t)){
-			System.out.println("[(!)이미 관리자 등급인 계정입니다.]");
-		} else if (UserService.getInstance().getUsers(Customer.class).contains(t)) {
-			UserService.getInstance().users.add(new Admin(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
-//			UserService.getInstance().users.remove(Customer(t.getUserNo(),t.getName(),t.getId(),t.getPw()));
-			 UserService.getInstance().users.remove(t);
-			System.out.printf("[id : \"%s\"에 관리자 권한이 부여되었습니다.]\n", id);
-		} else {
-			System.out.println("[(!)존재하지 않는 계정입니다.]");
-			return;
-		}
-	}
-	
-	 //관리자 권한 해제메서드
-	public void removeAdminRole() {
-	    String id = nextLine("관리자 권한을 해제할 ID를 입력하세요> ");
-	    User t = UserService.getInstance().findBy(id, Admin.class);
-
-	    if (t == null) {
-	        System.out.println("해당 ID는 관리자 계정이 아닙니다");
+		
+		String input = nextLine("[관리자 권한을 부여할 ID 또는 회원번호를 입력하세요] > ");
+//		if (input == ) { //ID의 시작이 숫자일 수 없으니까 숫자로 시작하면 무조건 회원번호로 취급
+//			User t = UserService.getInstance().findBy(id, User.class);
+//		}
+		User t = UserService.getInstance().findBy(input, User.class);
+		
+	    if (t instanceof Admin) {
+	        System.out.print("[(!)이미 관리자 등급인 계정입니다.]\n");
+	        if(nextConfirm("[이 계정의 관리자 권한을 취소하시겠습니까?] > ")) {
+		        UserService.getInstance().users.add(new Customer(t.getUserNo(), t.getName(), t.getId(), t.getPw()));
+		        UserService.getInstance().users.remove(t);
+		        System.out.printf("[id : \"%s\"의 관리자 권한이 취소되었습니다.]", input);
+	        }
 	        return;
 	    }
-	    UserService.getInstance().users.remove(t);
-	    UserService.getInstance().users.add(new Customer(t.getUserNo(), t.getName(), t.getId(), t.getPw()));
-	    System.out.printf("[id : 의 관리자 권한이 해제되었습니다.]", id);
+	    if (t instanceof Customer) {
+	        UserService.getInstance().users.add(new Admin(t.getUserNo(), t.getName(), t.getId(), t.getPw() ));
+	        UserService.getInstance().users.remove(t);
+	        System.out.printf("[id : \"%s\"에게 관리자 권한이 부여되었습니다.]", input);
+	    }
+	    if (t == null) {
+	        System.out.println("[(!)존재하지 않는 계정입니다.]");
+	        return;
+	    }
 	}
 	
 	//-----------------회원 삭제 //관리자 권한이 있을경우 삭제 불가능
@@ -115,14 +110,14 @@ public class AdminService {
 		String input = nextLine("[삭제할 회원의 ID를 입력하세요] > ");
 		User t = UserService.getInstance().findBy(input, User.class);
 		
-		if(UserService.getInstance().getUsers(User.class).contains(t)) {
-			if (UserService.getInstance().getUsers(Admin.class).contains(t)){
+		if(t instanceof User) {
+			if (t instanceof Admin){
 				System.out.println("[(!)해당 회원은 관리자 권한을 갖고 있습니다.]\n[관리자 권한 해지 후 회원 삭제가 가능합니다.]");
 				return;
 			} else {
 				if(nextConfirm("[이 계정을 정말 삭제하시겠습니까? (Y,YES)] > ")) {
 				UserService.getInstance().users.remove(t);
-				System.out.printf("[id : \"%s\"가 삭제되었습니다.]",input);
+				System.out.printf("[id : \"%s\"가 삭제되었습니다.]", input);
 				} else {
 					System.out.println("[취소되었습니다.]");
 					return;
@@ -133,5 +128,38 @@ public class AdminService {
 			return;
 		}
 	}
+	
+	//----------------- 매출조회
+	public void salesRecord() {
+		System.out.println("=======[매출조회]=======");
+		int input = nextInt("[1.당일 매출] [2.특정일 매출] [3.특정월 매출] [4.총 누적 매출]");
+		switch (input) {
+		case 1 : //오늘 매출
+			System.out.println("당일매출");
+//			System.out.printf("오늘 매출은 %s원 입니다.", saleTodayTotal);
+			
+			break;
+		case 2 : //일매출
+			String d = nextLine("[일 매출 확인할 날짜를 입력](yyyy-mm-dd) > ");
+			
+			break;
+		case 3 : //특정월
+			String m = nextLine("[월 매출 확인할 날짜를 입력](yyyy-mm) > ");
+			
+			break;
+		case 4 : //누적
+			System.out.println("누적매출");
+//			System.out.printf("현재까지 총 누적 매출은 %s원 입니다.", saleTotal);			
+			break;
+			
+		}
+	}
+	
+
+//	public static void main(String[] args) {// 구동 연습 메서드
+//		List<Order> orders = getInstance().findOrderBy(QqUtils.DATE_FORMAT_MONTH, "2025-05");
+//		getInstance().print(orders);
+//		System.out.println(getInstance().getSum(orders)); }
+
 	
 } //============================ AdminService 닫기
