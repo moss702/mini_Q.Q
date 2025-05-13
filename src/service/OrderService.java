@@ -37,7 +37,7 @@ public class OrderService {
 		Date d = cal.getTime();
 		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest1"), l, mu.findBy(1).getPrice() * 2, d));
-		l.clear();
+		l = new ArrayList<Cart>();
 		l.add(new Cart(mu.findBy(4), 1));
 		l.add(new Cart(mu.findBy(11), 2));
 		cal.set(2025, 4, 2, 20, 20);
@@ -143,77 +143,70 @@ public class OrderService {
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
-		System.out.println(orders);  
-		carts.clear();
+		print(orders);
+		carts = new ArrayList<Cart>();
 		return;
+	}
+	
+	public void print (List<Order> orders) {
+		System.out.println(orders);
 	}
 
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
-	public List<Order> findByPayment(Customer c) { //loginCustomer를 집어 넣는다 개인의 주문금액 조회, 쿠폰도 여기서 호출?/ 관리자페이지에서 손님 리스트에 손님객체 대입
+	public List<Order> findByPayment(User u) { //loginCustomer의 주문금액 조회 관리자페이지에서 손님 리스트에 손님객체 대입
 		//손님 한 명당 가지고 있는 주문 수는 여러개 일 수 있으므로 리스트 타입으로 반환
 		List<Order> tmp = new ArrayList<Order>();
 		for (Order o : orders) {
-			if(c == o.getCustomer()) {
+			if(u == o.getCustomer()) {
 				tmp.add(o);
-				System.out.println(tmp);
-				return tmp;
 			}
 		}
-		System.out.println("주문 내역이 없습니다.");
-		return null;
+		if(tmp.isEmpty()) {	
+			System.out.println("주문 내역이 없습니다.");
+		}
+		print(tmp);
+		return tmp;
 	}
 	
-	public void findBySalesDate () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
-		String f = date.format(d);
-		List<Order> sales = new ArrayList<Order>();
-			for(Order o : orders) {
-				if(o.getDate().getMonth() == d.getMonth() && o.getDate().getDate() == d.getDate()) {					
-					sales.add(o);
+	public List<Order> findOrderBy (SimpleDateFormat sdf, String str)  { //관리자 서비스에서 List<Order>를 지역변수로 만들어놓고 집어너헝서 반환 받으시면 됩니다.
+		//사용 예시는 아래 메인메서드에 있습니다. 
+		List<Order> tmp = new ArrayList<Order>();
+			if (str == null) {
+				for(Order o : orders) {
+					if(o.getDate().equals(sdf.format(new Date().getDate())) ) // 입력 값이 없을경우 그날 매출 반환
+						tmp.add(o);
 				}
-				else {					
-					System.out.println("선택한 일자의 매출 내역이 없습니다.");
-					return;
+			} else {
+				for(Order o : orders) {
+					if(str.equals(sdf.format(o.getDate()))) {					
+						tmp.add(o);
+					}
 				}
 			}
-			int sum = 0;
-			for(Order o : sales) {
-				sum += o.getSales();
+			if(tmp.isEmpty()) {
+				System.out.println("주문내역이 없습니다.");
 			}
-			System.out.println(sales);
-			System.out.println(f + "일 매출 총액 : " + sum);
+			
+			return tmp;
+	}
+	
+	public int totalSales(List<Order> orders) { // 관리자 및 커스토머 서비스에서 List<Order> 를 지역변수로 만들어놓고 집어넣어서 반환 받으시면 됩니다.
+		int sum = 0; 
+		for(Order o : orders) {
+			sum += o.getSales();
+		}
+		return sum;
 	}
 	
 
-	public void findBySalesMonth () throws ParseException { // 월별 매출 조회 날짜/메뉴/수량/금액
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM");
-		Date d = date.parse(QqUtils.nextLine("조회하실 월을 yyyy-MM 순으로 입력하여 주십시오. >"));
-		String f = date.format(d);
 
-		List<Order> sales = new ArrayList<Order>();
-			for(Order o : orders) {
-				if(o.getDate().getMonth() == d.getMonth()) {					
-					sales.add(o);
-				}
-				else {					
-					System.out.println("선택한 월의 매출 내역이 없습니다.");
-					return;
-				}
-			}
-			int sum = 0;
-			for(Order o : sales) {
-				sum += o.getSales();
-			}
-			System.out.println(sales);
-			System.out.println(d + "월 매출 총액 : " + sum);
-	}
-
-	
-	
 	public static void main(String[] args) throws ParseException {// 구동 연습 메서드
 		System.out.println(new Date());
 		OrderService order = ORDER_SERVICE.getInstance();
+		
+		
+		
+		
 		Date d = new Date();
 		while(true) {
 			int no = QqUtils.nextInt(" 1. 장바구니담기,  2. 장바구니 빼기 3. 결제하기  4. 일별매출점검  5. 월별매출점검 6. 주문내역 점검(손님기준) 7. 종료");
@@ -227,11 +220,13 @@ public class OrderService {
 			case 3 : order.pay();;
 			break;
 				
-			case 4 : order.findBySalesDate(); 
+			case 4 : order.findByPayment(UserService.getInstance().getLoginUser()); 
 			break;
 			
-			case 5 : order.findBySalesMonth();
-			
+			case 5 : System.out.println("월별 매출조회 기능입니다.");
+			List<Order> ol = order.findOrderBy(QqUtils.DATE_FORMAT_MONTH, QqUtils.nextLine("yyyy-mm 형식으로 입력하여주세요. >"));
+				 order.print(ol);
+			break;
 //			case 6 : order.findByPayment();
 //			break;
 			

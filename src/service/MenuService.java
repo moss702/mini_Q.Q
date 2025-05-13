@@ -24,7 +24,7 @@ public class MenuService {
 	private List<Menu> menus = new ArrayList<Menu>(); 
 	{
 		menus.add(new Menu(2, "두부조림", 0, 12_000));
-		menus.add(new Menu(3, "술찜", 0, 18_000));
+		menus.add(new Menu(17, "술찜", 0, 18_000));
 		menus.add(new Menu(14, "하이볼", 2, 8_000));
 		menus.add(new Menu(7, "김치전", 0, 10_000));
 		menus.add(new Menu(8, "타코와사비", 1, 8_000));
@@ -52,31 +52,52 @@ public class MenuService {
 	// 메뉴 등록
 //	메뉴 번호, 이름, 카테고리, 가격을 사용자 입력으로 받아서
 //	중복 번호 확인 후, 새로 만든 Menu 객체를 menus 리스트에 추가
-		public void register() {
-			System.out.println(" 메뉴 등록");
+	public void register() {
+	    System.out.println(" 메뉴 등록");
 
-			System.out.print("메뉴 번호 > ");
-		
-			int no = Integer.parseInt(sc.nextLine());
-           
-			Menu m = findBy(no);
-			if (m != null) {
-				System.out.println("중복된 메뉴 번호가 존재합니다.");
-				return;
-			}
-			System.out.print("메뉴 이름 > ");
-			String name = sc.nextLine();
+	    try {
+	        System.out.print("메뉴 번호 > ");
+	        int no = Integer.parseInt(sc.nextLine());
+	        if (no < 0) {
+	            throw new IllegalArgumentException("메뉴 번호는 음수일 수 없습니다.");
+	        }
 
-			System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
-			int category = Integer.parseInt(sc.nextLine());
-			
-			System.out.print("가격 >");
-			int price = Integer.parseInt(sc.nextLine());
-			
-			Menu m1 = new Menu(no, name, category, price);
-			menus.add(m1);
-			System.out.println("메뉴가 등록되었습니다.");
-		}
+	        Menu m = findBy(no);
+	        if (m != null) {
+	            System.out.println("중복된 메뉴 번호가 존재합니다.");
+	            return;
+	        }
+
+	        System.out.print("메뉴 이름 > ");
+	        String name = sc.nextLine();
+
+	        System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
+	        int category = Integer.parseInt(sc.nextLine());
+	        if (category < 0 || category > 2) {
+	            throw new IllegalArgumentException("카테고리는 0~2 사이의 값이어야 합니다.");
+	        }
+
+	        System.out.print("가격 > ");
+	        int price = Integer.parseInt(sc.nextLine());
+	        if (price < 0) {
+	            throw new IllegalArgumentException("가격은 음수일 수 없습니다.");
+	        }
+
+	        Menu newMenu = new Menu(no, name, category, price);
+	        menus.add(newMenu);
+	        System.out.println("메뉴가 등록되었습니다.");
+
+	    } catch (NumberFormatException e) {
+	    	System.out.println(" 숫자를정확하게 입력하세요");
+	    	System.out.println("입력오류"+e.getMessage());
+	    }
+	    catch(IllegalArgumentException e) {
+	    	System.out.println("알수없는 번호입니다");
+	    	System.out.println("음수를입력하였습니다"+e.getMessage());
+	    }	
+	    
+	}
+
 	// 메뉴수정
 //사용자에게 수정할 메뉴 번호를 입력받고, 해당 메뉴가 있으면
 //이름, 카테고리, 가격을 다시 입력받아 값을 변경
@@ -149,23 +170,39 @@ public class MenuService {
 	  
 //메뉴 리스트를 화면에 하나씩 출력 System.out.println(s)는 Menu 클래스의 toString()을 자동으로 사용
 	public void print(List<Menu> menus) {
-		 System.out.println("메뉴순서조회기능");	 
-		menus.forEach(s -> System.out.println(s));
+		System.out.println("메뉴순서조회기능");	
+		String[] menuNames = {"메인", "사이드", "주류"};
+		
+		boolean change = true;//true무조건 한번은해야함
+		int prev = -1;   // -1부터시작해서
+		for(Menu m : menus) {  
+			change = m.getCategory() != prev; 
+			if(change) {
+				System.out.println("===========================" + menuNames[++prev] + "===========================");
+			}
+			System.out.println(m);
+		}
+//		menus.forEach(s -> System.out.println(s));
 	}
+	
+	// category 오름차순?
+	// no 오름차순
 	
 	public void rank() {
-		Collections.sort(menus,(o1, o2) -> o1.getCategory() - o2.getCategory());
+		Collections.sort(menus, (o1, o2) -> {
+			int result = o1.getCategory() - o2.getCategory();
+			if(result == 0) return o1.getNo() - o2.getNo();
+			return result;
+		});
 		print(menus);
-		
-		
 	}
+//		Collections.sort(menus,(o1, o2) -> o1.getCategory() - o2.getCategory());
+//		print(menus);
+//		
+//		Collections.sort(menus,(o1, o2) -> o1.getNo() - o2.getNo());
+//		print(menus);
+//			
 	
-	public void sank() {
-		Collections.sort(menus,(o1, o2) -> o1.getNo() - o2.getNo());
-		print(menus);
-		
-	}
-
 	// 가격 범위로 메뉴 검색할수있는기능
 	public void PriceRange() {
 	    System.out.print("최소 가격 > ");

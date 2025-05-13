@@ -32,24 +32,27 @@ public class AdminService {
 // =============================== 메인 호출용 -- 관리자 로그인 상태
 	public void adminInit() throws Exception {
 		System.out.println("===============관리자 로그인 상태");
-		int input = nextInt("[1.회원목록 조회] [2.관리자 권한 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
+		int input = nextInt("[1.회원목록 조회] [2.관리자 권한 관리] [3.회원삭제] [4.메뉴관리] [5.매출조회] | [9.내정보수정] [0.로그아웃]");	
 		switch (input) {
-			case 1 : 
+			case 1 : //회원목록 조회
 				read();
 				break;
-			case 2 : 
+			case 2 : //관리자 권한 관리
 				isSeller();
 				break;
-			case 3 : 
+			case 3 : //회원삭제
 				userRemove();
 				break;
-			case 4 : 
+			case 4 : //메뉴관리
 				MenuService.getInstance().register();
 				break;
-			case 5 : 
+			case 5 : //매출조회
 				salesRecord();
 				break;
-			case 0 :
+			case 9 ://내정보수정
+				UserService.getInstance().modify();
+				break;
+			case 0 : //로그아웃
 				UserService.getInstance().logout();
 				break;
 		}
@@ -60,13 +63,13 @@ public class AdminService {
 		System.out.println("=======[회원 목록 조회]=======");
 		int input = nextInt("[1.전체회원 보기] [2.관리자회원 보기] [3.일반회원 보기]");
 		switch (input) {
-		case 1 : 
+		case 1 : //전체회원보기
 			UserService.getInstance().printUser();
 			break;
-		case 2 : 
+		case 2 : //관리자회원보기
 			UserService.getInstance().printAdmin();
 			break;
-		case 3 : 
+		case 3 : //일반회원보기
 			UserService.getInstance().printCustomer();
 			break;
 		} 
@@ -78,9 +81,7 @@ public class AdminService {
 		System.out.println("=======[관리자 권한 관리]=======");
 		
 		String input = nextLine("[관리자 권한을 부여할 ID 또는 회원번호를 입력하세요] > ");
-//		if (input == ) { //ID의 시작이 숫자일 수 없으니까 숫자로 시작하면 무조건 회원번호로 취급
-//			User t = UserService.getInstance().findBy(id, User.class);
-//		}
+
 		User t = UserService.getInstance().findBy(input, User.class);
 		
 	    if (t instanceof Admin) {
@@ -104,8 +105,8 @@ public class AdminService {
 	}
 	
 	//-----------------회원 삭제 //관리자 권한이 있을경우 삭제 불가능
-	public void userRemove() {
 	//계정 존재유무 확인 >> 관리자 권한 소지유무 확인 >> 정말 삭제할건지 확인
+	public void userRemove() {
 		System.out.println("=======[회원 정보 삭제]=======");
 		String input = nextLine("[삭제할 회원의 ID를 입력하세요] > ");
 		User t = UserService.getInstance().findBy(input, User.class);
