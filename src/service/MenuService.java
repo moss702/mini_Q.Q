@@ -61,7 +61,7 @@ public class MenuService {
 	        if (no < 0) {
 	            throw new IllegalArgumentException("메뉴 번호는 음수일 수 없습니다.");
 	        }
-
+	        	
 	        Menu m = findBy(no);
 	        if (m != null) {
 	            System.out.println("중복된 메뉴 번호가 존재합니다.");
@@ -70,7 +70,8 @@ public class MenuService {
 
 	        System.out.print("메뉴 이름 > ");
 	        String name = sc.nextLine();
-
+	        
+	        
 	        System.out.print("카테고리 (0:메인, 1:사이드, 2:주류) > ");
 	        int category = Integer.parseInt(sc.nextLine());
 	        if (category < 0 || category > 2) {
@@ -83,8 +84,8 @@ public class MenuService {
 	            throw new IllegalArgumentException("가격은 음수일 수 없습니다.");
 	        }
 
-	        Menu newMenu = new Menu(no, name, category, price);
-	        menus.add(newMenu);
+	        Menu enus = new Menu(no, name, category, price);
+	        menus.add(enus);
 	        System.out.println("메뉴가 등록되었습니다.");
 
 	    } catch (NumberFormatException e) {
@@ -92,8 +93,8 @@ public class MenuService {
 	    	System.out.println("입력오류"+e.getMessage());
 	    }
 	    catch(IllegalArgumentException e) {
-	    	System.out.println("알수없는 번호입니다");
-	    	System.out.println("음수를입력하였습니다"+e.getMessage());
+	    
+	    	System.out.println("오류입니다"  +  e.getMessage());
 	    }	
 	    
 	}
@@ -103,7 +104,7 @@ public class MenuService {
 //이름, 카테고리, 가격을 다시 입력받아 값을 변경
 		public void modify() {
 			System.out.println("메뉴 수정");
-
+		
 			System.out.print("수정할 메뉴 번호 > ");
 			int no = Integer.parseInt(sc.nextLine());
 
@@ -123,6 +124,7 @@ public class MenuService {
 			m.setPrice(Integer.parseInt(sc.nextLine()));
 			
 			System.out.println("메뉴가 수정되었습니다.");
+	
 		}
 	
 // 메뉴삭제
@@ -142,13 +144,14 @@ public class MenuService {
 		   
 		    System.out.printf("'%s' 메뉴를 정말 삭제하시겠습니까? (Y/N) > ", m.getName());
 		    String confirm = sc.nextLine().trim();
-
+		    
 		    if (confirm.equals("Y") || confirm.equals("y")) {
 		        menus.remove(m);
 		        System.out.println("메뉴가 삭제되었습니다.");
 		    } else {
 		        System.out.println("삭제가 취소되었습니다.");
 		    }
+		
 		}
 
 //	// 메뉴조회
