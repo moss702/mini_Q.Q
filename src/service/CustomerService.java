@@ -31,9 +31,16 @@ public class CustomerService {
 		int input = nextInt("[1.메뉴보기 2. 장바구니 담기 3. 장바구니 빼기 4. 결제하기 5.내정보 6. 로그아웃]");	
 		//메뉴보기 - 메뉴클래스 , 장바구니 담기, 장바구니 빼기, 결제하기 - order 클래스
 		switch (input) {
-			case 1 : 
-				MenuService.getInstance().read();
-				break;
+			case 1 : while (true) {
+	                int menuInput = nextInt("[1.가격 범위로 메뉴 검색] [2.선택한메뉴 가격 합계] [0.뒤로가기]");
+	                switch (menuInput) {
+	                    case 1: MenuService.getInstance(). PriceRange(); break;
+	                    case 2: MenuService.getInstance().totalMenuPrice();break;
+	                }
+	                if (menuInput == 0) break;
+			}
+		     	break;
+	         
 			case 2: 
 				OrderService.getInstance().getItem();
 				break;
