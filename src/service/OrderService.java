@@ -191,12 +191,10 @@ public class OrderService {
 			return tmp;
 	}
 	
-	public int totalSales(List<Order> orders) { // 관리자 및 커스토머 서비스에서 List<Order> 를 지역변수로 만들어놓고 집어넣어서 반환 받으시면 됩니다.
-		int sum = 0; 
+	public void printSalesList(List<Order> orders) { // 관리자 및 커스토머 서비스에서 List<Order> 를 지역변수로 만들어놓고 집어넣어서 반환 받으시면 됩니다. 
 		for(Order o : orders) {
-			sum += o.getSales();
+			System.out.println(o);
 		}
-		return sum;
 	}
 	
 
@@ -226,7 +224,7 @@ public class OrderService {
 			
 			case 5 : System.out.println("월별 매출조회 기능입니다.");
 			List<Order> ol = order.findOrderBy(QqUtils.DATE_FORMAT_MONTH, QqUtils.nextLine("yyyy-mm 형식으로 입력하여주세요. >"));
-//				 order.print(ol);
+			order.printSalesList(ol);
 			break;
 //			case 6 : order.findByPayment();
 //			break;
