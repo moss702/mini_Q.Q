@@ -42,7 +42,7 @@ public class CustomerService {
 				OrderService.getInstance().pay();
 				break;
 			case 5 :
-				CustomerService.Mypage();;
+//				CustomerService.Mypage();;
 				CustomerService.modify();
 				
 				break;
@@ -52,18 +52,18 @@ public class CustomerService {
 		}
 	}
 	// 소비금액조회, 정보 수정
-		static void  Mypage () {
-		System.out.println("내정보보기");
-		System.out.println("loginCustomer");
-		System.out.println("소비금액 조회");
-		//OrderService.getInstance().print(OrderService.getInstance().findByPayment(Customer ));
-	// 소비금액조회, 정보 수정, 수정후 저장
-	public void Mypage() {
-	    System.out.println("내 정보 보기");
-	    System.out.println(Customer);  
-	    List<Order> payment = OrderService.getInstance().findByPayment(Customer);
-	  //  OrderService.getInstance().print(payment);
-	}
+//		static void  Mypage () {
+//		System.out.println("내정보보기");
+//		System.out.println("loginCustomer");
+//		System.out.println("소비금액 조회");
+//		//OrderService.getInstance().print(OrderService.getInstance().findByPayment(Customer ));
+//	// 소비금액조회, 정보 수정, 수정후 저장
+//	public void Mypage() {
+//	    System.out.println("내 정보 보기");
+//	    System.out.println(Customer);  
+//	    List<Order> payment = OrderService.getInstance().findByPayment(Customer);
+//	  //  OrderService.getInstance().print(payment);
+//	}
 
 		public static void modify() {
 		    System.out.println("정보 수정");
