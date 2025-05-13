@@ -33,16 +33,14 @@ public class OrderService {
 		List<Cart> l = new ArrayList<>();
 		l.add(new Cart(mu.findBy(1), 2));
 		Calendar cal = Calendar.getInstance();
-		cal.set(2025, 4, 1, 18, 30);
+		cal.set(2025, Calendar.MAY, 1, 18, 30);
 		Date d = cal.getTime();
-		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest1"), l, mu.findBy(1).getPrice() * 2, d));
 		l = new ArrayList<Cart>();
 		l.add(new Cart(mu.findBy(4), 1));
 		l.add(new Cart(mu.findBy(11), 2));
-		cal.set(2025, 4, 2, 20, 20);
+		cal.set(2025, Calendar.MARCH, 25, 20, 20);
 		d = cal.getTime();
-		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest2"), l, (mu.findBy(4).getPrice() * 1 + mu.findBy(11).getPrice() *  2) , d));
 	}
 	// CRUD
@@ -150,6 +148,10 @@ public class OrderService {
 	
 	public void print (List<Order> orders) {
 		System.out.println(orders);
+	}
+	
+	public void CartCheck () {
+		System.out.println(carts);
 	}
 
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
