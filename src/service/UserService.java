@@ -146,7 +146,7 @@ public class UserService {
 	//----------------- 회원 정보 수정 (수정가능요소 : ID, PW, name)
 	public void modify() {
 		System.out.println("=======[내 회원정보 수정]=======");
-		System.out.println("[수정할 정보 입력중입니다]");
+		System.out.println("[수정할 정보를 입력하세요]");
 		String id = "0";
 		id = inputId(id);
 		User t = findBy(id, User.class);
@@ -198,7 +198,7 @@ public class UserService {
 	//-----------------탈퇴/계정삭제
 	public void remove() {
 		System.out.println("=======[탈퇴 서비스]=======");
-		if(!nextConfirm("[정말 탈퇴하시겠습니까?]")) {
+		if(nextConfirm("[정말 탈퇴하시겠습니까?](y/yes)")) {
 			UserService.getInstance().users.remove(loginUser);
 			System.out.println("[정상적으로 탈퇴 되었습니다.]");			
 			logout();
