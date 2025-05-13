@@ -121,7 +121,7 @@ public class UserService {
 		String name = inputName();
 		
 		//----ID
-		String id = "a";
+		String id = "0";
 		id = inputId(id);
 		id = duplId(id);
 
@@ -130,8 +130,7 @@ public class UserService {
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
-		//----회원리스트에 저장 
-		//최초 회원가입시 Customer
+		//----회원리스트에 저장 (최초 회원가입시 Customer)
 		User users = new Customer(no, name, id, pw);
 		this.users.add(users);
 		
@@ -143,24 +142,21 @@ public class UserService {
 	public void modify(User user) {
 		System.out.println("=======[내 회원정보 수정]=======");
 		String id = nextLine("[수정] ID  입력 > ");
-//			users = findBy(id, Class<T>);
 		
-		if(id == null) {
+		User t = UserService.getInstance().findBy(id, User.class);
+	
+		if(t == null) {
 			System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
 			loginUser.setId(id);
-		} else {
-			System.out.println("[(!)이미 존재하는 ID 입니다.]");
-			return;
 		}
 		
-		String name = nextLine("[수정]이름 입력 > ");
+		//
+		String name = inputName();
 		String pw = nextLine("[수정] PW  입력 > ");
 		System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
 	
 		loginUser.setName(name);
 		loginUser.setPw(pw); 
-		//이걸 loginUser에 저장하는게 아니라 users에 저장해야할것같은디
-		//회원목록을 파일로 익스포트, 파일에 loginUser 정보도 저장해야함.
 
 		System.out.println("[회원 정보가 수정되었습니다.]");
 	}
@@ -196,67 +192,14 @@ public class UserService {
 	public void remove() {
 		System.out.println("=======[탈퇴 서비스]=======");
 		if(!nextConfirm("[정말 탈퇴하시겠습니까?]")) {
+			UserService.getInstance().users.remove(loginUser);
+			System.out.println("[정상적으로 탈퇴 되었습니다.]");			
+			logout();
+			return;
+		} else {
+			System.out.println("[탈퇴 취소되었습니다.]");
 			return;
 		}
-		users.remove(loginUser);
-		logout();
 	}
-	
-// =============================== 테스트용 메인
-	public static void main(String[] args) throws Exception {
-		while(true) {
-			try {	
-				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
-					int input = nextInt("[1.회원가입] [2.로그인]");
-					switch (input) {
-						case 1 : 
-							UserService.getInstance().register();
-							break;
-						
-						case 2 : 
-							UserService.getInstance().login();
-							break;
-					}
-				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
-					System.out.println("===============관리자 로그인 상태");
-					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원정보삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
-					switch (input) {
-						case 1 : 
-							AdminService.getInstance().read();
-							break;
-						case 2 : 
-							AdminService.getInstance().isSeller();
-							break;
-						case 3 : 
-							AdminService.getInstance().userRemove();
-							break;
-						case 4 : 
-							MenuService.getInstance().register();
-							break;
-						case 5 : 
-							System.out.println("* 임시 * 매출관리"); 
-							OrderService.getInstance().findBySalesDate();
-							break;
-						case 0 :
-							UserService.getInstance().logout();
-							break;
-					}
-				} else {
-					System.out.println("===============손님 로그인 상태"); 
-					int input = nextInt("[0.로그아웃]");	
-					switch (input) {
-						case 0 : 
-							UserService.getInstance().logout();
-							break;
-					}
-				}
-			}	catch (NumberFormatException e) {
-				System.out.println("정확한 숫자를 입력하세요");
-			}	catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-
-		} //while(true) 닫기
-	}//테스트용 main 닫기
 
 } //UserService 닫기

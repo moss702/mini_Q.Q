@@ -16,7 +16,6 @@ import utils.QqUtils;
 public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
-	private CustomerService cu = CustomerService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
 	private UserService cu = UserService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
 	private MenuService mu = MenuService.getInstance();
 	User loginCustomer = cu.getLoginUser();
@@ -74,8 +73,6 @@ public class OrderService {
 			if(m == null) {
 				System.out.println("올바른 메뉴번호를 입력하여주세요.");
 				break;
-				System.out.println("올바른 메뉴를 입력하여주세요.");
-				return;
 			}
 			// 수량 입력
 			int amount = QqUtils.nextInt("담을 수량을 입력하세요 > ");
@@ -142,11 +139,7 @@ public class OrderService {
 		List<Cart> tmp = new ArrayList<>();
 		tmp.addAll(carts);
 		
-<<<<<<< HEAD
-		Order order = new Order(++num, kim, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
-=======
 		Order order = new Order(++num, (Customer)loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
@@ -154,12 +147,7 @@ public class OrderService {
 		carts.clear();
 		return;
 	}
-	// 결제 취소
-	public void cancle() { // 취소 했을 때의 시간도 반영되어야 한다.
-		List<Order> tmp = findByPayment(kim);// loginCustomer를 집어넣어야 한다.
-		
-	}
-	
+
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
 	public List<Order> findByPayment(Customer c) { //loginCustomer를 집어 넣는다 개인의 주문금액 조회, 쿠폰도 여기서 호출?/ 관리자페이지에서 손님 리스트에 손님객체 대입
 		//손님 한 명당 가지고 있는 주문 수는 여러개 일 수 있으므로 리스트 타입으로 반환
@@ -197,16 +185,12 @@ public class OrderService {
 			System.out.println(f + "일 매출 총액 : " + sum);
 	}
 	
-<<<<<<< HEAD
-	public List<Order> findBySalesMonth () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
-=======
+
 	public void findBySalesMonth () throws ParseException { // 월별 매출 조회 날짜/메뉴/수량/금액
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM");
 		Date d = date.parse(QqUtils.nextLine("조회하실 월을 yyyy-MM 순으로 입력하여 주십시오. >"));
 		String f = date.format(d);
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
+
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
 				if(o.getDate().getMonth() == d.getMonth()) {					
@@ -248,8 +232,8 @@ public class OrderService {
 			
 			case 5 : order.findBySalesMonth();
 			
-			case 6 : order.findByPayment(kim);
-			break;
+//			case 6 : order.findByPayment();
+//			break;
 			
 			default : System.out.println("프로그램을 종료합니다");
 			return;

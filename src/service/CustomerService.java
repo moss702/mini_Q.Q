@@ -10,7 +10,9 @@ import domain.Menu;
 import domain.Order;
 import domain.User;
 
+
 public class CustomerService {
+	
 	private static final CustomerService CUSTOMER_SERVICE = new CustomerService();
 	private   CustomerService () {
 		
@@ -52,12 +54,12 @@ public class CustomerService {
 	// 소비금액조회, 정보 수정
 		public static void  Mypage () {
 			System.out.println("소비금액 조회");
-			String ord = nextLine("소비금액 >");
-		//	OrderService o = findBy(ord, null);
+			String ord = nextLine("소비금액 > ");
+			OrderService.getInstance().findByPayment(Customer c);
+			return;
 			
 		}
 	// 소비금액조회, 정보 수정, 수정 후 저장
-
 		public static void modify() {
 		    System.out.println("정보 수정");
 
@@ -71,7 +73,9 @@ public class CustomerService {
 
 		    String newPw = nextLine("새 비밀번호 > ");
 		    c.setPassword(newPw);
+	
 	}
+		
 		private static domain.Customer findBy(String pw, Object object) {
 			// TODO Auto-generated method stub
 			return null;
@@ -82,4 +86,5 @@ public class CustomerService {
 	}
 		
 }
+
 	
