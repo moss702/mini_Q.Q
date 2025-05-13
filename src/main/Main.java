@@ -2,7 +2,6 @@ package main;
 
 import static utils.QqUtils.nextInt;
 
-
 import domain.Admin;
 import service.AdminService;
 import service.CustomerService;
@@ -11,20 +10,21 @@ import service.OrderService;
 import service.UserService;
 
 public class Main {
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws Exception {
 		while(true) {
 			try {	
-				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
+				if(UserService.getInstance().getLoginUser() == null) { // 비로그인 상태
 					int input = nextInt("[1.회원가입] [2.로그인]");
 					switch (input) {
 						case 1 : 
 							UserService.getInstance().register();
 							break;
-						
 						case 2 : 
 							UserService.getInstance().login();
 							break;
 					}
+<<<<<<< HEAD
 				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원정보삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
@@ -82,6 +82,12 @@ public class Main {
 					            }
 					            break;
 					}
+=======
+				} else if(UserService.getInstance().getLoginUser() instanceof Admin){
+					AdminService.getInstance().adminInit(); // Login Admin
+				} else { 
+					CustomerService.getInstance().init(); // Login Customer
+>>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 				}
 			}
 				catch (NumberFormatException e) {
@@ -89,7 +95,6 @@ public class Main {
 			}	catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
-
 		} //while(true) 닫기
 	}
 }

@@ -76,6 +76,6 @@ public class Order {
 	}
 	@Override
 	public String toString() {
-		return "주문내역 " + "주문 번호 : " + num +  ", 손님 정보 : " + customer.getId() + ", 주문내역 : " + cart + ", 결제 금액 : " + sales +  "원, 결제 시간 : " + date;
+		return "주문 번호 : " + num +  ", 손님 정보 : " + customer.getId() + ", 주문상품 : " + cart + ", 결제 금액 : " + sales +  "원, 결제 시간 : " + date;
 	}
 }
