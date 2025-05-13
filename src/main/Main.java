@@ -82,11 +82,10 @@ public class Main {
 					            break;
 					}
 
-				} else if(UserService.getInstance().getLoginUser() instanceof Admin){
+				} if(UserService.getInstance().getLoginUser() instanceof Admin){
 					AdminService.getInstance().adminInit(); // Login Admin
 				} else { 
 					CustomerService.getInstance().init(); // Login Customer
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 				}
 			}
 				catch (NumberFormatException e) {
