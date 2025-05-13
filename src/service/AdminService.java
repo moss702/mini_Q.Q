@@ -150,37 +150,37 @@ public class AdminService {
 	        case 4: 
 	        	MenuService.getInstance().remove();
 	        break;
-        }		
+        }
 //        if (input == 0) break;
 	}
 	
 	//----------------- 매출조회
 	public void salesRecord() {
 		System.out.println("=======[매출조회]=======");
-		int input = nextInt("[1.당일 매출] [2.특정일 매출] [3.특정월 매출]");
+		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출]");
 		switch (input) {
 		case 1 : //오늘 매출
 			System.out.println("당일매출");
-//			System.out.printf("오늘 매출은 %s원 입니다.", saleTodayTotal);
+			List<Order> od = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, null);
+			OrderService.getInstance().print(od);
 			break;
-		case 2 : //일매출
+		case 2 : //이번달 매출
+			System.out.println("당월매출");
+			List<Order> om = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, null);
+			OrderService.getInstance().print(om);
+			break;
+		case 3 : //일매출
 			String d = nextLine("[일 매출 확인할 날짜를 입력](yyyy-mm-dd) > ");
 			List<Order> old = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, d);
 			OrderService.getInstance().print(old);
 			break;
-		case 3 : //특정월
+		case 4 : //특정월
 			String m = nextLine("[월 매출 확인할 날짜를 입력](yyyy-mm) > ");
 			List<Order> olm = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, m);
 			OrderService.getInstance().print(olm);
 			break;
 		}
 	}
-
-
-//	public static void main(String[] args) {// 구동 연습 메서드
-//		List<Order> orders = getInstance().findOrderBy(QqUtils.DATE_FORMAT_MONTH, "2025-05");
-//		getInstance().print(orders);
-//		System.out.println(getInstance().getSum(orders)); }
 
 	
 } //============================ AdminService 닫기
