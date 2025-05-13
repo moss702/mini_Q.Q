@@ -55,7 +55,7 @@ public class CustomerService {
 		public static void  Mypage () {
 			System.out.println("소비금액 조회");
 			String ord = nextLine("소비금액 > ");
-			OrderService.getInstance().findByPayment(Customer c);
+			OrderService.getInstance().findByPayment(Customer);
 			return;
 			
 		}

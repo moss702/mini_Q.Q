@@ -152,11 +152,15 @@ public class MenuService {
 		}
 
 //	// 메뉴조회
-	public void read() {
-		System.out.println("메뉴조회");
-		       	print(menus);
-		       	
-	}
+		
+		
+		
+//	public void read() {
+//		System.out.println("메뉴조회");
+//		       	print(menus);
+//		       	
+//	}
+		
 //메뉴 번호를 입력받아, menus 리스트 안에서 번호가 일치하는 메뉴를 찾아 반환 없으면 null 반환
 	public Menu findBy(int no) {
 		for(Menu m : menus) {
@@ -188,7 +192,7 @@ public class MenuService {
 	// category 오름차순?
 	// no 오름차순
 	
-	public void rank() {
+	public void read() {
 		Collections.sort(menus, (o1, o2) -> {
 			int result = o1.getCategory() - o2.getCategory();
 			if(result == 0) return o1.getNo() - o2.getNo();
@@ -202,6 +206,14 @@ public class MenuService {
 //		Collections.sort(menus,(o1, o2) -> o1.getNo() - o2.getNo());
 //		print(menus);
 //			
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 가격 범위로 메뉴 검색할수있는기능
 	public void PriceRange() {
@@ -221,6 +233,9 @@ public class MenuService {
 
 
 
+	
+	
+	
 	//선택한메뉴 가격 합계할수있는것
 	public void totalMenuPrice() {
 	    System.out.println("선택된 메뉴의 가격 합산");
