@@ -38,8 +38,8 @@ public class MenuService {
 		menus.add(new Menu(11, "소주", 2, 5_000));
 		menus.add(new Menu(13, "청하", 2, 7_000));
 		menus.add(new Menu(15, "고량주", 2, 10_000));
-		rank();
-		sank();
+		
+		
 	}
 
 	
@@ -165,17 +165,7 @@ public class MenuService {
 		print(menus);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// 가격 범위로 메뉴 검색할수있는기능
 	public void PriceRange() {
 	    System.out.print("최소 가격 > ");
