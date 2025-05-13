@@ -37,7 +37,7 @@ public class OrderService {
 		Date d = cal.getTime();
 		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest1"), l, mu.findBy(1).getPrice() * 2, d));
-		l.clear();
+		l = new ArrayList<Cart>();
 		l.add(new Cart(mu.findBy(4), 1));
 		l.add(new Cart(mu.findBy(11), 2));
 		cal.set(2025, 4, 2, 20, 20);
@@ -164,12 +164,13 @@ public class OrderService {
 	}
 	
 	public void findBySalesDate () throws ParseException { // 일별 매출 조회 날짜/메뉴/수량/금액
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = date.parse(QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >"));
-		String f = date.format(d);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String input = QqUtils.nextLine("조회하실 날짜를 yyyy-MM-dd 순으로 입력하여 주십시오. >");
+		Date d = sdf.parse(input);
+		String f = sdf.format(d);
 		List<Order> sales = new ArrayList<Order>();
 			for(Order o : orders) {
-				if(o.getDate().getMonth() == d.getMonth() && o.getDate().getDate() == d.getDate()) {					
+				if(input.equals(o.getDate())) {					
 					sales.add(o);
 				}
 				else {					

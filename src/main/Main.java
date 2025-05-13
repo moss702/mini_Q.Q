@@ -12,7 +12,7 @@ import service.OrderService;
 import service.UserService;
 
 public class Main {
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args)  {
 		while(true) {
 			try {	
 				if(UserService.getInstance().getLoginUser() == null) { //null :비로그인 상태, 그외 : 로그인 상태
@@ -63,6 +63,8 @@ public class Main {
 				System.out.println("정확한 숫자를 입력하세요");
 			}	catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
+			} catch (ParseException e) {
+				System.out.println("YYYY-MM-DD 형태로 작성하여 주십시오.");
 			}
 
 		} //while(true) 닫기
