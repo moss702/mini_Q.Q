@@ -63,7 +63,7 @@ public class AdminService {
 	//-----------------회원 목록 조회
 	public void read() {
 		System.out.println("=======[회원 목록 조회]=======");
-		int input = nextInt("[1.전체회원 보기] [2.관리자회원 보기] [3.일반회원 보기]");
+		int input = nextInt("[1.전체회원 보기] [2.관리자회원 보기] [3.일반회원 보기] | [0.뒤로가기]");
 		switch (input) {
 		case 1 : //전체회원보기
 			UserService.getInstance().printUser();
@@ -74,6 +74,7 @@ public class AdminService {
 		case 3 : //일반회원보기
 			UserService.getInstance().printCustomer();
 			break;
+        case 0 : return;
 		} 
 	}
 	
@@ -136,49 +137,50 @@ public class AdminService {
 	//----------------- 메뉴관리
 	public void menu() {
 		System.out.println("=======[메뉴 관리]=======");
-		int input = nextInt("[1.메뉴등록] [2.메뉴조회] [3.메뉴수정] [4.메뉴삭제] [0.뒤로가기]");
+		int input = nextInt("[1.메뉴등록] [2.메뉴조회] [3.메뉴수정] [4.메뉴삭제] | [0.뒤로가기]");
         switch (input) {
-	        case 1: 
+	        case 1: //메뉴등록
 	        	MenuService.getInstance().register(); 
 	        break;
-	        case 2: 
+	        case 2: //메뉴조회
 	        	MenuService.getInstance().read(); 
 	        break;
-	        case 3: 
+	        case 3: //메뉴수정
 	        	MenuService.getInstance().modify();
 	        break;
-	        case 4: 
+	        case 4: //메뉴삭제
 	        	MenuService.getInstance().remove();
 	        break;
+	        case 0 : return;
         }
-//        if (input == 0) break;
 	}
 	
 	//----------------- 매출조회
 	public void salesRecord() {
 		System.out.println("=======[매출조회]=======");
-		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출] > ");
+		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출] | [0.뒤로가기]");
 		switch (input) {
 		case 1 : //오늘 매출
 			System.out.println("당일매출");
 			List<Order> od = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, null);
-			OrderService.getInstance().print(od);
+			System.out.println(od);
 			break;
 		case 2 : //이번달 매출
 			System.out.println("당월매출");
 			List<Order> om = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, null);
-			OrderService.getInstance().print(om);
+			System.out.println(om);
 			break;
 		case 3 : //일매출
 			String d = nextLine("[일 매출 확인할 날짜를 입력](yyyy-mm-dd) > ");
 			List<Order> old = OrderService.getInstance().findOrderBy(DATE_FORMAT_DATE, d);
-			OrderService.getInstance().print(old);
+			System.out.println(old);
 			break;
 		case 4 : //특정월
 			String m = nextLine("[월 매출 확인할 날짜를 입력](yyyy-mm) > ");
 			List<Order> olm = OrderService.getInstance().findOrderBy(DATE_FORMAT_MONTH, m);
-			OrderService.getInstance().print(olm);
+			System.out.println(olm);
 			break;
+        case 0 : return;
 		}
 	}
 
