@@ -11,7 +11,7 @@ import domain.User;
 
 public class CustomerService  extends UserService{
 	private static final CustomerService CUSTOMER_SERVICE = new CustomerService();
-	public CustomerService () {
+	private   CustomerService () {
 		
 	}
 	public static CustomerService getInstance() {
@@ -19,7 +19,7 @@ public class CustomerService  extends UserService{
 	}
 	
 	List<Customer> customers;
-	private Customer Customer;
+	private static Customer Customer;
 	private char[] loginCustomer;
 
 	
@@ -41,8 +41,7 @@ public class CustomerService  extends UserService{
 				OrderService.getInstance().pay();
 				break;
 			case 5 :
-				UserService.getInstance().modify(Customer);
-				
+				CustomerService.Mypage();;
 				break;
 			case 6 :
 				UserService.getInstance().logout();
@@ -50,11 +49,11 @@ public class CustomerService  extends UserService{
 		}
 	}
 	// 소비금액조회, 정보 수정
-	public void  Mypage () {
+		static void  Mypage () {
 		System.out.println("내정보보기");
-		System.out.println(loginCustomer);
+		System.out.println("loginCustomer");
 		System.out.println("소비금액 조회");
-		//OrderService.getInstance().print(OrderService.getInstance().findByPayment(Customer c));
+		//OrderService.getInstance().print(OrderService.getInstance().findByPayment(Customer ));
 	}
 	public void modify() {
 		System.out.println("정보수정");
@@ -64,5 +63,3 @@ public class CustomerService  extends UserService{
 	
 	}
 	
-	
-
