@@ -1,9 +1,5 @@
 package service;
-import domain.Admin;
 import domain.Menu;
-import domain.User;
-import utils.QqUtils;
-
 import java.util.Collections;
 import java.util.*;
 
@@ -196,31 +192,8 @@ public class MenuService {
 	    }
 	}
 
-//	//관리자 권한 부여
-//	public void ToAdmin() {
-//		String id = QqUtils.nextLine("관리자로 승격할 회원의 ID 입력 ");
-//		User target = UserService.getInstance().findBy(id, User.class);
-//		
-//		if (target == null) {
-//			System.out.println("해당 ID의 사용자를 찾을 수 없습니다.");
-//			return;
-//		}
-//		
-//		if (target instanceof Admin) {
-//			System.out.println("[이미 관리자입니다.]");
-//			return;
-//		}
-//		}
-//
-//	
-//	public void to Admin(){
-//		String id = QqUtils.nextLine('관리자 권한부여');
-//	  User target= target=UserService.getInstance().findBy(id, User.class);
-//	  if(target==null)
-//		  System.out.println(해당아이디를 찾을수없습);
-//	  return;
-//	}
-	
+
+
 	//선택한메뉴 가격 합계할수있는것
 	public void totalMenuPrice() {
 	    System.out.println("선택된 메뉴의 가격 합산");
