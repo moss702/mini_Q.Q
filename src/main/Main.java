@@ -39,8 +39,22 @@ public class Main {
 							AdminService.getInstance().userRemove();
 							break;
 						case 4 : 
-							MenuService.getInstance().register();
-							break;
+							  while (true) {
+					                int menuInput = nextInt("\n[1.메뉴등록] [2.메뉴조회] [3.메뉴수정] [4.메뉴삭제] [0.뒤로가기]");
+					                switch (menuInput) {
+					                    case 1: MenuService.getInstance().register(); 
+					                    break;
+					                    case 2: MenuService.getInstance().rank(); 
+					                    break;
+					                    case 3: MenuService.getInstance().modify();
+					                    break;
+					                    case 4: MenuService.getInstance().remove();
+					                    break;
+					                }
+					                if (menuInput == 0) break;
+					            }
+					            break;
+						
 						case 5 : 
 							System.out.println("* 임시 * 매출관리"); 
 						//	OrderService.getInstance().findBySalesDate();
@@ -51,14 +65,26 @@ public class Main {
 					}
 				} else {
 					System.out.println("===============손님 로그인 상태"); 
-					int input = nextInt("[0.로그아웃]");	
+					int input = nextInt("[0.로그아웃] [1.메뉴판]");	
 					switch (input) {
 						case 0 : 
 							UserService.getInstance().logout();
 							break;
+						case 1:
+							 while (true) {
+					                int menuInput = nextInt("\n[1.선택한메뉴 가격 합계] [2.가격 범위로 메뉴 검색] ");
+					                switch (menuInput) {
+					                    case 1: MenuService.getInstance().PriceRange(); 
+					                    break;
+					                    case 2: MenuService.getInstance().totalMenuPrice();
+					                }
+					                if (menuInput == 0) break;
+					            }
+					            break;
 					}
 				}
-			}	catch (NumberFormatException e) {
+			}
+				catch (NumberFormatException e) {
 				System.out.println("정확한 숫자를 입력하세요");
 			}	catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
