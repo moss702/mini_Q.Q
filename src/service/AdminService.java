@@ -141,7 +141,7 @@ public class AdminService {
 	        	MenuService.getInstance().register(); 
 	        break;
 	        case 2: 
-	        	MenuService.getInstance().rank(); 
+	        	MenuService.getInstance().read(); 
 	        break;
 	        case 3: 
 	        	MenuService.getInstance().modify();
