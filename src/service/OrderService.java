@@ -33,17 +33,16 @@ public class OrderService {
 		List<Cart> l = new ArrayList<>();
 		l.add(new Cart(mu.findBy(1), 2));
 		Calendar cal = Calendar.getInstance();
-		cal.set(2025, 4, 1, 18, 30);
+		cal.set(2025, Calendar.MAY, 1, 18, 30);
 		Date d = cal.getTime();
-		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest1"), l, mu.findBy(1).getPrice() * 2, d));
 		l = new ArrayList<Cart>();
 		l.add(new Cart(mu.findBy(4), 1));
 		l.add(new Cart(mu.findBy(11), 2));
-		cal.set(2025, 4, 2, 20, 20);
+		cal.set(2025, Calendar.MARCH, 25, 20, 20);
 		d = cal.getTime();
-		System.out.println(d);
 		orders.add(new Order(++num, (Customer)cu.findByID("guest2"), l, (mu.findBy(4).getPrice() * 1 + mu.findBy(11).getPrice() *  2) , d));
+		l = new ArrayList<Cart>();
 	}
 	// CRUD
 	
@@ -133,23 +132,21 @@ public class OrderService {
 		if(sales != QqUtils.nextInt(sales + "원을 입력하여주세요. > ")) {
 			System.out.println("올바른 값을 입력하여 주십시오.");
 			System.out.println("주문화면으로 돌아갑니다.");
-			carts.clear();
 			return;
 		}
 		List<Cart> tmp = new ArrayList<>();
 		tmp.addAll(carts);
-		
 		Order order = new Order(++num, (Customer)loginCustomer, tmp, sales, new Date()); // kim 대신 로그인한 손님을 대입해야 함
 		orders.add(order);
 		order.setPay(true);
 		System.out.println("결제가 완료되었습니다.");
-		print(orders);
+		System.out.println(loginCustomer.getName() + "님의 결제내역은 아래와 같습니다.");
+		CartCheck();
 		carts = new ArrayList<Cart>();
-		return;
 	}
 	
-	public void print (List<Order> orders) {
-		System.out.println(orders);
+	public void CartCheck () {
+		System.out.println(carts);
 	}
 
 	// 결제 조회, 관리자/손님 페이지에서 조회 관리자 -> 매출 조회, 손님 -> 누적 소비금액 및 쿠폰 관련
@@ -164,16 +161,20 @@ public class OrderService {
 		if(tmp.isEmpty()) {	
 			System.out.println("주문 내역이 없습니다.");
 		}
-		print(tmp);
+		System.out.println(loginCustomer.getName() + "님의 주문내역은 다음과 같습니다.");
+		System.out.println(tmp);;
 		return tmp;
 	}
 	
 	public List<Order> findOrderBy (SimpleDateFormat sdf, String str)  { //관리자 서비스에서 List<Order>를 지역변수로 만들어놓고 집어너헝서 반환 받으시면 됩니다.
 		//사용 예시는 아래 메인메서드에 있습니다. 
+		
 		List<Order> tmp = new ArrayList<Order>();
 			if (str == null) {
+//				Date current = new Date(); 
+//				sdf.format(current);
 				for(Order o : orders) {
-					if(o.getDate().equals(sdf.format(new Date().getDate())) ) // 입력 값이 없을경우 그날 매출 반환
+					if(sdf.format(o.getDate()).equals(sdf.format(new Date()))) // 입력 값이 없을경우 그날 매출 반환
 						tmp.add(o);
 				}
 			} else {
@@ -190,12 +191,10 @@ public class OrderService {
 			return tmp;
 	}
 	
-	public int totalSales(List<Order> orders) { // 관리자 및 커스토머 서비스에서 List<Order> 를 지역변수로 만들어놓고 집어넣어서 반환 받으시면 됩니다.
-		int sum = 0; 
+	public void printSalesList(List<Order> orders) { // 관리자 및 커스토머 서비스에서 List<Order> 를 지역변수로 만들어놓고 집어넣어서 반환 받으시면 됩니다. 
 		for(Order o : orders) {
-			sum += o.getSales();
+			System.out.println(o);
 		}
-		return sum;
 	}
 	
 
@@ -225,7 +224,7 @@ public class OrderService {
 			
 			case 5 : System.out.println("월별 매출조회 기능입니다.");
 			List<Order> ol = order.findOrderBy(QqUtils.DATE_FORMAT_MONTH, QqUtils.nextLine("yyyy-mm 형식으로 입력하여주세요. >"));
-				 order.print(ol);
+			order.printSalesList(ol);
 			break;
 //			case 6 : order.findByPayment();
 //			break;
