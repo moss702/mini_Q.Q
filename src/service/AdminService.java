@@ -44,7 +44,7 @@ public class AdminService {
 				userRemove();
 				break;
 			case 4 : //메뉴관리
-				MenuService.getInstance().register();
+				menu();
 				break;
 			case 5 : //매출조회
 				salesRecord();
@@ -129,6 +129,31 @@ public class AdminService {
 			return;
 		}
 	}
+	
+	//----------------- 메뉴관리
+	public void menu() {
+		System.out.println("=======[메뉴 관리]=======");
+		int input = nextInt("[1.메뉴등록] [2.메뉴조회] [3.메뉴수정] [4.메뉴삭제] [0.뒤로가기]");
+        switch (input) {
+	        case 1: 
+	        	MenuService.getInstance().register(); 
+	        break;
+	        case 2: 
+	        	MenuService.getInstance().rank(); 
+	        break;
+	        case 3: 
+	        	MenuService.getInstance().modify();
+	        break;
+	        case 4: 
+	        	MenuService.getInstance().remove();
+	        break;
+        }		
+//        if (input == 0) break;
+	}
+	
+	
+	
+	
 	
 	//----------------- 매출조회
 	public void salesRecord() {
