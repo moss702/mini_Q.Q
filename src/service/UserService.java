@@ -121,7 +121,7 @@ public class UserService {
 		String name = inputName();
 		
 		//----ID
-		String id = null;
+		String id = "0";
 		id = inputId(id);
 		id = duplId(id);
 
@@ -130,8 +130,7 @@ public class UserService {
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
-		//----회원리스트에 저장 
-		//최초 회원가입시 Customer
+		//----회원리스트에 저장 (최초 회원가입시 Customer)
 		User users = new Customer(no, name, id, pw);
 		this.users.add(users);
 		
