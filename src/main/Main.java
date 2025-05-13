@@ -15,6 +15,7 @@ public class Main {
 		while(true) {
 			try {	
 				if(UserService.getInstance().getLoginUser() == null) { // 비로그인 상태
+					System.out.println("===============비로그인 상태");
 					int input = nextInt("[1.회원가입] [2.로그인]");
 					switch (input) {
 						case 1 : 

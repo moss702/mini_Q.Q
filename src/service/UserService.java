@@ -19,7 +19,6 @@ public class UserService {
 		return USER_SERVICE;
 	}
 	
-	
 	// 유저 리스트 생성
 	List<User> users = new ArrayList<>();
 
@@ -30,7 +29,6 @@ public class UserService {
 		users.add(new Customer(3, "개똥이", "guest2", "1234"));
 		users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
 	}
-	
 	
 //============================= 메소드 ======================
 	// loginUser -- 로그인 상태 저장
@@ -47,12 +45,12 @@ public class UserService {
 		collect(Collectors.toList());
 	}
 	
-	// findBy -- (입력 : id, 클래스 | 출력 : 해당하는 클래스 users 스트림)
+	// findBy (아이디, 클래스(Admin || Customer))
 	public <T extends User> T findBy(String id, Class<T> clazz) {
 		return users.stream().filter(u -> clazz.isInstance(u) && u.getId().equals(id)).map(clazz::cast).findFirst().orElse(null);
 	}
 	
-	// findByID 
+	// findByID (아이디)
 	public User findByID(String id) {
 		for(User u : users) {
 			if(u.getId().equals(id)) {
@@ -61,7 +59,7 @@ public class UserService {
 		}
 		return null;
 	}
-	// findByNo 
+	// findByNo (회원번호)
 	public User findByNo(int no) {
 		for(User u : users) {
 			if(u.getUserNo() == no) {
@@ -70,7 +68,6 @@ public class UserService {
 		}
 		return null;
 	}
-	
 
 	// inputName -- 입력제한_이름
 	public String inputName() {
@@ -130,34 +127,36 @@ public class UserService {
 		
 		//----회원번호(자동증가)
 		int no = users.isEmpty() ? 1 : users.get(users.size()-1).getUserNo()+1;
+		
 		//----회원리스트에 저장 (최초 회원가입시 Customer)
 		User users = new Customer(no, name, id, pw);
 		this.users.add(users);
 		
 		System.out.println("[회원가입 완료. 로그인해주세요.]");
-		
 		}
 	
 	//----------------- 회원 정보 수정 (수정가능요소 : ID, PW, name)
-	public void modify(User user) {
+	public void modify() {
 		System.out.println("=======[내 회원정보 수정]=======");
-		String id = nextLine("[수정] ID  입력 > ");
-		
-		User t = UserService.getInstance().findBy(id, User.class);
-	
+		System.out.println("[수정할 정보 입력중입니다]");
+		String id = "0";
+		id = inputId(id);
+		User t = findBy(id, User.class);
 		if(t == null) {
-			System.out.printf("[아이디 :\"%s\"가 \"%s\"로 수정됩니다.]", getLoginUser().getId(), id);
-			loginUser.setId(id);
+			System.out.printf("[기존 아이디 :\"%s\"가 \"%s\"로 수정됩니다.]\n", getLoginUser().getId(), id);
+		} else {
+			System.out.println("[(!)중복된 아이디입니다.]");
+			return;
 		}
 		
-		//
 		String name = inputName();
-		String pw = nextLine("[수정] PW  입력 > ");
-		System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
-	
-		loginUser.setName(name);
-		loginUser.setPw(pw); 
 
+		String pw = nextLine("[ PW 를 입력해주세요] > ");
+		System.out.printf("[PW가 \"%s\"로 변경됩니다.]", pw);
+
+		loginUser.setId(id);
+		loginUser.setName(name);
+		loginUser.setPw(pw); 	
 		System.out.println("[회원 정보가 수정되었습니다.]");
 	}
 	
