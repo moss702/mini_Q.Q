@@ -1,5 +1,12 @@
 package service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +29,13 @@ public class UserService {
 	// 유저 리스트 생성
 	List<User> users = new ArrayList<>();
 
-	// 유저 리스트 초기화 블럭
-	{
-		users.add(new Admin(1, "고양이관리자", "admin", "1234"));
-		users.add(new Customer(2, "새똥이", "guest1", "1234"));
-		users.add(new Customer(3, "개똥이", "guest2", "1234"));
-		users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
+	{ // 유저 리스트 초기화 블럭
+			users.add(new Admin(1, "고양이관리자", "admin", "1234"));
+			users.add(new Customer(2, "새똥이", "guest1", "1234"));
+			users.add(new Customer(3, "개똥이", "guest2", "1234"));
+			users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
+			users.add(new Admin(5, "테스트용 관리자", "1", "1"));
+			users.add(new Customer(6, "테스트용 고객", "a", "a"));
 	}
 	
 //============================= 메소드 ======================
@@ -200,5 +208,5 @@ public class UserService {
 			return;
 		}
 	}
-
+	
 } //UserService 닫기
