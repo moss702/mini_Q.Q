@@ -16,13 +16,11 @@ import utils.QqUtils;
 public class OrderService {
 	
 	private static final OrderService ORDER_SERVICE = new OrderService();
-<<<<<<< HEAD
 	private CustomerService cu = CustomerService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
-=======
 	private UserService cu = UserService.getInstance(); // 이후에 getloginCustmoer 메서드를 통해 호출하여야 한다.
 	private MenuService mu = MenuService.getInstance();
 	User loginCustomer = cu.getLoginUser();
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
+
 	private OrderService() {	}
 	public static OrderService getInstance() {
 		return ORDER_SERVICE;
@@ -30,11 +28,7 @@ public class OrderService {
 	private List<Order> orders = new ArrayList<Order>(); // 주문 내역 집합
 	private List<Cart> carts = new ArrayList<>(); // 장바구니
 	private List<Menu> menus = new ArrayList<>(); //메뉴판 목록
-<<<<<<< HEAD
-	static Customer kim = new Customer(1, "김찬", "kim@123", "kim", "1234" ); // 로그인 커스토머 담기 전 임시
-=======
-	
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
+
 	int num ;
 	{	
 		List<Cart> l = new ArrayList<>();
@@ -78,13 +72,10 @@ public class OrderService {
 			checkRangeMenu(no);
 			Menu m = MenuService.getInstance().findBy(no); // 숫자 번호는 1번부터
 			if(m == null) {
-<<<<<<< HEAD
 				System.out.println("올바른 메뉴번호를 입력하여주세요.");
 				break;
-=======
 				System.out.println("올바른 메뉴를 입력하여주세요.");
 				return;
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
 			}
 			// 수량 입력
 			int amount = QqUtils.nextInt("담을 수량을 입력하세요 > ");
