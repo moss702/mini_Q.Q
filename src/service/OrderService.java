@@ -175,7 +175,7 @@ public class OrderService {
 		List<Order> tmp = new ArrayList<Order>();
 			if (str == null) {
 				for(Order o : orders) {
-					if(o.getDate().equals(sdf.format(new Date().getDate())) ) // 입력 값이 없을경우 그날 매출 반환
+					if(o.getDate().equals(new Date().getDate()) ) // 입력 값이 없을경우 그날 매출 반환
 						tmp.add(o);
 				}
 			} else {
