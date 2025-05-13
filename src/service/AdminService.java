@@ -29,6 +29,8 @@ public class AdminService {
 		return ADMIN_SERVICE;
 	}
 	
+	
+	
 // =============================== 메인 호출용 -- 관리자 로그인 상태
 	public void adminInit() throws Exception {
 		System.out.println("===============관리자 로그인 상태");
@@ -175,7 +177,8 @@ public class AdminService {
 			break;
 		case 4 : //누적
 			System.out.println("누적매출");
-//			System.out.printf("현재까지 총 누적 매출은 %s원 입니다.", saleTotal);			
+			OrderService.getInstance().totalSales(null)
+			System.out.printf("현재까지 총 누적 매출은 %d원 입니다.", totalSales);			
 			break;
 			
 		}
