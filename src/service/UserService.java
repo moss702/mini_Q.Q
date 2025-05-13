@@ -251,7 +251,7 @@ public class UserService {
 					}
 				}
 			}	catch (NumberFormatException e) {
-				System.out.println("정확한 숫자를 입력하세요");
+				System.out.println("[(!) 정확한 숫자를 입력하세요]");
 			}	catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
