@@ -42,6 +42,7 @@ public class OrderService {
 		cal.set(2025, Calendar.MARCH, 25, 20, 20);
 		d = cal.getTime();
 		orders.add(new Order(++num, (Customer)cu.findByID("guest2"), l, (mu.findBy(4).getPrice() * 1 + mu.findBy(11).getPrice() *  2) , d));
+		l = new ArrayList<Cart>();
 	}
 	// CRUD
 	
