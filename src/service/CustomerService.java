@@ -52,8 +52,8 @@ public class CustomerService {
 		}
 	}
 	// 소비금액조회, 정보 수정
-<<<<<<< HEAD
-		public void  Mypage () {
+
+		public void  Mypage() {
 			int input = nextInt("[1.소비금액 조회 2. 정보수정 3. 정보삭제 4. 뒤로가기]");	
 			//메뉴보기 - 메뉴클래스 , 장바구니 담기, 장바구니 빼기, 결제하기 - order 클래스
 			switch (input) {
@@ -68,8 +68,8 @@ public class CustomerService {
 					break;
 				case 4 : 
 					return;
-		}
 			}
+		}
 		public void modify() { // 비밀번호 입력, 정보 조회,   현재 비밀번호 일치하지 않음, 새로운 비밀번호 입력 , 탈퇴하기
 				System.out.println("비밀번호 입력");
 				
@@ -78,15 +78,13 @@ public class CustomerService {
 				System.out.println("내정보 보기");
 				
 				System.out.println("loginCustomer");
-=======
+
 		public static void  Mypage () {
 			System.out.println("소비금액 조회");
 			String ord = nextLine("소비금액 > ");
 			OrderService.getInstance().findByPayment(Customer);
 			return;
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
-			
-					   
+  
 			    System.out.println("비밀번호가 일치하지 않습니다.");
 			  if (pw == null) {
 			  } else {
