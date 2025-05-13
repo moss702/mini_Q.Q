@@ -24,7 +24,7 @@ public class Main {
 							UserService.getInstance().login();
 							break;
 					}
-<<<<<<< HEAD
+
 				} else if(UserService.getInstance().getLoginUser().getClass() == Admin.class){
 					System.out.println("===============관리자 로그인 상태");
 					int input = nextInt("[1.회원목록 조회] [2.관리자 등급 관리] [3.회원정보삭제] [4.메뉴관리] [5.매출조회] [0.로그아웃]");	
@@ -82,12 +82,12 @@ public class Main {
 					            }
 					            break;
 					}
-=======
-				} else if(UserService.getInstance().getLoginUser() instanceof Admin){
+
+				} else if (UserService.getInstance().getLoginUser() instanceof Admin) {
 					AdminService.getInstance().adminInit(); // Login Admin
 				} else { 
 					CustomerService.getInstance().init(); // Login Customer
->>>>>>> branch 'master' of https://github.com/songseongjun/Q.Q.git
+
 				}
 			}
 				catch (NumberFormatException e) {
