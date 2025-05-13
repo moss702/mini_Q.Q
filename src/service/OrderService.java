@@ -169,11 +169,18 @@ public class OrderService {
 	}
 	
 	public List<Order> findOrderBy (SimpleDateFormat sdf, String str)  { //관리자 서비스에서 List<Order>를 지역변수로 만들어놓고 집어너헝서 반환 받으시면 됩니다.
-		//파라미터에서 str을 utils에 넣어서 받으시면 됩니다.
+		//사용 예시는 아래 메인메서드에 있습니다. 
 		List<Order> tmp = new ArrayList<Order>();
-			for(Order o : orders) {
-				if(str.equals(sdf.format(o.getDate()))) {					
-					tmp.add(o);
+			if (str == null) {
+				for(Order o : orders) {
+					if(o.getDate().equals(sdf.format(new Date().getDate())) ) // 입력 값이 없을경우 그날 매출 반환
+						tmp.add(o);
+				}
+			} else {
+				for(Order o : orders) {
+					if(str.equals(sdf.format(o.getDate()))) {					
+						tmp.add(o);
+					}
 				}
 			}
 			if(tmp.isEmpty()) {
@@ -196,6 +203,10 @@ public class OrderService {
 	public static void main(String[] args) throws ParseException {// 구동 연습 메서드
 		System.out.println(new Date());
 		OrderService order = ORDER_SERVICE.getInstance();
+		
+		
+		
+		
 		Date d = new Date();
 		while(true) {
 			int no = QqUtils.nextInt(" 1. 장바구니담기,  2. 장바구니 빼기 3. 결제하기  4. 일별매출점검  5. 월별매출점검 6. 주문내역 점검(손님기준) 7. 종료");
@@ -209,11 +220,13 @@ public class OrderService {
 			case 3 : order.pay();;
 			break;
 				
-//			case 4 : order.findBySalesDate(); 
-//			break;
+			case 4 : order.findByPayment(UserService.getInstance().getLoginUser()); 
+			break;
 			
-//			case 5 : order.findBySalesMonth();
-//			break;
+			case 5 : System.out.println("월별 매출조회 기능입니다.");
+			List<Order> ol = order.findOrderBy(QqUtils.DATE_FORMAT_MONTH, QqUtils.nextLine("yyyy-mm 형식으로 입력하여주세요. >"));
+				 order.print(ol);
+			break;
 //			case 6 : order.findByPayment();
 //			break;
 			
