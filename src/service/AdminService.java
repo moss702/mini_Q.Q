@@ -157,7 +157,7 @@ public class AdminService {
 	//----------------- 매출조회
 	public void salesRecord() {
 		System.out.println("=======[매출조회]=======");
-		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출]");
+		int input = nextInt("[1.당일 매출] [2.당월매출] [3.특정일 매출] [4.특정월 매출] > ");
 		switch (input) {
 		case 1 : //오늘 매출
 			System.out.println("당일매출");

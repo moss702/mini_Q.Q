@@ -28,6 +28,8 @@ public class UserService {
 		users.add(new Customer(2, "새똥이", "guest1", "1234"));
 		users.add(new Customer(3, "개똥이", "guest2", "1234"));
 		users.add(new Admin(4, "멍멍이관리자", "admin2", "1234"));
+		users.add(new Admin(5, "동명이인", "a", "a"));
+		users.add(new Customer(6, "동명이인", "b", "b"));
 	}
 	
 //============================= 메소드 ======================
