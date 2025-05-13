@@ -70,7 +70,7 @@ public class OrderService {
 			checkRangeMenu(no);
 			Menu m = MenuService.getInstance().findBy(no); // 숫자 번호는 1번부터
 			if(m == null) {
-				System.out.println("올바른 메뉴를 입력하여주세요.");
+				System.out.println("올바른 메뉴번호를 입력하여주세요.");
 				break;
 			}
 			// 수량 입력
