@@ -116,7 +116,9 @@ public class MenuService {
 
 	    System.out.print("새 이름 > ");
 	    m.setName(sc.nextLine());
+	    
 	    int category = -1;
+	    
 	    while (true) {
 	        try {
 	            System.out.print("새 카테고리 (0:메인, 1:사이드, 2:주류) > ");
